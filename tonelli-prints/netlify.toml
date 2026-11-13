@@ -1,0 +1,16 @@
+# Deploy su Netlify. Imposta "Base directory" = tonelli-prints se il sito vive in una sottocartella del repo.
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Gli header di sicurezza e di cache NON stanno qui: vengono generati in dist/_headers
+# a ogni build da src/integrations/security-headers.ts, così la Content-Security-Policy
+# resta coerente con l'endpoint del form (PUBLIC_FORM_ENDPOINT) e con il flag analytics.
+
+[[redirects]]
+  from = "/cookie"
+  to = "/cookies.html"
+  status = 301
