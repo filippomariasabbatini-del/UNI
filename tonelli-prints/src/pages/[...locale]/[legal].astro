@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Container from '../../components/ui/Container.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Icon from '../../components/ui/Icon.astro';
+import { INTL_LOCALE } from '../../config/constants';
+import { enabledLocales, site } from '../../config/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../lib/content';
+import { absoluteUrl, format, localeFromParam, localePath } from '../../lib/i18n';
+import { breadcrumbSchema } from '../../lib/schema-org';
+
+// Una pagina per ogni file src/content/legal/<lingua>/<pagina>.md → /<pagina>.html
+export async function getStaticPaths() {
+  const pages = await getCollection('legal');
+  return pages.flatMap((page) => {
+    const [locale, slug] = page.id.split('/');
+    const enabled = enabledLocales.find((code) => code === locale);
+    if (!enabled || !slug) return [];
+    return [
+      {
+        params: { locale: enabled === site.defaultLocale ? undefined : enabled, legal: slug },
+        props: { page },
+      },
+    ];
+  });
+}
+
+const { page } = Astro.props;
+const locale = localeFromParam(Astro.params.locale);
+const ui = await getContent('ui', locale);
+const { Content } = await render(page);
+const path = `/${Astro.params.legal}.html`;
+const home = localePath(locale, '/');
+const updated = page.data.updated
+  ? new Intl.DateTimeFormat(INTL_LOCALE[locale], { dateStyle: 'long' }).format(
+      new Date(page.data.updated),
+    )
+  : null;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${page.data.title} · ${site.name}`}
+  description={page.data.description}
+  path={path}
+>
+  <JsonLd
+    slot="head"
+    data={breadcrumbSchema([
+      { name: site.name, url: absoluteUrl(home) },
+      { name: page.data.title, url: absoluteUrl(localePath(locale, path)) },
+    ])}
+  />
+  <Container class="pt-[clamp(7rem,13vw,10rem)] pb-[clamp(5rem,10vw,8rem)]">
+    <a
+      href={home}
+      class="text-accent-text inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] font-medium"
+    >
+      <Icon name="arrow-left" size={18} />
+      {ui.legal.back}
+    </a>
+    <Heading level={1} class="mt-4">
+      {page.data.title}
+    </Heading>
+    {updated && (
+      <p class="text-muted mt-4 text-[0.9375rem]">{format(ui.legal.updated, { date: updated })}</p>
+    )}
+    <p class="bg-surface mt-8 max-w-[44rem] rounded-2xl px-5 py-4 text-[0.9375rem]">
+      {ui.legal.draftNotice}
+    </p>
+    <div class="prose">
+      <Content />
+    </div>
+  </Container>
+</BaseLayout>

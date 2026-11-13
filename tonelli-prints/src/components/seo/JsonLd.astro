@@ -4,6 +4,7 @@ import { serializeJsonLd, type JsonLdNode } from '../../lib/schema-org';
 interface Props {
   data: JsonLdNode | JsonLdNode[];
 }
+const { data } = Astro.props;
 ---
 
-<script is:inline type="application/ld+json" set:html={serializeJsonLd(Astro.props.data)} />
+<script is:inline type="application/ld+json" set:html={serializeJsonLd(data)} />

@@ -1,0 +1,32 @@
+---
+import Button from '../components/ui/Button.astro';
+import Container from '../components/ui/Container.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import Heading from '../components/ui/Heading.astro';
+import { site } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getContent } from '../lib/content';
+import { localePath } from '../lib/i18n';
+
+const locale = site.defaultLocale;
+const ui = await getContent('ui', locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${ui.notFound.title} · ${site.name}`}
+  description={ui.notFound.body}
+  path="/404.html"
+  noindex
+>
+  <Container class="flex min-h-[80svh] flex-col items-center justify-center py-32 text-center">
+    <Eyebrow>404</Eyebrow>
+    <Heading level={1} class="mt-4 max-w-[16ch]">
+      {ui.notFound.heading}
+    </Heading>
+    <p class="text-muted mt-6">{ui.notFound.body}</p>
+    <Button href={localePath(locale, '/')} class="mt-9">
+      {ui.notFound.cta}
+    </Button>
+  </Container>
+</BaseLayout>

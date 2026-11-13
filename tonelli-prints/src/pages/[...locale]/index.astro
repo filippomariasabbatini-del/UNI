@@ -1,17 +1,59 @@
 ---
+import logo from '../../assets/brand/logo-full.png';
+import About from '../../components/sections/About.astro';
+import Contact from '../../components/sections/Contact.astro';
+import Estimator from '../../components/sections/Estimator.astro';
 import Hero from '../../components/sections/Hero.astro';
 import Marquee from '../../components/sections/Marquee.astro';
+import Materials from '../../components/sections/Materials.astro';
+import Process from '../../components/sections/Process.astro';
+import Products from '../../components/sections/Products.astro';
+import Projects from '../../components/sections/Projects.astro';
+import Studios from '../../components/sections/Studios.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import { site } from '../../config/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getContent } from '../../lib/content';
-import { localeFromParam, localeStaticPaths } from '../../lib/i18n';
+import { absoluteUrl, localeFromParam, localeStaticPaths } from '../../lib/i18n';
+import { localBusinessSchema, organizationSchema } from '../../lib/schema-org';
 
 export const getStaticPaths = localeStaticPaths;
 
 const locale = localeFromParam(Astro.params.locale);
 const ui = await getContent('ui', locale);
+const studios = (await getContent('studios', locale)).items;
+
+const structuredData = [
+  organizationSchema({ description: ui.meta.description, logoUrl: absoluteUrl(logo.src) }),
+  ...site.studios.flatMap((studio) => {
+    const content = studios.find((item) => item.id === studio.id);
+    return content
+      ? [
+          localBusinessSchema(studio, {
+            city: content.city,
+            description: content.description,
+            imageUrl: absoluteUrl('/og-image.png'),
+          }),
+        ]
+      : [];
+  }),
+];
 ---
 
 <BaseLayout locale={locale} title={ui.meta.title} description={ui.meta.description} path="/">
+  <JsonLd slot="head" data={structuredData} />
   <Hero ui={ui} />
   <Marquee ui={ui} />
+  <Products locale={locale} ui={ui} />
+  <Projects locale={locale} ui={ui} />
+  <About locale={locale} ui={ui} />
+  <Studios locale={locale} ui={ui} />
+  <Process locale={locale} ui={ui} />
+  <Materials locale={locale} ui={ui} />
+  <Estimator locale={locale} ui={ui} />
+  <Contact locale={locale} ui={ui} />
 </BaseLayout>
+
+<script>
+  import '../../scripts/home';
+</script>
