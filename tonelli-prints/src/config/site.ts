@@ -64,7 +64,6 @@ const siteSchema = z.object({
   legal: z.object({
     /** Numero KVK (Camera di commercio NL). null = "in attesa" */
     kvk: z.string().nullable(),
-    vat: z.string().nullable(),
   }),
   studios: z.array(studioSchema).min(1),
   analytics: z.object({
@@ -110,7 +109,6 @@ export const site = siteSchema.parse({
   },
   legal: {
     kvk: null, // TODO(dati): numero KVK in attesa
-    vat: null, // TODO(dati): partita IVA / BTW
   },
   studios: [
     {

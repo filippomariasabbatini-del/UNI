@@ -222,7 +222,6 @@ const ui = defineCollection({
         pieces: text,
         total: text,
         unit: text,
-        perPiece: text,
         lead: text,
         days: text,
         onRequest: text,

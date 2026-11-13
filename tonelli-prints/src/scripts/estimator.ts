@@ -107,13 +107,26 @@ export function initEstimator(): void {
     }
   };
 
-  // Etichette delle tacche allineate al centro del cursore
+  // Etichette delle tacche allineate al centro del cursore; su schermi stretti nasconde quelle che si sovrappongono
   if (ticks) {
-    for (const tick of ticks.querySelectorAll<HTMLElement>('[data-tick]')) {
+    const tickLabels = [...ticks.querySelectorAll<HTMLElement>('[data-tick]')];
+    for (const tick of tickLabels) {
       const ratio = (Number(tick.dataset['tick']) - min) / (max - min);
       tick.style.left = `calc(${ratio} * (100% - ${THUMB_WIDTH_REM}rem) + ${THUMB_WIDTH_REM / 2}rem)`;
     }
     ticks.hidden = false;
+    const hideOverlaps = (): void => {
+      let lastRight = -Infinity;
+      for (const tick of tickLabels) {
+        tick.style.visibility = 'visible';
+        const { left, right } = tick.getBoundingClientRect();
+        const overlaps = left < lastRight + 6;
+        tick.style.visibility = overlaps ? 'hidden' : 'visible';
+        if (!overlaps) lastRight = right;
+      }
+    };
+    hideOverlaps();
+    window.addEventListener('resize', hideOverlaps);
   }
 
   select.addEventListener('change', render);

@@ -402,25 +402,13 @@
     box-shadow: var(--tp-shadow-card);
   }
 
-  /* Bottone della scheda materiale: sopra il pannello scuro diventa chiaro e ruota a "chiudi" */
+  /* Bottone della scheda materiale: resta sopra il pannello e ruota a "chiudi" quando è aperta */
   .material-toggle {
-    transition:
-      rotate 350ms var(--ease-soft),
-      color 200ms ease,
-      background-color 200ms ease;
+    transition: rotate 350ms var(--ease-soft);
   }
 
   .material-card[data-open] .material-toggle {
-    background-color: transparent;
-    color: var(--tp-bg);
     rotate: 45deg;
-  }
-
-  @media (hover: hover) {
-    .material-card:hover .material-toggle {
-      background-color: transparent;
-      color: var(--tp-bg);
-    }
   }
 
   /* Comparsa del menu mobile */

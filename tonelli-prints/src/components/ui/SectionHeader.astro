@@ -8,16 +8,11 @@ interface Props {
   eyebrow?: string;
   title: string;
   sub?: string;
-  align?: 'left' | 'center';
-  class?: string;
 }
-const { id, eyebrow, title, sub, align = 'left', class: className } = Astro.props;
+const { id, eyebrow, title, sub } = Astro.props;
 ---
 
-<div
-  data-reveal
-  class:list={['max-w-[52rem]', align === 'center' && 'mx-auto text-center', className]}
->
+<div data-reveal class="max-w-[52rem]">
   {eyebrow && <Eyebrow class="mb-4">{eyebrow}</Eyebrow>}
   <Heading level={2} id={id}>
     {title}

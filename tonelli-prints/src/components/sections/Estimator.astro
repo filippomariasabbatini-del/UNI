@@ -118,7 +118,7 @@ const panel = 'rounded-panel bg-surface p-7 md:p-10';
               {initial.available ? money(initial.total, 0) : labels.onRequest}
             </dd>
           </div>
-          <div class="border-line flex flex-col-reverse gap-1 border-t pt-6">
+          <div class="border-line flex flex-col-reverse justify-end gap-1 border-t pt-6">
             <dt class={label}>{labels.unit}</dt>
             <dd
               data-estimator-unit
@@ -127,7 +127,7 @@ const panel = 'rounded-panel bg-surface p-7 md:p-10';
               {initial.available ? money(initial.unitPrice, 2) : labels.onRequest}
             </dd>
           </div>
-          <div class="border-line flex flex-col-reverse gap-1 border-t pt-6">
+          <div class="border-line flex flex-col-reverse justify-end gap-1 border-t pt-6">
             <dt class={label}>{labels.lead}</dt>
             <dd
               data-estimator-lead
@@ -144,7 +144,11 @@ const panel = 'rounded-panel bg-surface p-7 md:p-10';
         </p>
         <p data-estimator-live aria-live="polite" class="sr-only"></p>
         <div class="mt-auto pt-9">
-          <Button href="#contatti" data-estimator-cta class="w-full sm:w-auto">
+          <Button
+            href="#contatti"
+            data-estimator-cta
+            class="w-full whitespace-nowrap max-sm:px-4 max-sm:text-[0.9375rem] sm:w-auto"
+          >
             {labels.cta}
           </Button>
         </div>

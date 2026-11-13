@@ -3,12 +3,11 @@ interface Props {
   /** id del controllo: l'errore ha id `${id}-error` e va referenziato con aria-describedby */
   id: string;
   label: string;
-  class?: string;
 }
-const { id, label, class: className } = Astro.props;
+const { id, label } = Astro.props;
 ---
 
-<div class={className}>
+<div>
   <label for={id} class="mb-2 block text-[0.9375rem] font-medium">
     {label}
   </label>
