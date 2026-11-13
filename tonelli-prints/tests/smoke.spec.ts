@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
 test.describe('home', () => {
@@ -248,5 +249,39 @@ test.describe('altre pagine', () => {
     expect(await robots.text()).toContain('Sitemap: https://tonelliprints.com/sitemap-index.xml');
     const sitemap = await request.get('/sitemap-0.xml');
     expect(await sitemap.text()).toContain('https://tonelliprints.com/privacy.html');
+  });
+});
+
+test.describe('sicurezza', () => {
+  test('la Content-Security-Policy generata non blocca nessuna risorsa della home', async ({
+    page,
+  }) => {
+    const headersFile = readFileSync(new URL('../dist/_headers', import.meta.url), 'utf8');
+    const csp = /Content-Security-Policy: (.+)/.exec(headersFile)?.[1];
+    expect(csp).toBeTruthy();
+    expect(csp).not.toContain('unsafe-inline');
+    // In locale il sito gira su http: la direttiva che forza https va tolta solo per il test
+    const policy = (csp ?? '').replace('; upgrade-insecure-requests', '');
+
+    const violations: string[] = [];
+    page.on('console', (message) => {
+      if (/Content Security Policy/i.test(message.text())) violations.push(message.text());
+    });
+    await page.route('**/*', async (route) => {
+      if (route.request().resourceType() !== 'document') return route.continue();
+      const response = await route.fetch();
+      return route.fulfill({
+        response,
+        headers: { ...response.headers(), 'content-security-policy': policy },
+      });
+    });
+
+    await page.goto('/');
+    await expect(page.locator('[data-studio-time]').first()).toHaveText(/^\d{2}:\d{2}$/);
+    await page.locator('#stima').getByLabel('Quantità').fill('500');
+    await page.getByRole('button', { name: 'Mostra la scheda di PLA+ 2.0' }).click();
+    await page.locator('footer').scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
+    expect(violations).toEqual([]);
   });
 });
