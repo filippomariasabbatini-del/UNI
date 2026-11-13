@@ -1,11 +1,7 @@
 import { enabledLocales, site, type Locale } from '../config/site';
 
-/** Sostituisce i segnaposto {chiave} in una stringa di interfaccia. */
-export function format(template: string, values: Record<string, string | number>): string {
-  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
-    key in values ? String(values[key]) : match,
-  );
-}
+export { INTL_LOCALE } from '../config/constants';
+export { format } from './format';
 
 /** Percorso assoluto per una lingua: la lingua di default non ha prefisso. */
 export function localePath(locale: Locale, path = '/'): string {
@@ -41,6 +37,3 @@ export function alternates(path: string): { hreflang: string; href: string }[] {
     { hreflang: 'x-default', href: absoluteUrl(localePath(site.defaultLocale, path)) },
   ];
 }
-
-/** Tag BCP 47 usato per Intl e per og:locale */
-export const INTL_LOCALE: Record<Locale, string> = { it: 'it-IT', en: 'en-GB', nl: 'nl-NL' };

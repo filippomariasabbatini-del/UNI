@@ -1,4 +1,4 @@
-import { WEEKDAYS, type WeekHours, type Weekday } from '../config/site';
+import { WEEKDAYS, type WeekHours, type Weekday } from '../config/constants';
 
 export interface LocalMoment {
   weekday: Weekday;

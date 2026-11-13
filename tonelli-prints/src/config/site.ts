@@ -1,4 +1,7 @@
 import { z } from 'astro/zod';
+import { LOCALE_CODES, STUDIO_IDS, type Locale } from './constants';
+
+export type { Locale, StudioId, WeekHours, Weekday } from './constants';
 
 /**
  * Configurazione del sito: dati non testuali (contatti, sedi, orari, lingue, flag).
@@ -7,17 +10,11 @@ import { z } from 'astro/zod';
  * Lo schema Zod fa fallire la build se un valore è mancante o malformato.
  */
 
-export const LOCALE_CODES = ['it', 'en', 'nl'] as const;
-export type Locale = (typeof LOCALE_CODES)[number];
-
-export const WEEKDAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
-export type Weekday = (typeof WEEKDAYS)[number];
-
 const time = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Formato orario atteso: HH:MM');
 const dayHours = z.tuple([time, time]).nullable();
 
 const studioSchema = z.object({
-  id: z.enum(['nijmegen', 'roma']),
+  id: z.enum(STUDIO_IDS),
   primary: z.boolean(),
   countryCode: z.enum(['NL', 'IT']),
   timeZone: z.string().min(1),
@@ -147,8 +144,6 @@ export const site = siteSchema.parse({
 
 export type Site = z.infer<typeof siteSchema>;
 export type Studio = Site['studios'][number];
-export type StudioId = Studio['id'];
-export type WeekHours = Studio['hours']['week'];
 
 export const enabledLocales: Locale[] = site.locales.filter((l) => l.enabled).map((l) => l.code);
 

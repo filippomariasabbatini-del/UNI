@@ -2,7 +2,7 @@ import { defineCollection, type SchemaContext } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { MATERIAL_IDS } from './config/pricing';
-import { WEEKDAYS } from './config/site';
+import { STUDIO_IDS, WEEKDAYS } from './config/constants';
 
 /**
  * Ogni collection ha un file per lingua: src/content/<collection>/<locale>.json
@@ -89,7 +89,7 @@ const studios = defineCollection({
       .array(
         z.object({
           /** Deve corrispondere a site.studios[].id */
-          id: z.enum(['nijmegen', 'roma']),
+          id: z.enum(STUDIO_IDS),
           city: text,
           label: text,
           description: text,

@@ -31,6 +31,15 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/404'),
+      // Con build.format 'preserve' le pagine sono file .html: la sitemap deve usare gli stessi URL dei canonical
+      serialize: (item) => {
+        const url = new URL(item.url);
+        const path = url.pathname.replace(/^\/|\/$/g, '');
+        if (path === '') return item;
+        const isLocaleHome = enabledLocales.some((code) => code === path);
+        url.pathname = isLocaleHome ? `/${path}/` : `/${path.replace(/\.html$/, '')}.html`;
+        return { ...item, url: url.href };
+      },
       ...(enabledLocales.length > 1
         ? {
             i18n: {

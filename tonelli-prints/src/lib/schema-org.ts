@@ -1,4 +1,5 @@
-import { WEEKDAYS, site, type Studio, type Weekday } from '../config/site';
+import { WEEKDAYS, type Weekday } from '../config/constants';
+import { site, type Studio } from '../config/site';
 
 export type JsonLdNode = Record<string, unknown>;
 
