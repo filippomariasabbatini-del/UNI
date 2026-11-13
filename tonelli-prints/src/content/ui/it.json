@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "title": "Tonelli Prints — Stampa 3D personalizzata per brand · Nimega · Roma",
+    "description": "Studio B2B di stampa 3D a Nimega e Roma. Portachiavi NFC, accessori brandizzati, merchandising personalizzato e kit dipendenti per hospitality, eventi e retail. In PLA, PETG e fibra di carbonio.",
+    "ogImageAlt": "Tonelli Prints: stampiamo il tuo brand in oggetti che la gente vuole tenere"
+  },
+  "a11y": {
+    "skipLink": "Vai al contenuto",
+    "mainNav": "Navigazione principale",
+    "openMenu": "Apri il menu",
+    "closeMenu": "Chiudi il menu",
+    "homeLink": "Tonelli Prints, torna alla home",
+    "footerNav": "Link del footer",
+    "legalNav": "Informazioni legali",
+    "languageSelector": "Lingua",
+    "newTab": "si apre in una nuova scheda"
+  },
+  "nav": {
+    "items": [
+      {
+        "href": "#cosa-facciamo",
+        "label": "Cosa facciamo"
+      },
+      {
+        "href": "#chi-siamo",
+        "label": "Chi siamo"
+      },
+      {
+        "href": "#studi",
+        "label": "Studi"
+      },
+      {
+        "href": "#processo",
+        "label": "Processo"
+      },
+      {
+        "href": "#materiali",
+        "label": "Materiali"
+      }
+    ],
+    "cta": "Inizia un progetto"
+  },
+  "hero": {
+    "eyebrow": "Fatto a mano. Con le macchine.",
+    "title": "Stampiamo il tuo brand in oggetti che la gente vuole tenere.",
+    "sub": "Tonelli Prints è uno studio B2B di stampa 3D a Nimega e Roma. Realizziamo accessori personalizzati, portachiavi NFC, souvenir e kit per dipendenti, per hotel, ristoranti, eventi e i brand che vogliono lasciare il segno.",
+    "primaryCta": "Inizia un progetto",
+    "secondaryCta": "Vedi i materiali",
+    "liveBadge": "{count} stampanti accese a Nimega",
+    "stats": [
+      {
+        "value": 5,
+        "prefix": "",
+        "suffix": " giorni",
+        "text": "",
+        "label": "tempo di consegna medio"
+      },
+      {
+        "value": 20,
+        "prefix": "",
+        "suffix": "+",
+        "text": "",
+        "label": "colori di filamento"
+      },
+      {
+        "value": null,
+        "prefix": "",
+        "suffix": "",
+        "text": "NL · IT",
+        "label": "due studi, un solo team"
+      }
+    ],
+    "images": [
+      {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Portachiavi gialli a forma di pasta su un tagliere"
+      },
+      {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "Portachiavi stampati in 3D con i loghi dei clienti, uno spicchio di pizza e formati di pasta"
+      },
+      {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Biglietti da visita NFC neri in fibra di carbonio"
+      }
+    ]
+  },
+  "marquee": {
+    "label": "Materiali e sedi",
+    "items": [
+      "PLA+ 2.0",
+      "PETG",
+      "Fibra di carbonio",
+      "Silky-PLA",
+      "Wood-PLA",
+      "TPU flessibile",
+      "Made in EU",
+      "Nimega",
+      "Roma",
+      "Consegna in 5 giorni"
+    ],
+    "pause": "Metti in pausa lo scorrimento",
+    "play": "Riavvia lo scorrimento"
+  },
+  "products": {
+    "eyebrow": "Cosa facciamo",
+    "title": "Oggetti con il tuo brand sopra. Che la gente vuole tenere.",
+    "more": "Scopri di più",
+    "moreAbout": "Scopri di più su {product}"
+  },
+  "projects": {
+    "eyebrow": "Progetti selezionati",
+    "title": "Alcuni brand con cui lavoriamo già.",
+    "sub": "Progetti reali, clienti veri.",
+    "previous": "Progetto precedente",
+    "next": "Progetto successivo",
+    "region": "Progetti e testimonianze, scorri in orizzontale"
+  },
+  "about": {
+    "eyebrow": "Chi siamo",
+    "title": "Un team piccolo. Due studi. Tre persone rispondono al telefono.",
+    "body": "Niente call center, niente carosello di account manager. Tonelli la portiamo avanti noi tre, ogni giorno. Quando scrivi, ti risponde uno di noi, col proprio nome.",
+    "rolePending": "Ruolo in arrivo",
+    "bioPending": "Bio in arrivo.",
+    "linkedin": "Profilo LinkedIn di {name}"
+  },
+  "studios": {
+    "eyebrow": "Studi",
+    "title": "Due studi. Un team. Le stesse mani.",
+    "call": "Chiama lo studio di {city}",
+    "localTime": "Ora locale",
+    "status": {
+      "open": "In reparto, fino alle {time}",
+      "closedTomorrow": "Fuori dal reparto, torniamo domani",
+      "closedLaterToday": "Fuori dal reparto, torniamo alle {time}",
+      "closedUntilDay": "Fuori dal reparto, torniamo {day}",
+      "fallback": "Rispondiamo entro un giorno lavorativo"
+    },
+    "weekdays": {
+      "mon": "lunedì",
+      "tue": "martedì",
+      "wed": "mercoledì",
+      "thu": "giovedì",
+      "fri": "venerdì",
+      "sat": "sabato",
+      "sun": "domenica"
+    }
+  },
+  "process": {
+    "eyebrow": "Processo",
+    "title": "Quattro passi. Due settimane, di solito meno.",
+    "sub": "Non lavoriamo con il modulo-preventivo-nel-vuoto. Ogni progetto ha un referente con nome e cognome che risponde entro un giorno lavorativo."
+  },
+  "materials": {
+    "eyebrow": "Materiali",
+    "title": "Sei filamenti. Un catalogo, in crescita.",
+    "sub": "Teniamo a magazzino i materiali che i nostri clienti ordinano davvero.",
+    "hint": "Mostra la scheda di {material}",
+    "lead": "Consegna",
+    "days": "{days} g",
+    "price": "al pezzo per 100 unità",
+    "colors": "Colori",
+    "pending": "Scheda in arrivo. Intanto chiedi a noi: rispondiamo in giornata."
+  },
+  "estimator": {
+    "eyebrow": "Stima in tempo reale",
+    "title": "Configura una produzione. Vedi il numero.",
+    "disclaimer": "Solo indicativo, i preventivi finali sono scritti da una persona entro due giorni lavorativi.",
+    "material": "Materiale",
+    "quantity": "Quantità",
+    "pieces": "{quantity} pezzi",
+    "total": "Stima totale",
+    "unit": "Prezzo a pezzo",
+    "perPiece": "al pezzo",
+    "lead": "Consegna porta-a-porta",
+    "days": "{days} giorni",
+    "onRequest": "Su richiesta",
+    "onRequestNote": "Per questo materiale il prezzo te lo scriviamo noi, voce per voce.",
+    "cta": "Conferma questa produzione",
+    "prefill": "Vorrei confermare questa produzione: {quantity} pezzi in {material}. Stima indicativa: {total}.",
+    "prefillOnRequest": "Vorrei un preventivo per questa produzione: {quantity} pezzi in {material}."
+  },
+  "contact": {
+    "eyebrow": "Inizia un progetto",
+    "title": "Dicci cosa ti serve. Rispondiamo entro due giorni lavorativi.",
+    "noteBefore": "Oppure scrivici a",
+    "noteAfter": ", rispondiamo noi stessi.",
+    "fields": {
+      "company": "Azienda",
+      "email": "Email",
+      "material": "Materiale",
+      "materialUnsure": "Non sono sicuro, consigliatemi voi",
+      "message": "Che cosa vuoi realizzare?",
+      "honeypot": "Lascia vuoto questo campo"
+    },
+    "selectedProduct": "Ti interessa: {product}",
+    "removeProduct": "Togli {product} dalla richiesta",
+    "submit": "Invia richiesta",
+    "sending": "Invio in corso…",
+    "privacyBefore": "Usiamo questi dati solo per risponderti. Dettagli nella",
+    "privacyLink": "informativa sulla privacy",
+    "errors": {
+      "summary": "Controlla i campi evidenziati.",
+      "required": "Questo campo ci serve.",
+      "email": "Scrivi un indirizzo email valido, tipo nome@azienda.it.",
+      "tooShort": "Raccontaci qualcosa in più: bastano due righe."
+    },
+    "success": {
+      "title": "Richiesta arrivata.",
+      "body": "Ti risponde uno di noi entro due giorni lavorativi, col proprio nome."
+    },
+    "mailto": {
+      "title": "Abbiamo aperto la tua app di posta.",
+      "body": "Il messaggio è già compilato: ti basta premere invia. Se non si è aperto nulla, scrivici a {email}.",
+      "subject": "Nuovo progetto: {company}"
+    },
+    "failure": "Qualcosa è andato storto e la richiesta non è partita. Riprova tra poco oppure scrivici a {email}."
+  },
+  "footer": {
+    "tagline": "Tonelli Prints. Stampa 3D B2B su misura. Hospitality, food, eventi, intrattenimento.",
+    "studio": {
+      "title": "Studio",
+      "links": [
+        {
+          "href": "#materiali",
+          "label": "Materiali"
+        },
+        {
+          "href": "#cosa-facciamo",
+          "label": "Cosa facciamo"
+        },
+        {
+          "href": "#processo",
+          "label": "Processo"
+        },
+        {
+          "href": "#progetti",
+          "label": "Case study"
+        }
+      ]
+    },
+    "contacts": {
+      "title": "Contatti",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
+    "locations": {
+      "title": "Sedi"
+    },
+    "copyright": "© {year} Tonelli Prints",
+    "kvkPending": "KVK in attesa",
+    "kvk": "KVK {kvk}",
+    "legal": {
+      "privacy": "Privacy",
+      "cookies": "Cookie",
+      "terms": "Termini",
+      "imprint": "Note legali"
+    },
+    "languageSoon": "{language}, in arrivo"
+  },
+  "cookie": {
+    "label": "Cookie",
+    "text": "Usiamo solo cookie tecnici. Niente tracker, niente profilazione.",
+    "textNonEssential": "I cookie non essenziali sono spenti finché non li accetti.",
+    "policy": "Cookie policy",
+    "ok": "Ok, capito",
+    "accept": "Accetta",
+    "reject": "Rifiuta"
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "heading": "Questa pagina non l'abbiamo stampata.",
+    "body": "Il link è sbagliato oppure la pagina non esiste più.",
+    "cta": "Torna alla home"
+  },
+  "legal": {
+    "draftNotice": "Bozza: i punti marcati [DA COMPILARE] vanno completati e rivisti da un legale prima della pubblicazione.",
+    "back": "Torna alla home",
+    "updated": "Ultimo aggiornamento: {date}"
+  }
+}

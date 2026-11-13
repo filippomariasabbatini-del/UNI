@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "id": "leonardo-tonelli",
+      "name": "Leonardo Tonelli",
+      "role": "CEO",
+      "place": "Roma",
+      "bio": "Il partner di Riccardo e la spina dorsale di Roma. Leonardo gestisce il reparto italiano: ogni stampa che esce da Via Monteciccardo è passata dalle sue mani e dal suo banco qualità.",
+      "avatar": {
+        "src": "../../assets/team/leonardo.svg",
+        "alt": "Illustrazione di Leonardo Tonelli"
+      },
+      "linkedin": null,
+      "todo": "Sostituire l'illustrazione con una foto reale (src/assets/team/)."
+    },
+    {
+      "id": "lieke-terbraak",
+      "name": "Lieke Terbraak",
+      "role": "Operational Manager Paesi Bassi",
+      "place": "Nimega",
+      "bio": "Lieke supporta la parte organizzativa dell'azienda ed è focalizzata sul ramo B2C di Tonelli Prints, tenendo in ordine ordini, rifiniture e spedizioni.",
+      "avatar": {
+        "src": "../../assets/team/lieke.svg",
+        "alt": "Illustrazione di Lieke Terbraak"
+      },
+      "linkedin": null,
+      "todo": "Sostituire l'illustrazione con una foto reale (src/assets/team/)."
+    },
+    {
+      "id": "riccardo-tonelli",
+      "name": "Riccardo Tonelli",
+      "role": null,
+      "place": null,
+      "bio": null,
+      "avatar": null,
+      "linkedin": "https://www.linkedin.com/in/riccardotonelli02",
+      "todo": "TODO: ruolo, sede, bio e foto di Riccardo mancano nel sito attuale."
+    }
+  ]
+}

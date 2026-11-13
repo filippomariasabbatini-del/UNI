@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": "nfc-keychains",
+      "title": "Portachiavi NFC smart",
+      "summary": "Punti di contatto phygital. Tap-to-menu, tap-to-tip, tap-to-loyalty. Brandizzati come vuoi tu.",
+      "details": "Usati da oltre 40 hotel e ristoranti tra Italia e Paesi Bassi. Programmiamo i chip, tu scrivi l'URL. Aggiorni i contenuti quando vuoi.",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "Portachiavi stampati in 3D con chip NFC: loghi di locali, uno spicchio di pizza, formati di pasta e lo skyline di Firenze"
+      }
+    },
+    {
+      "id": "branded-accessories",
+      "title": "Accessori brandizzati",
+      "summary": "Numeri da tavolo, etichette per bottiglie, segnaletica, porta-menu, stampati nei tuoi colori e con il tuo font.",
+      "details": "La maggior parte degli ordini spedisce entro una settimana. Possiamo abbinare qualsiasi Pantone, incidere il logo o rifinire con cera per un tocco più morbido.",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "Porta-menu bianco stampato in 3D con il menu di un matrimonio, su un tavolo in legno apparecchiato"
+      }
+    },
+    {
+      "id": "souvenirs",
+      "title": "Souvenir che si vendono",
+      "summary": "Oggetti da regalo di qualità retail per hotel, musei, location. Prezzati per margini da rivendita.",
+      "details": "Prezzi all'ingrosso a partire da 50 pezzi. Ti aiutiamo con packaging da scaffale, hangtag, e una piccola UI di riordino per la reception.",
+      "image": {
+        "src": "../../assets/photos/figurines.jpg",
+        "alt": "Statuette stampate in 3D su un ripiano scuro: uno gnomo bianco, un toro color sabbia e due gatti neri"
+      }
+    },
+    {
+      "id": "employee-kits",
+      "title": "Kit dipendenti",
+      "summary": "Biglietti da visita NFC, badge, lanyard, targhette. Cose che il team userà davvero.",
+      "details": "Biglietti NFC in fibra di carbonio che salvano un contatto sul telefono in un secondo. Personalizzati a persona senza sovrapprezzo oltre i 25 pezzi.",
+      "image": {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Due biglietti da visita NFC neri in fibra di carbonio, uno con nome e contatti e uno con QR code"
+      }
+    },
+    {
+      "id": "retail-collections",
+      "title": "Collezioni pronte al retail",
+      "summary": "Linee di prodotto a tema. Portachiavi pasta, monumenti, forme di cibo.",
+      "details": "Co-progettiamo l'intera collezione con te, stampiamo i primi 50, decidi se scalare. Teniamo gli stampi a file: i riordini costano la metà.",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Portachiavi gialli a forma di pasta, ravioli, farfalle, fusilli, rigatoni e tortellini, su un tagliere"
+      }
+    },
+    {
+      "id": "functional-parts",
+      "title": "Parti funzionali & prototipi",
+      "summary": "Portautensili, staffe, dime, fissaggi. File di progetto il lunedì, pezzi in mano il venerdì.",
+      "details": "Accettiamo STL, STEP, OBJ o .f3d. Fibra di carbonio e PA-CF per parti strutturali. Controlliamo ogni file in DFM e segnaliamo tutto ciò che non reggerà l'uso.",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Due trapani a batteria appesi a supporti neri stampati in 3D, fissati a una parete in cemento"
+      }
+    }
+  ]
+}

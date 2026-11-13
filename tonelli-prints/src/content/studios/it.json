@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": "nijmegen",
+      "city": "Nimega",
+      "label": "NL, studio principale",
+      "description": "Il reparto produttivo principale. Otto stampanti, una piccola sala di rifinitura e il magazzino da cui spediamo i portachiavi.",
+      "addressLine": null,
+      "todo": "TODO: indirizzo dello studio di Nimega."
+    },
+    {
+      "id": "roma",
+      "city": "Roma",
+      "label": "IT, sede italiana",
+      "description": "Più vicini ai nostri clienti dell'hospitality nel centro-sud Italia. Più piccolo, più veloce, per il mercato locale.",
+      "addressLine": "Via Monteciccardo",
+      "todo": "TODO: civico e CAP da confermare."
+    }
+  ]
+}

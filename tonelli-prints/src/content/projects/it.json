@@ -1,0 +1,81 @@
+{
+  "items": [
+    {
+      "id": "nfc-welcome-keychains",
+      "title": "Portachiavi NFC di benvenuto",
+      "quote": "I portachiavi NFC hanno sostituito le vecchie schede di carta. Gli ospiti li avvicinano all'arrivo e la nostra guida di benvenuto compare sul telefono, la hall ha tutt'altro stile. Abbiamo già riordinato due volte.",
+      "author": "Sofia Marchetti",
+      "place": "Toscana, IT",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "Portachiavi NFC brandizzati su sfondo chiaro"
+      }
+    },
+    {
+      "id": "wedding-menu-holders",
+      "title": "Porta-menù da matrimonio",
+      "quote": "Ci serviva qualcosa di più caldo dell'acrilico per i matrimoni all'aperto. Tonelli ha stampato 80 porta-menù dello stesso color crema dei nostri tovagliati, rifiniti a mano. Ogni weekend gli sposi ci chiedono dove li abbiamo presi.",
+      "author": "Eva van der Berg",
+      "place": "Utrecht, NL",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "Porta-menù color crema con il menu di un buffet di nozze, accanto a un vaso di fiori di campo"
+      }
+    },
+    {
+      "id": "pizza-slice-keychain",
+      "title": "Portachiavi spicchio di pizza",
+      "quote": "Li regaliamo ai clienti delivery come grazie per gli ordini sopra i 25 euro. I riordini sono saliti del 15% circa nel primo mese. Riccardo ha pure ritoccato il disegno della mozzarella quando glielo ho chiesto.",
+      "author": "Marco Greco",
+      "place": "Roma, IT",
+      "image": {
+        "src": "../../assets/photos/pizza-keychain.jpg",
+        "alt": "Portachiavi a forma di spicchio di pizza margherita, con mozzarella e basilico in rilievo"
+      }
+    },
+    {
+      "id": "makita-wall-mounts",
+      "title": "Supporti a muro per Makita",
+      "quote": "I trapani sbattevano nelle cassette degli attrezzi. Lieke ha prototipato il supporto a muro il venerdì, lunedì lo abbiamo testato e ne abbiamo ordinati 24 nella stessa settimana. Fibra di carbonio, reggono il peso, sei mesi senza un problema.",
+      "author": "Bram de Vries",
+      "place": "Nijmegen, NL",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Trapani a batteria appesi a supporti a muro neri in fibra di carbonio"
+      }
+    },
+    {
+      "id": "pasta-keychain-line",
+      "title": "Linea portachiavi pasta",
+      "quote": "I turisti li prendono dallo scaffale per farci una foto prima ancora di leggere il prezzo. Il farfalle è il bestseller. Ora rifornisco ogni tre settimane.",
+      "author": "Giulia Rossi",
+      "place": "Firenze, IT",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Portachiavi gialli a forma di farfalle, ravioli, fusilli e tortellini"
+      }
+    },
+    {
+      "id": "trade-show-spin-wheel",
+      "title": "Ruota della fortuna per fiera",
+      "quote": "Tre settimane dallo schizzo all'evento, compresa una manopola personalizzata nei colori del cliente. Abbiamo chiuso due nuovi clienti in fiera, sul posto. Vale ogni euro.",
+      "author": "Tom Janssen",
+      "place": "Amsterdam, NL",
+      "image": {
+        "src": "../../assets/photos/spin-wheel.jpg",
+        "alt": "Ruota della fortuna da tavolo stampata in 3D, con spicchi colorati in movimento"
+      }
+    },
+    {
+      "id": "popartment-collection",
+      "title": "Collezione POPARTMENT",
+      "quote": "Abbiamo dato il brief del David e del Duomo, sono tornati con un bilanciamento di colori che da soli non avremmo trovato. In negozio vanno via prima ancora del riordino.",
+      "author": "Lorenzo Bianchi",
+      "place": "Firenze, IT",
+      "image": {
+        "src": "../../assets/photos/popartment-keychains.jpg",
+        "alt": "Due portachiavi POPARTMENT: il David in stile pop art e lo skyline di Firenze con il Duomo"
+      }
+    }
+  ]
+}

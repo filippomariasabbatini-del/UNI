@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "title": "Dicci cosa ti serve",
+      "description": "Un brief, uno schizzo, una bacheca Pinterest. Va bene anche una descrizione a voce."
+    },
+    {
+      "title": "Preventivo in 48 ore",
+      "description": "Materiali, quantità, finitura, tempi. Voce per voce. Nessuna sorpresa dopo."
+    },
+    {
+      "title": "Approvi il prototipo",
+      "description": "Spediamo prima un campione singolo. Tu approvi, poi parte il lotto."
+    },
+    {
+      "title": "Stampa, imballo, spedizione",
+      "description": "Produzione a Nimega o a Roma, la più vicina a te."
+    }
+  ]
+}
