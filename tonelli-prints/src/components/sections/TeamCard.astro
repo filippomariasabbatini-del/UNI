@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import type { TeamMember, Ui } from '../../lib/content';
+import { format } from '../../lib/i18n';
+import Card from '../ui/Card.astro';
+import Heading from '../ui/Heading.astro';
+import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
+
+interface Props {
+  member: TeamMember;
+  ui: Ui;
+  delay: number;
+}
+const { member, ui, delay } = Astro.props;
+const initials = member.name
+  .split(/\s+/)
+  .map((part) => part.charAt(0))
+  .join('');
+const roleLine = [member.role ?? ui.about.rolePending, member.place].filter(Boolean).join(' · ');
+---
+
+<li data-reveal={delay} class="flex">
+  <Card tone="surface" class="flex w-full flex-col">
+    <div class="bg-line/60 flex aspect-[4/3] items-center justify-center overflow-hidden">
+      {member.avatar === null ? (
+        // Segnaposto: aggiungere una foto in src/assets/team/ e il campo "avatar" in team/<lingua>.json
+        <span aria-hidden="true" class="text-muted text-6xl font-semibold tracking-[-0.04em]">
+          {initials}
+        </span>
+      ) : member.avatar.src.format === 'svg' ? (
+        <Image
+          src={member.avatar.src}
+          alt={member.avatar.alt}
+          loading="lazy"
+          class="h-full w-full object-cover"
+        />
+      ) : (
+        <Photo
+          src={member.avatar.src}
+          alt={member.avatar.alt}
+          sizes="(min-width: 75rem) 23rem, (min-width: 48rem) 31vw, 92vw"
+        />
+      )}
+    </div>
+    <div class="flex flex-1 flex-col p-7">
+      <Heading level={3} size="card">
+        {member.name}
+      </Heading>
+      <p class="text-accent-text mt-1.5 text-[0.9375rem] font-medium">{roleLine}</p>
+      <p class="text-muted mt-4 text-[0.9375rem] leading-[1.55]">
+        {member.bio ?? ui.about.bioPending}
+      </p>
+      {member.linkedin && (
+        <a
+          href={member.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${format(ui.about.linkedin, { name: member.name })} (${ui.a11y.newTab})`}
+          class="hover:text-accent-text mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-3 text-[0.9375rem] font-medium transition-colors"
+        >
+          <Icon name="linkedin" size={20} />
+          LinkedIn
+        </a>
+      )}
+    </div>
+  </Card>
+</li>

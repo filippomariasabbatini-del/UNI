@@ -1,0 +1,47 @@
+---
+import { INTL_LOCALE } from '../../config/constants';
+import { pricing } from '../../config/pricing';
+import type { Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import { formatCurrency } from '../../lib/format';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import MaterialCard from './MaterialCard.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const materials = (await getContent('materials', locale)).items;
+---
+
+<Section id="materiali" tone="surface" labelledby="materiali-title">
+  <Container>
+    <SectionHeader
+      id="materiali-title"
+      eyebrow={ui.materials.eyebrow}
+      title={ui.materials.title}
+      sub={ui.materials.sub}
+    />
+    <ul class="mt-[clamp(3rem,6vw,5rem)] grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {materials.map((material, index) => {
+        const price = pricing.materials[material.id];
+        return (
+          <MaterialCard
+            material={material}
+            price={price}
+            formattedPrice={
+              price.unitPriceAt100 === null
+                ? null
+                : formatCurrency(price.unitPriceAt100, INTL_LOCALE[locale], pricing.currency, 2)
+            }
+            ui={ui}
+            delay={(index % 3) * 90}
+          />
+        );
+      })}
+    </ul>
+  </Container>
+</Section>

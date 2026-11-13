@@ -1,0 +1,154 @@
+---
+import { INTL_LOCALE } from '../../config/constants';
+import { pricing } from '../../config/pricing';
+import type { Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import { format, formatCurrency } from '../../lib/format';
+import { assertPricingConfig, estimate } from '../../lib/pricing';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const labels = ui.estimator;
+const materials = (await getContent('materials', locale)).items;
+
+// Una curva non valida in src/config/pricing.ts ferma la build
+assertPricingConfig(pricing);
+
+// Valori iniziali calcolati in build: senza JS si vede comunque la stima di default
+const { quantity } = pricing;
+const initial = estimate(pricing.defaultMaterial, quantity.default, pricing);
+const money = (value: number, digits: 0 | 2) =>
+  formatCurrency(value, INTL_LOCALE[locale], pricing.currency, digits);
+const label = 'text-muted text-[0.9375rem]';
+const panel = 'rounded-panel bg-surface p-7 md:p-10';
+---
+
+<Section id="stima" tone="dark" labelledby="stima-title">
+  <Container>
+    <SectionHeader
+      id="stima-title"
+      eyebrow={labels.eyebrow}
+      title={labels.title}
+      sub={labels.disclaimer}
+    />
+
+    <div
+      data-estimator
+      data-labels={JSON.stringify({
+        pieces: labels.pieces,
+        days: labels.days,
+        onRequest: labels.onRequest,
+        prefill: labels.prefill,
+        prefillOnRequest: labels.prefillOnRequest,
+        total: labels.total,
+      })}
+      data-reveal
+      class="mt-[clamp(3rem,6vw,5rem)] grid gap-6 lg:grid-cols-2"
+    >
+      <div class:list={[panel, 'flex flex-col justify-center']}>
+        <label for="stima-materiale" class="mb-2 block text-[0.9375rem] font-medium">
+          {labels.material}
+        </label>
+        <select id="stima-materiale" data-estimator-material class="field">
+          {materials.map((material) => (
+            <option value={material.id} selected={material.id === pricing.defaultMaterial}>
+              {material.name}
+            </option>
+          ))}
+        </select>
+
+        <div class="mt-9 flex items-baseline justify-between gap-4">
+          <label for="stima-quantita" class="text-[0.9375rem] font-medium">
+            {labels.quantity}
+          </label>
+          <output
+            for="stima-quantita"
+            data-estimator-quantity
+            class="text-[1.375rem] font-semibold tracking-[-0.02em] tabular-nums"
+          >
+            {format(labels.pieces, { quantity: quantity.default })}
+          </output>
+        </div>
+        <input
+          type="range"
+          id="stima-quantita"
+          data-estimator-range
+          min={quantity.min}
+          max={quantity.max}
+          step={quantity.step}
+          value={quantity.default}
+          list="stima-tacche"
+          class="range mt-3"
+        />
+        <datalist id="stima-tacche">
+          {quantity.ticks.map((tick) => (
+            <option value={tick} />
+          ))}
+        </datalist>
+        <!-- Etichette delle tacche: posizionate da src/scripts/estimator.ts -->
+        <div
+          data-estimator-ticks
+          aria-hidden="true"
+          hidden
+          class="text-muted relative h-5 text-[0.8125rem] tabular-nums"
+        >
+          {quantity.ticks.map((tick) => (
+            <span data-tick={tick} class="absolute top-0 -translate-x-1/2">
+              {tick}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class:list={[panel, 'flex flex-col']}>
+        <dl class="grid grid-cols-2 gap-x-6">
+          <div class="col-span-2 flex flex-col-reverse gap-1 pb-8">
+            <dt class={label}>{labels.total}</dt>
+            <dd
+              data-estimator-total
+              class="text-[clamp(3rem,6vw+1rem,5rem)] leading-none font-semibold tracking-[-0.04em] tabular-nums"
+            >
+              {initial.available ? money(initial.total, 0) : labels.onRequest}
+            </dd>
+          </div>
+          <div class="border-line flex flex-col-reverse gap-1 border-t pt-6">
+            <dt class={label}>{labels.unit}</dt>
+            <dd
+              data-estimator-unit
+              class="text-[1.5rem] font-semibold tracking-[-0.02em] tabular-nums"
+            >
+              {initial.available ? money(initial.unitPrice, 2) : labels.onRequest}
+            </dd>
+          </div>
+          <div class="border-line flex flex-col-reverse gap-1 border-t pt-6">
+            <dt class={label}>{labels.lead}</dt>
+            <dd
+              data-estimator-lead
+              class="text-[1.5rem] font-semibold tracking-[-0.02em] tabular-nums"
+            >
+              {initial.available && initial.leadDays !== null
+                ? format(labels.days, { days: initial.leadDays })
+                : labels.onRequest}
+            </dd>
+          </div>
+        </dl>
+        <p data-estimator-note hidden class="text-muted mt-6 text-[0.9375rem]">
+          {labels.onRequestNote}
+        </p>
+        <p data-estimator-live aria-live="polite" class="sr-only"></p>
+        <div class="mt-auto pt-9">
+          <Button href="#contatti" data-estimator-cta class="w-full sm:w-auto">
+            {labels.cta}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,145 @@
+---
+import { PUBLIC_FORM_ENDPOINT } from 'astro:env/client';
+import { site, type Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import { localePath } from '../../lib/i18n';
+import Button from '../ui/Button.astro';
+import FormField from '../ui/FormField.astro';
+import Heading from '../ui/Heading.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const labels = ui.contact;
+const materials = (await getContent('materials', locale)).items;
+// Senza endpoint configurato il form apre il client di posta (mailto:)
+const endpoint = PUBLIC_FORM_ENDPOINT ?? null;
+---
+
+<div class="rounded-panel bg-surface p-7 md:p-10">
+  <form
+    data-contact-form
+    data-endpoint={endpoint}
+    data-email={site.email}
+    data-labels={JSON.stringify({
+      errors: labels.errors,
+      success: labels.success,
+      mailto: labels.mailto,
+      failure: labels.failure,
+      submit: labels.submit,
+      sending: labels.sending,
+      selectedProduct: labels.selectedProduct,
+      removeProduct: labels.removeProduct,
+      fields: labels.fields,
+    })}
+    action={endpoint ?? `mailto:${site.email}`}
+    method="post"
+    enctype={endpoint ? undefined : 'text/plain'}
+    class="grid gap-6"
+  >
+    <!-- Prodotto scelto da una card "Scopri di più": compilato da src/scripts/contact-form.ts -->
+    <p
+      data-selected-product
+      hidden
+      class="bg-raised flex items-center justify-between gap-3 rounded-full py-1 pr-1 pl-5 text-[0.9375rem] font-medium"
+    >
+      <span data-selected-product-label></span>
+      <button
+        type="button"
+        data-remove-product
+        class="hover:bg-surface inline-flex size-11 shrink-0 items-center justify-center rounded-full"
+      >
+        <Icon name="close" size={18} />
+      </button>
+    </p>
+    <input type="hidden" name="prodotto" data-product-input />
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <FormField id="azienda" label={labels.fields.company}>
+        <input
+          id="azienda"
+          name="azienda"
+          type="text"
+          required
+          autocomplete="organization"
+          aria-describedby="azienda-error"
+          class="field"
+        />
+      </FormField>
+      <FormField id="email" label={labels.fields.email}>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          inputmode="email"
+          aria-describedby="email-error"
+          class="field"
+        />
+      </FormField>
+    </div>
+
+    <FormField id="materiale" label={labels.fields.material}>
+      <select id="materiale" name="materiale" aria-describedby="materiale-error" class="field">
+        <option value={labels.fields.materialUnsure} selected>
+          {labels.fields.materialUnsure}
+        </option>
+        {materials.map((material) => (
+          <option value={material.name} data-material-id={material.id}>
+            {material.name}
+          </option>
+        ))}
+      </select>
+    </FormField>
+
+    <FormField id="messaggio" label={labels.fields.message}>
+      <textarea
+        id="messaggio"
+        name="messaggio"
+        required
+        minlength="10"
+        rows="5"
+        aria-describedby="messaggio-error"
+        class="field"
+      ></textarea>
+    </FormField>
+
+    <!-- Honeypot antispam: invisibile alle persone, i bot lo compilano -->
+    <div class="honeypot" aria-hidden="true">
+      <label for="sito-web">{labels.fields.honeypot}</label>
+      <input id="sito-web" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
+      <Button type="submit" data-submit>
+        {labels.submit}
+      </Button>
+      <p class="text-muted max-w-[22rem] text-[0.875rem] leading-[1.45]">
+        {labels.privacyBefore}{' '}
+        <a
+          href={localePath(locale, '/privacy.html')}
+          class="text-accent-text underline underline-offset-[0.2em]"
+        >
+          {labels.privacyLink}
+        </a>
+        .
+      </p>
+    </div>
+
+    <p data-form-status role="alert" hidden class="text-danger text-[0.9375rem]"></p>
+  </form>
+
+  <div data-form-success hidden tabindex="-1" role="status" class="py-10 outline-none">
+    <span class="bg-ok text-bg inline-flex size-12 items-center justify-center rounded-full">
+      <Icon name="check" size={24} />
+    </span>
+    <Heading level={3} size="subtitle" class="mt-6">
+      <span data-form-success-title></span>
+    </Heading>
+    <p data-form-success-body class="text-muted mt-3 max-w-[30rem]"></p>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+---
+import type { Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const projects = (await getContent('projects', locale)).items;
+const control =
+  'ring-field hover:bg-fg hover:text-bg inline-flex size-12 items-center justify-center rounded-full ring-1 ring-inset transition-colors duration-300 disabled:pointer-events-none disabled:opacity-35';
+---
+
+<Section id="progetti" tone="dark" labelledby="progetti-title" class="overflow-hidden">
+  <div data-carousel>
+    <Container class="flex flex-wrap items-end justify-between gap-8">
+      <SectionHeader
+        id="progetti-title"
+        eyebrow={ui.projects.eyebrow}
+        title={ui.projects.title}
+        sub={ui.projects.sub}
+      />
+      <!-- I bottoni compaiono solo con JS: senza, il carosello si scorre comunque (touch, trackpad, tastiera) -->
+      <div data-carousel-controls hidden class="flex gap-3">
+        <button type="button" data-carousel-prev aria-label={ui.projects.previous} class={control}>
+          <Icon name="arrow-left" />
+        </button>
+        <button type="button" data-carousel-next aria-label={ui.projects.next} class={control}>
+          <Icon name="arrow-right" />
+        </button>
+      </div>
+    </Container>
+
+    <div
+      data-carousel-track
+      role="region"
+      aria-label={ui.projects.region}
+      tabindex="0"
+      class="bleed-px scrollbar-none mt-[clamp(3rem,6vw,5rem)] snap-x snap-mandatory overflow-x-auto scroll-smooth"
+    >
+      <ul class="flex w-max gap-5">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </ul>
+    </div>
+  </div>
+</Section>

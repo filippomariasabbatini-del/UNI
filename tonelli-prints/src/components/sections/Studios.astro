@@ -1,0 +1,37 @@
+---
+import { site, type Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import StudioCard from './StudioCard.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const contents = (await getContent('studios', locale)).items;
+const studios = site.studios.flatMap((studio) => {
+  const content = contents.find((item) => item.id === studio.id);
+  if (!content) throw new Error(`studios/${locale}.json: manca la sede "${studio.id}"`);
+  return [{ studio, content }];
+});
+---
+
+<Section id="studi" tone="surface" labelledby="studi-title">
+  <Container>
+    <SectionHeader id="studi-title" eyebrow={ui.studios.eyebrow} title={ui.studios.title} />
+    <ul
+      data-studio-labels={JSON.stringify({
+        status: ui.studios.status,
+        weekdays: ui.studios.weekdays,
+      })}
+      class="mt-[clamp(3rem,6vw,5rem)] grid gap-6 md:grid-cols-2"
+    >
+      {studios.map(({ studio, content }, index) => (
+        <StudioCard studio={studio} content={content} ui={ui} delay={index * 90} />
+      ))}
+    </ul>
+  </Container>
+</Section>

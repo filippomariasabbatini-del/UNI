@@ -1,0 +1,36 @@
+---
+import type { Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import { format } from '../../lib/i18n';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const products = (await getContent('products', locale)).items;
+---
+
+<Section id="cosa-facciamo" tone="surface" labelledby="cosa-facciamo-title">
+  <Container>
+    <SectionHeader
+      id="cosa-facciamo-title"
+      eyebrow={ui.products.eyebrow}
+      title={ui.products.title}
+    />
+    <ul class="mt-[clamp(3rem,6vw,5rem)] grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((product, index) => (
+        <ProductCard
+          product={product}
+          moreLabel={ui.products.more}
+          moreAriaLabel={format(ui.products.moreAbout, { product: product.title })}
+          delay={(index % 3) * 90}
+        />
+      ))}
+    </ul>
+  </Container>
+</Section>

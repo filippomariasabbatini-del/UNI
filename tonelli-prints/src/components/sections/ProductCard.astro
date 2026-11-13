@@ -1,0 +1,51 @@
+---
+import type { Product } from '../../lib/content';
+import Card from '../ui/Card.astro';
+import Heading from '../ui/Heading.astro';
+import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
+
+interface Props {
+  product: Product;
+  moreLabel: string;
+  moreAriaLabel: string;
+  /** Ritardo del reveal in ms, per l'effetto a cascata */
+  delay: number;
+}
+const { product, moreLabel, moreAriaLabel, delay } = Astro.props;
+---
+
+<li data-reveal={delay} class="flex">
+  <Card as="article" hover class="group flex w-full flex-col">
+    <div class="bg-surface aspect-[4/5] overflow-hidden sm:aspect-square lg:aspect-[4/5]">
+      <Photo
+        src={product.image.src}
+        alt={product.image.alt}
+        sizes="(min-width: 75rem) 23rem, (min-width: 64rem) 31vw, (min-width: 40rem) 46vw, 92vw"
+        class="ease-soft transition-transform duration-700 group-hover:scale-[1.04]"
+      />
+    </div>
+    <div class="flex flex-1 flex-col p-7">
+      <Heading level={3} size="card">
+        {product.title}
+      </Heading>
+      <p class="mt-3 leading-[1.5]">{product.summary}</p>
+      <p class="text-muted mt-3 text-[0.9375rem] leading-[1.55]">{product.details}</p>
+      <a
+        href="#contatti"
+        data-product-link
+        data-product-id={product.id}
+        data-product-title={product.title}
+        aria-label={moreAriaLabel}
+        class="text-accent-text group/link mt-auto inline-flex min-h-11 items-center gap-1.5 self-start pt-5 font-medium"
+      >
+        <span class="underline-offset-[0.25em] group-hover/link:underline">{moreLabel}</span>
+        <Icon
+          name="arrow-right"
+          size={18}
+          class="ease-soft transition-transform duration-300 group-hover/link:translate-x-1"
+        />
+      </a>
+    </div>
+  </Card>
+</li>

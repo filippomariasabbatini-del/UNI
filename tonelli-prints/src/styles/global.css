@@ -323,3 +323,115 @@
     transform: translateY(-3%) scale(1.08);
   }
 }
+
+@layer components {
+  /* Campi dei form */
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid var(--tp-field);
+    border-radius: 0.875rem;
+    background-color: var(--tp-raised);
+    padding: 0.75rem 1rem;
+    color: var(--tp-fg);
+    font: inherit;
+    transition: border-color 200ms ease;
+  }
+
+  .field:hover {
+    border-color: var(--tp-fg);
+  }
+
+  .field[aria-invalid='true'] {
+    border-color: var(--tp-danger);
+    box-shadow: 0 0 0 1px var(--tp-danger);
+  }
+
+  textarea.field {
+    min-height: 9rem;
+    resize: vertical;
+  }
+
+  /* Slider quantità. --range-progress lo aggiorna src/scripts/estimator.ts */
+  .range {
+    width: 100%;
+    height: 2.75rem;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .range::-webkit-slider-runnable-track {
+    height: 0.25rem;
+    border-radius: 9999px;
+    background: linear-gradient(
+      to right,
+      var(--tp-accent-text) var(--range-progress, 0%),
+      var(--tp-field) var(--range-progress, 0%)
+    );
+  }
+
+  .range::-moz-range-track {
+    height: 0.25rem;
+    border-radius: 9999px;
+    background-color: var(--tp-field);
+  }
+
+  .range::-moz-range-progress {
+    height: 0.25rem;
+    border-radius: 9999px;
+    background-color: var(--tp-accent-text);
+  }
+
+  .range::-webkit-slider-thumb {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-top: -0.75rem;
+    appearance: none;
+    border-radius: 9999px;
+    background-color: var(--tp-fg);
+    box-shadow: var(--tp-shadow-card);
+  }
+
+  .range::-moz-range-thumb {
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 0;
+    border-radius: 9999px;
+    background-color: var(--tp-fg);
+    box-shadow: var(--tp-shadow-card);
+  }
+
+  /* Bottone della scheda materiale: sopra il pannello scuro diventa chiaro e ruota a "chiudi" */
+  .material-toggle {
+    transition:
+      rotate 350ms var(--ease-soft),
+      color 200ms ease,
+      background-color 200ms ease;
+  }
+
+  .material-card[data-open] .material-toggle {
+    background-color: transparent;
+    color: var(--tp-bg);
+    rotate: 45deg;
+  }
+
+  @media (hover: hover) {
+    .material-card:hover .material-toggle {
+      background-color: transparent;
+      color: var(--tp-bg);
+    }
+  }
+
+  /* Comparsa del menu mobile */
+  #menu-mobile {
+    animation: menu-in 300ms var(--ease-soft);
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
