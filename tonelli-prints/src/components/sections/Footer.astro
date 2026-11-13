@@ -1,0 +1,157 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/logo-full.png';
+import { site, type Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
+import { format, localePath } from '../../lib/i18n';
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const { footer } = ui;
+const home = localePath(locale, '/');
+const studios = (await getContent('studios', locale)).items;
+const year = new Date().getFullYear();
+const LOGO_HEIGHT = 30;
+const logoWidth = Math.round((LOGO_HEIGHT * logo.width) / logo.height);
+
+const legalLinks = [
+  { href: '/privacy.html', label: footer.legal.privacy },
+  { href: '/cookies.html', label: footer.legal.cookies },
+  { href: '/terms.html', label: footer.legal.terms },
+  { href: '/imprint.html', label: footer.legal.imprint },
+];
+const social = [
+  { href: site.social.linkedin, label: footer.contacts.linkedin, icon: 'linkedin' },
+  { href: site.social.instagram, label: footer.contacts.instagram, icon: 'instagram' },
+] as const;
+// Ordine alfabetico per codice: EN · IT · NL
+const languages = [...site.locales].sort((a, b) => a.code.localeCompare(b.code));
+const linkClass = 'hover:text-fg inline-flex min-h-11 items-center gap-2 transition-colors';
+const columnTitle = 'text-fg mb-2 text-[0.9375rem] font-semibold';
+---
+
+<footer class="bg-surface border-line text-muted border-t text-[0.9375rem]">
+  <Container class="pt-16 pb-10">
+    <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.3fr_0.8fr]">
+      <div>
+        <Image
+          src={logo}
+          alt={site.name}
+          width={logoWidth}
+          height={LOGO_HEIGHT}
+          densities={[1, 2, 3]}
+          loading="lazy"
+        />
+        <p class="mt-5 max-w-[22rem] leading-[1.55]">{footer.tagline}</p>
+      </div>
+
+      <nav aria-label={ui.a11y.footerNav}>
+        <h2 class={columnTitle}>{footer.studio.title}</h2>
+        <ul>
+          {footer.studio.links.map((item) => (
+            <li>
+              <a href={`${home}${item.href}`} class={linkClass}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class={columnTitle}>{footer.contacts.title}</h2>
+        <ul>
+          <li>
+            <a href={`mailto:${site.email}`} class={linkClass}>
+              <Icon name="mail" size={18} />
+              {site.email}
+            </a>
+          </li>
+          {site.studios.map((studio) => (
+            <li>
+              <a href={`tel:${studio.phone}`} class={linkClass}>
+                <Icon name="phone" size={18} />
+                {studio.phoneDisplay}
+              </a>
+            </li>
+          ))}
+          {social.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel="noopener noreferrer" class={linkClass}>
+                <Icon name={item.icon} size={18} />
+                {item.label}
+                <span class="sr-only">({ui.a11y.newTab})</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class={columnTitle}>{footer.locations.title}</h2>
+        <ul>
+          {site.studios.map((studio) => {
+            const content = studios.find((item) => item.id === studio.id);
+            return (
+              <li class="flex min-h-11 items-center">
+                {content?.city}, {studio.countryCode}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-line mt-14 flex flex-col gap-x-8 gap-y-3 border-t pt-6 lg:flex-row lg:items-center lg:justify-between">
+      <p>
+        {format(footer.copyright, { year })},{' '}
+        {site.legal.kvk ? format(footer.kvk, { kvk: site.legal.kvk }) : footer.kvkPending}
+      </p>
+
+      <nav aria-label={ui.a11y.legalNav}>
+        <ul class="flex flex-wrap gap-x-6">
+          {legalLinks.map((item) => (
+            <li>
+              <a href={localePath(locale, item.href)} class={linkClass}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label={ui.a11y.languageSelector}>
+        <ul class="flex items-center gap-1">
+          {languages.map((language) => (
+            <li>
+              {language.enabled ? (
+                <a
+                  href={localePath(language.code, '/')}
+                  hreflang={language.code}
+                  lang={language.code}
+                  aria-current={language.code === locale ? 'true' : undefined}
+                  class="hover:text-fg aria-[current]:text-fg inline-flex min-h-11 min-w-11 items-center justify-center font-medium transition-colors aria-[current]:font-semibold"
+                >
+                  <span aria-hidden="true">{language.label}</span>
+                  <span class="sr-only">{language.name}</span>
+                </a>
+              ) : (
+                <span class="inline-flex min-h-11 min-w-11 items-center justify-center">
+                  <span aria-hidden="true">{language.label}</span>
+                  <span class="sr-only">
+                    {format(footer.languageSoon, { language: language.name })}
+                  </span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </Container>
+</footer>

@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/logo-full.png';
+import type { Locale } from '../../config/site';
+import type { Ui } from '../../lib/content';
+import { localePath } from '../../lib/i18n';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const home = localePath(locale, '/');
+const LOGO_HEIGHT = 26;
+const logoWidth = Math.round((LOGO_HEIGHT * logo.width) / logo.height);
+---
+
+<header data-header class="group/header fixed inset-x-0 top-0 z-50">
+  <div class="bg-bg/75 group-data-scrolled/header:border-line group-data-menu-open/header:border-line group-data-menu-open/header:bg-bg border-b border-transparent backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300">
+    <Container class="ease-soft flex h-16 items-center justify-between gap-6 transition-[height] duration-500 group-data-scrolled/header:h-13">
+      <a href={home} aria-label={ui.a11y.homeLink} class="flex min-h-11 items-center">
+        <Image
+          src={logo}
+          alt=""
+          width={logoWidth}
+          height={LOGO_HEIGHT}
+          densities={[1, 2, 3]}
+          loading="eager"
+        />
+      </a>
+
+      <nav aria-label={ui.a11y.mainNav} class="hidden lg:block">
+        <ul class="flex items-center gap-1">
+          {ui.nav.items.map((item) => (
+            <li>
+              <a
+                href={`${home}${item.href}`}
+                class="text-fg/80 hover:text-fg inline-flex min-h-11 items-center rounded-full px-3.5 text-[0.9375rem] transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="hidden lg:block">
+        <Button href={`${home}#contatti`} size="sm">
+          {ui.nav.cta}
+        </Button>
+      </div>
+
+      <button
+        type="button"
+        data-menu-toggle
+        data-label-open={ui.a11y.openMenu}
+        data-label-close={ui.a11y.closeMenu}
+        aria-label={ui.a11y.openMenu}
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+        class="-mr-2.5 inline-flex size-11 items-center justify-center rounded-full lg:hidden"
+      >
+        <Icon name="menu" size={24} class="group-data-menu-open/header:hidden" />
+        <Icon name="close" size={24} class="hidden group-data-menu-open/header:block" />
+      </button>
+    </Container>
+  </div>
+
+  <div
+    id="menu-mobile"
+    hidden
+    class="bg-bg border-line max-h-[calc(100dvh-4rem)] overflow-y-auto border-b lg:hidden"
+  >
+    <Container class="pt-4 pb-8">
+      <nav aria-label={ui.a11y.mainNav}>
+        <ul>
+          {ui.nav.items.map((item) => (
+            <li class="border-line border-b">
+              <a
+                href={`${home}${item.href}`}
+                class="flex min-h-14 items-center text-[1.375rem] font-semibold tracking-[-0.02em]"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <Button href={`${home}#contatti`} class="mt-6 w-full">
+        {ui.nav.cta}
+      </Button>
+    </Container>
+  </div>
+</header>

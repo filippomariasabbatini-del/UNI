@@ -1,0 +1,93 @@
+---
+import { site } from '../../config/site';
+import type { Ui } from '../../lib/content';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import Heading from '../ui/Heading.astro';
+import Photo from '../ui/Photo.astro';
+
+interface Props {
+  ui: Ui;
+}
+const { hero } = Astro.props.ui;
+const printers = site.studios.find((studio) => studio.primary)?.printers ?? null;
+const [badgeBefore = '', badgeAfter = ''] = hero.liveBadge.split('{count}');
+const [left, center, right] = hero.images;
+const frame = 'rounded-panel bg-surface shadow-card overflow-hidden';
+---
+
+<section aria-labelledby="hero-title" class="overflow-hidden pt-[clamp(7rem,13vw,11rem)] pb-16">
+  <Container class="text-center">
+    <Eyebrow>{hero.eyebrow}</Eyebrow>
+    <Heading level={1} size="display" id="hero-title" class="mx-auto mt-5 max-w-[19ch]">
+      {hero.title}
+    </Heading>
+    <p class="text-muted mx-auto mt-7 max-w-[44rem] text-[clamp(1.125rem,0.7vw+1rem,1.375rem)] leading-[1.5]">
+      {hero.sub}
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <Button href="#contatti">{hero.primaryCta}</Button>
+      <Button href="#materiali" variant="secondary">
+        {hero.secondaryCta}
+      </Button>
+    </div>
+    {printers !== null && (
+      <p class="bg-surface text-muted mt-8 inline-flex min-h-9 items-center gap-2.5 rounded-full px-4 text-[0.875rem]">
+        <span class="live-dot bg-ok text-ok relative size-2 rounded-full" />
+        <span>
+          {badgeBefore}
+          <span data-count-to={printers} class="text-fg font-semibold tabular-nums">
+            {printers}
+          </span>
+          {badgeAfter}
+        </span>
+      </p>
+    )}
+  </Container>
+
+  <Container class="mt-[clamp(3rem,6vw,5rem)]">
+    <div class="grid items-end gap-5 md:grid-cols-[1fr_1.3fr_1fr]">
+      {left && (
+        <div class:list={[frame, 'hidden aspect-[4/5] md:block']}>
+          <Photo src={left.src} alt={left.alt} sizes="(min-width: 75rem) 21rem, 28vw" parallax />
+        </div>
+      )}
+      {center && (
+        <div class:list={[frame, 'aspect-[4/5] md:aspect-[3/4]']}>
+          <Photo
+            src={center.src}
+            alt={center.alt}
+            sizes="(min-width: 75rem) 28rem, (min-width: 48rem) 38vw, 92vw"
+            priority
+            parallax
+          />
+        </div>
+      )}
+      {right && (
+        <div class:list={[frame, 'hidden aspect-[4/5] md:block']}>
+          <Photo src={right.src} alt={right.alt} sizes="(min-width: 75rem) 21rem, 28vw" parallax />
+        </div>
+      )}
+    </div>
+
+    <dl class="mx-auto mt-[clamp(3rem,6vw,5rem)] grid max-w-[56rem] gap-y-8 text-center sm:grid-cols-3">
+      {hero.stats.map((stat) => (
+        <div class="flex flex-col-reverse gap-1.5">
+          <dt class="text-muted text-[0.9375rem]">{stat.label}</dt>
+          <dd class="text-[clamp(2rem,3vw+1rem,3.25rem)] leading-none font-semibold tracking-[-0.035em] tabular-nums">
+            {stat.value === null ? (
+              stat.text
+            ) : (
+              <>
+                {stat.prefix}
+                <span data-count-to={stat.value}>{stat.value}</span>
+                {stat.suffix}
+              </>
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </Container>
+</section>

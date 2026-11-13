@@ -1,0 +1,49 @@
+---
+import { site, type Locale } from '../../config/site';
+import type { Ui } from '../../lib/content';
+import { localePath } from '../../lib/i18n';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  locale: Locale;
+  ui: Ui;
+}
+const { locale, ui } = Astro.props;
+const { cookie } = ui;
+const { hasNonEssential } = site.cookies;
+---
+
+<!-- Nascosto di default: lo mostra src/scripts/cookie-banner.ts solo se non c'è una scelta salvata -->
+<aside
+  data-cookie-banner
+  hidden
+  aria-label={cookie.label}
+  class="rounded-card bg-raised shadow-float fixed inset-x-4 bottom-4 z-40 p-5 text-[0.9375rem] leading-[1.5] sm:right-auto sm:max-w-[23rem]"
+>
+  <p>
+    {cookie.text}
+    {hasNonEssential && cookie.textNonEssential}{' '}
+    <a
+      href={localePath(locale, '/cookies.html')}
+      class="text-accent-text underline underline-offset-[0.2em]"
+    >
+      {cookie.policy}
+    </a>
+  </p>
+  <div class="mt-4 flex flex-wrap gap-3">
+    {hasNonEssential ? (
+      <>
+        <Button type="button" size="sm" variant="secondary" data-cookie-choice="essential">
+          {cookie.reject}
+        </Button>
+        <Button type="button" size="sm" data-cookie-choice="all">
+          {cookie.accept}
+        </Button>
+      </>
+    ) : (
+      <Button type="button" size="sm" variant="secondary" data-cookie-choice="essential">
+        {cookie.ok}
+      </Button>
+    )}
+  </div>
+</aside>

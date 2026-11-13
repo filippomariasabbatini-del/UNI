@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+import interUrl from '../assets/fonts/inter-latin-wght-normal.woff2?url';
+import SEO from '../components/seo/SEO.astro';
+import CookieBanner from '../components/sections/CookieBanner.astro';
+import Footer from '../components/sections/Footer.astro';
+import Header from '../components/sections/Header.astro';
+import { site, type Locale } from '../config/site';
+import { getContent } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Percorso senza prefisso di lingua, es. "/" oppure "/privacy.html" */
+  path: string;
+  noindex?: boolean;
+}
+const { locale, title, description, path, noindex = false } = Astro.props;
+const ui = await getContent('ui', locale);
+const { analytics } = site;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={interUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content={site.themeColor} />
+    <SEO
+      locale={locale}
+      title={title}
+      description={description}
+      path={path}
+      imageAlt={ui.meta.ogImageAlt}
+      noindex={noindex}
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <a
+      href="#contenuto"
+      class="bg-fg text-bg sr-only top-3 left-3 z-[60] rounded-full px-5 py-3 font-medium focus:not-sr-only focus:fixed"
+    >
+      {ui.a11y.skipLink}
+    </a>
+    <div
+      data-scroll-sentinel
+      aria-hidden="true"
+      class="pointer-events-none absolute top-0 h-6 w-px"
+    ></div>
+    <Header locale={locale} ui={ui} />
+    <main id="contenuto" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer locale={locale} ui={ui} />
+    <CookieBanner locale={locale} ui={ui} />
+    {analytics.provider && analytics.scriptUrl && (
+      <script
+        is:inline
+        defer
+        src={analytics.scriptUrl}
+        data-domain={analytics.provider === 'plausible' ? analytics.siteId : undefined}
+        data-website-id={analytics.provider === 'umami' ? analytics.siteId : undefined}
+      />
+    )}
+    <script>
+      import '../scripts/base';
+    </script>
+  </body>
+</html>

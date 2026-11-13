@@ -1,0 +1,44 @@
+---
+import type { Ui } from '../../lib/content';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  ui: Ui;
+}
+const { marquee } = Astro.props.ui;
+---
+
+<div data-marquee class="marquee border-line relative border-y">
+  <!-- Per le tecnologie assistive: lista statica. La fascia animata è decorativa. -->
+  <ul class="sr-only" aria-label={marquee.label}>
+    {marquee.items.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+  <div aria-hidden="true" class="overflow-hidden py-5">
+    <div class="marquee-track flex w-max">
+      {[0, 1].map(() => (
+        <ul class="flex shrink-0">
+          {marquee.items.map((item) => (
+            <li class="text-muted flex items-center text-[0.9375rem] font-medium whitespace-nowrap">
+              <span class="px-7">{item}</span>
+              <span class="bg-line size-1 rounded-full" />
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+  <button
+    type="button"
+    data-marquee-toggle
+    data-label-pause={marquee.pause}
+    data-label-play={marquee.play}
+    aria-label={marquee.pause}
+    hidden
+    class="bg-bg text-muted hover:text-fg group/toggle absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full"
+  >
+    <Icon name="pause" size={18} class="group-data-paused/toggle:hidden" />
+    <Icon name="play" size={18} class="hidden group-data-paused/toggle:block" />
+  </button>
+</div>

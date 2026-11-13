@@ -1,0 +1,17 @@
+---
+import Hero from '../../components/sections/Hero.astro';
+import Marquee from '../../components/sections/Marquee.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../lib/content';
+import { localeFromParam, localeStaticPaths } from '../../lib/i18n';
+
+export const getStaticPaths = localeStaticPaths;
+
+const locale = localeFromParam(Astro.params.locale);
+const ui = await getContent('ui', locale);
+---
+
+<BaseLayout locale={locale} title={ui.meta.title} description={ui.meta.description} path="/">
+  <Hero ui={ui} />
+  <Marquee ui={ui} />
+</BaseLayout>
