@@ -1,0 +1,30 @@
+---
+import { Picture } from 'astro:assets';
+import { responsiveWidths } from '../../lib/images';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Attributo sizes: larghezza reale dell'immagine nei vari breakpoint */
+  sizes: string;
+  /** true solo per l'immagine above the fold: niente lazy, priorità alta */
+  priority?: boolean;
+  parallax?: boolean;
+  class?: string;
+}
+const { src, alt, sizes, priority = false, parallax = false, class: className } = Astro.props;
+---
+
+<Picture
+  src={src}
+  alt={alt}
+  formats={['avif', 'webp']}
+  widths={responsiveWidths(src.width)}
+  sizes={sizes}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  decoding="async"
+  data-parallax={parallax ? '' : undefined}
+  class:list={['h-full w-full object-cover', className]}
+  pictureAttributes={{ class: 'block h-full w-full' }}
+/>

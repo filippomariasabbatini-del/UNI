@@ -1,0 +1,22 @@
+---
+interface Props {
+  as?: 'div' | 'li' | 'article';
+  /** raised = card bianca su sezione grigia, surface = card grigia su sezione bianca */
+  tone?: 'raised' | 'surface';
+  hover?: boolean;
+  class?: string;
+}
+const { as: Tag = 'div', tone = 'raised', hover = false, class: className } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    'rounded-card overflow-hidden',
+    tone === 'raised' ? 'bg-raised shadow-card' : 'bg-surface',
+    hover &&
+      'ease-soft hover:shadow-float transition-[translate,box-shadow] duration-500 hover:-translate-y-1',
+    className,
+  ]}
+>
+  <slot />
+</Tag>

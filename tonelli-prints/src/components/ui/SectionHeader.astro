@@ -1,0 +1,30 @@
+---
+import Eyebrow from './Eyebrow.astro';
+import Heading from './Heading.astro';
+
+interface Props {
+  /** id dell'h2: va passato anche a Section come `labelledby` */
+  id: string;
+  eyebrow?: string;
+  title: string;
+  sub?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { id, eyebrow, title, sub, align = 'left', class: className } = Astro.props;
+---
+
+<div
+  data-reveal
+  class:list={['max-w-[52rem]', align === 'center' && 'mx-auto text-center', className]}
+>
+  {eyebrow && <Eyebrow class="mb-4">{eyebrow}</Eyebrow>}
+  <Heading level={2} id={id}>
+    {title}
+  </Heading>
+  {sub && (
+    <p class="text-muted mt-6 max-w-[40rem] text-[clamp(1.125rem,0.6vw+1rem,1.3125rem)] leading-[1.5]">
+      {sub}
+    </p>
+  )}
+</div>

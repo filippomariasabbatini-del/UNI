@@ -1,0 +1,325 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* Inter variabile, subset latin, self-hosted (SIL OFL, vedi src/assets/fonts/OFL.txt) */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../assets/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Fallback con metriche allineate a Inter: lo swap del font non sposta il layout (CLS) */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+
+/* Niente palette di default: esistono solo i colori dei token */
+@theme {
+  --color-*: initial;
+}
+
+@theme inline {
+  --color-bg: var(--tp-bg);
+  --color-surface: var(--tp-surface);
+  --color-raised: var(--tp-raised);
+  --color-fg: var(--tp-fg);
+  --color-muted: var(--tp-muted);
+  --color-line: var(--tp-line);
+  --color-field: var(--tp-field);
+  --color-accent: var(--tp-accent);
+  --color-accent-hover: var(--tp-accent-hover);
+  --color-on-accent: var(--tp-on-accent);
+  --color-accent-text: var(--tp-accent-text);
+  --color-ok: var(--tp-ok);
+  --color-danger: var(--tp-danger);
+
+  --font-sans:
+    'Inter Variable', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', sans-serif;
+
+  --radius-card: var(--tp-radius-card);
+  --radius-panel: var(--tp-radius-panel);
+  --shadow-card: var(--tp-shadow-card);
+  --shadow-float: var(--tp-shadow-float);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--tp-bg);
+    color: var(--tp-fg);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 48rem) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus visibile personalizzato: usa il colore del testo, quindi funziona anche nelle sezioni scure */
+  :focus-visible {
+    outline: 2px solid var(--tp-fg);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--tp-accent);
+    color: var(--tp-on-accent);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Padding orizzontale che allinea un contenuto a tutta larghezza al Container */
+  .bleed-px {
+    padding-inline: max(1.25rem, calc((100vw - 75rem) / 2 + 2rem));
+    scroll-padding-inline: max(1.25rem, calc((100vw - 75rem) / 2 + 2rem));
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Reveal allo scroll: le classi le mette src/scripts/reveal.ts solo sugli elementi fuori schermo */
+  .reveal-pending {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  .reveal-run {
+    transition:
+      opacity 600ms var(--ease-soft),
+      transform 600ms var(--ease-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Fascia scorrevole */
+  .marquee-track {
+    animation: marquee 70s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee[data-paused] .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Pallino "live": tre impulsi e poi fermo, per non lampeggiare all'infinito */
+  .live-dot::after {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-color: currentColor;
+    content: '';
+    animation: pulse-ring 1.8s var(--ease-soft) 3;
+  }
+
+  /* Scheda materiale: pannello a comparsa su hover (puntatori) o con il bottone (tap e tastiera) */
+  .material-panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 350ms var(--ease-soft),
+      transform 350ms var(--ease-soft),
+      visibility 0s linear 350ms;
+  }
+
+  .material-card[data-open] .material-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  @media (hover: hover) {
+    .material-card:hover .material-panel {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition-delay: 0s;
+    }
+  }
+
+  /* Senza JavaScript il menu mobile e le schede materiale restano visibili */
+  @media (scripting: none) {
+    #menu-mobile[hidden] {
+      display: block !important;
+    }
+
+    .material-panel {
+      position: static;
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      margin-top: 1.5rem;
+      border-radius: 1rem;
+    }
+
+    .material-toggle,
+    [data-menu-toggle] {
+      display: none;
+    }
+  }
+
+  /* Campo trappola antispam: fuori schermo, non display:none (alcuni bot lo ignorano) */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  /* Testi lunghi delle pagine legali */
+  .prose {
+    max-width: 44rem;
+  }
+
+  .prose h2 {
+    margin-top: 3rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .prose p,
+  .prose ul,
+  .prose table {
+    margin-top: 1rem;
+  }
+
+  .prose ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .prose li + li {
+    margin-top: 0.375rem;
+  }
+
+  .prose a {
+    color: var(--tp-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .prose th,
+  .prose td {
+    border-bottom: 1px solid var(--tp-line);
+    padding: 0.625rem 1rem 0.625rem 0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .prose code {
+    border-radius: 0.375rem;
+    background-color: var(--tp-surface);
+    padding: 0.125rem 0.375rem;
+    font-size: 0.875em;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-ring {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+/* Parallax lieve delle foto, solo CSS: animazione legata allo scroll dove supportata */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-parallax] {
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes parallax {
+  from {
+    transform: translateY(3%) scale(1.08);
+  }
+
+  to {
+    transform: translateY(-3%) scale(1.08);
+  }
+}

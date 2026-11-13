@@ -1,0 +1,24 @@
+---
+interface Props {
+  id: string;
+  /** light = sfondo bianco, surface = grigio chiaro, dark = sezione scura */
+  tone?: 'light' | 'surface' | 'dark';
+  /** id del titolo che dà il nome alla sezione */
+  labelledby: string;
+  class?: string;
+}
+const { id, tone = 'light', labelledby, class: className } = Astro.props;
+const tones = {
+  light: 'bg-bg text-fg',
+  surface: 'bg-surface text-fg',
+  dark: 'tone-dark bg-bg text-fg',
+};
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={['py-[clamp(5rem,11vw,9.5rem)]', tones[tone], className]}
+>
+  <slot />
+</section>

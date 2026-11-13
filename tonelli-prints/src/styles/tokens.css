@@ -1,0 +1,45 @@
+/*
+ * Design token: unica fonte di verità per colori, ombre e raggi.
+ * Tailwind li legge da qui (vedi @theme in global.css): nessun colore nei componenti.
+ * `pnpm contrast` (eseguito anche da `pnpm build`) verifica i rapporti WCAG di queste coppie.
+ */
+:root {
+  --tp-bg: #ffffff;
+  --tp-surface: #f5f5f7;
+  --tp-raised: #ffffff;
+  --tp-fg: #1d1d1f;
+  --tp-muted: #66666b;
+  --tp-line: #dcdce1;
+  --tp-field: #7c7c83;
+  --tp-accent: #b4532a;
+  --tp-accent-hover: #984421;
+  --tp-on-accent: #ffffff;
+  --tp-accent-text: #a84b24;
+  --tp-ok: #1f7a3d;
+  --tp-danger: #b3261e;
+
+  --tp-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 14px 36px -18px rgb(0 0 0 / 0.16);
+  --tp-shadow-float: 0 2px 4px rgb(0 0 0 / 0.05), 0 28px 56px -24px rgb(0 0 0 / 0.26);
+  --tp-radius-card: 1.5rem;
+  --tp-radius-panel: 1.75rem;
+}
+
+/* Sezioni scure: stessi nomi, valori diversi. Basta la classe sul contenitore. */
+.tone-dark {
+  --tp-bg: #141413;
+  --tp-surface: #1f1f1e;
+  --tp-raised: #262625;
+  --tp-fg: #f5f5f7;
+  --tp-muted: #a9a9ae;
+  --tp-line: #3a3a3c;
+  --tp-field: #8e8e93;
+  --tp-accent: #b4532a;
+  --tp-accent-hover: #984421;
+  --tp-on-accent: #ffffff;
+  --tp-accent-text: #ec9a73;
+  --tp-ok: #5fd08a;
+  --tp-danger: #ff8a80;
+
+  --tp-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 14px 36px -18px rgb(0 0 0 / 0.6);
+  --tp-shadow-float: 0 2px 4px rgb(0 0 0 / 0.3), 0 28px 56px -24px rgb(0 0 0 / 0.7);
+}

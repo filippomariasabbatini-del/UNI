@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  variant?: 'primary' | 'secondary';
+  size?: 'md' | 'sm';
+  class?: string;
+} & (
+  | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href' | 'class'>)
+  | ({ href?: undefined } & Omit<HTMLAttributes<'button'>, 'class'>)
+);
+
+const { variant = 'primary', size = 'md', class: className, ...rest } = Astro.props;
+
+const classes = [
+  // min-h-11 = 44px: target touch minimo
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full font-medium',
+  'ease-soft transition-[background-color,color,box-shadow,scale] duration-300 active:scale-[0.98]',
+  'disabled:cursor-progress disabled:opacity-60',
+  size === 'md' ? 'px-6 text-[1.0625rem]' : 'px-5 text-[0.9375rem]',
+  variant === 'primary'
+    ? 'bg-accent text-on-accent hover:bg-accent-hover'
+    : 'text-fg ring-field hover:bg-fg hover:text-bg ring-1 ring-inset hover:ring-fg',
+  className,
+];
+---
+
+{typeof rest.href === 'string' ? (
+  <a class:list={classes} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
+    <slot />
+  </button>
+)}
