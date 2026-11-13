@@ -1,0 +1,77 @@
+name: Tonelli Prints CI
+
+on:
+  push:
+    branches: [main]
+    paths: ['tonelli-prints/**', '.github/workflows/tonelli-prints-ci.yml']
+  pull_request:
+    paths: ['tonelli-prints/**', '.github/workflows/tonelli-prints-ci.yml']
+
+concurrency:
+  group: tonelli-prints-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: tonelli-prints
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+
+jobs:
+  quality:
+    name: Check, lint, build, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: tonelli-prints/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: tonelli-prints/.nvmrc
+          cache: pnpm
+          cache-dependency-path: tonelli-prints/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm lint
+      # `pnpm build` esegue anche il controllo di contrasto dei token colore
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: tonelli-prints/playwright-report
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse CI (mobile, soglia 90)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: tonelli-prints/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: tonelli-prints/.nvmrc
+          cache: pnpm
+          cache-dependency-path: tonelli-prints/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # Soglie e pagine in tonelli-prints/lighthouserc.json
+      - run: pnpm dlx @lhci/cli@0.16.1 autorun
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: tonelli-prints/.lighthouseci/reports
+          include-hidden-files: true
+          retention-days: 7
