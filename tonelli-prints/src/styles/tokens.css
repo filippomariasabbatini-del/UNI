@@ -19,15 +19,25 @@
   --tp-danger: #b3261e;
 
   /*
-   * Colore di ogni filamento nella scena di stampa dell'hero (letti da src/scripts/print-stage.ts).
+   * Colore di ogni filamento nella scena 3D dell'hero (letti da src/scripts/logo-stage/index.ts).
    * Dimostrativi: da allineare alla palette reale quando sarà in src/content/materials.
    */
-  --tp-filament-pla-plus: #c2562c;
-  --tp-filament-petg: #8fa9bd;
+  --tp-filament-pla-plus: #d6c4a8;
+  --tp-filament-petg: #c4603a;
   --tp-filament-carbon-fiber: #2c2d31;
   --tp-filament-silky-pla: #c9a45c;
-  --tp-filament-wood-pla: #a87c54;
-  --tp-filament-tpu: #e4e1da;
+  --tp-filament-wood-pla: #3b281e;
+  --tp-filament-tpu: #e9e6df;
+
+  /* Scena 3D dell'hero: fondo, piatto di stampa, filamento caldo, metalli dell'ugello e tag NFC */
+  --tp-stage: #f3efea;
+  --tp-stage-bed: #d9ccba;
+  --tp-stage-bed-line: #bfb19e;
+  --tp-stage-hot: #d47a5a;
+  --tp-stage-brass: #b8893c;
+  --tp-stage-copper: #c8743a;
+  --tp-stage-steel: #b9bcc2;
+  --tp-stage-chip: #f4f2ec;
 
   --tp-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 14px 36px -18px rgb(0 0 0 / 0.16);
   --tp-shadow-float: 0 2px 4px rgb(0 0 0 / 0.05), 0 28px 56px -24px rgb(0 0 0 / 0.26);

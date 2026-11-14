@@ -1,6 +1,6 @@
 # Tonelli Prints
 
-Sito B2B single page di Tonelli Prints. Statico (Astro SSG), contenuti in file JSON/Markdown validati con Zod, JavaScript solo dove serve: circa 17 KB non compressi, più 14 KB (6,1 KB gzip) per la scena di stampa dell'hero, caricati solo in home e a pagina ferma.
+Sito B2B single page di Tonelli Prints. Statico (Astro SSG), contenuti in file JSON/Markdown validati con Zod, JavaScript solo dove serve: circa 17 KB non compressi. La scena 3D dell'hero (three.js + GSAP, 177 KB gzip) è un modulo a parte, scaricato solo dai dispositivi che possono mostrarla.
 
 ## Stack
 
@@ -8,6 +8,8 @@ Sito B2B single page di Tonelli Prints. Statico (Astro SSG), contenuti in file J
 | ------------ | ----------------------- | ---------------------------------------------------------------------- |
 | Astro        | 7.4                     | output statico, nessun framework UI                                    |
 | Tailwind CSS | 4.3                     | via `@tailwindcss/vite` (integrazione ufficiale per Astro)             |
+| three.js     | 0.187                   | scena 3D dell'hero, caricata solo dove serve                           |
+| GSAP         | 3.15                    | timeline della scena 3D (licenza standard gratuita)                    |
 | TypeScript   | 6.0, preset `strictest` | TS 7 non è ancora supportato da `@astrojs/check` e `typescript-eslint` |
 | Node         | 22 LTS (>= 22.23.4)     | vedi `.nvmrc`                                                          |
 | pnpm         | 10                      |                                                                        |
@@ -75,7 +77,7 @@ src/
     404.astro, robots.txt.ts
   lib/               funzioni pure: pricing, studio-hours, i18n, schema-org, security-headers, format, images
   scripts/           moduli vanilla del browser (menu, configuratore, form, carosello, orologio, ...)
-                     print-stage.ts + print-stage.frag.glsl: scena di stampa 3D dell'hero (WebGL)
+                     logo-stage/: scena 3D interattiva dell'hero (three.js + GSAP)
   integrations/      genera dist/_headers a fine build
 scripts/check-contrast.mjs
 tests/               unit.spec.ts, smoke.spec.ts, a11y.spec.ts
@@ -98,19 +100,28 @@ I campi `todo` nei JSON sono note per chi compila i dati: non compaiono mai nel 
 
 `src/config/pricing.ts` contiene la curva a scaglioni (moltiplicatori rispetto al prezzo a 100 pezzi, interpolati linearmente tra uno scaglione e l'altro). **Solo due punti sono reali** (PLA+ 2.0: 100 pezzi a 3,40 €, 150 pezzi a 449 €): il resto è segnaposto. Un materiale con `unitPriceAt100: null` mostra "Su richiesta". I test in `tests/unit.spec.ts` verificano i due punti reali e che il totale non scenda mai aumentando i pezzi.
 
-## Scena di stampa dell'hero
+## Scena 3D dell'hero
 
-Il riquadro centrale dell'hero mostra tre oggetti stampati strato dopo strato, in loop, ognuno in un filamento del listino: portachiavi NFC in PLA+ 2.0, statuetta in Silky-PLA, logo da banco in fibra di carbonio. Ogni ciclo: stampa (con linee di layer e riempimento a griglia in sezione), giro di presentazione, ritiro del pezzo, pezzo successivo. È uno shader WebGL scritto a mano (raymarching di superfici implicite), senza librerie.
+Al centro dell'hero il logo Tonelli viene prodotto in tempo reale, in quattro fasi su un'unica timeline:
 
-- **Miglioramento progressivo**: la foto resta il contenuto di base. La scena la sostituisce solo se WebGL è disponibile con accelerazione hardware. Senza JavaScript, senza WebGL, con GPU software (è il caso di Lighthouse e della CI) o se il contesto va perso, resta la foto.
-- **Prestazioni**: gira solo quando è visibile, parte a pagina ferma, la risoluzione è limitata a 1,5× e scala da sola se i frame superano 26 ms di media. Se scalare non aiuta (es. risparmio energetico a 30 fps) torna alla risoluzione piena; se il dispositivo non regge nemmeno al minimo, torna la foto.
-- **Accessibilità**: bottone pausa (WCAG 2.2.2). Con `prefers-reduced-motion` mostra il primo oggetto finito e fermo. Il canvas ha `role="img"` con descrizione; il pannello con strato e avanzamento è decorativo (`aria-hidden`).
-- **Oggetti e materiali**: `hero.printStage.objects` in `src/content/ui/it.json`. Ogni oggetto ha `name` e `material` (un id del listino: `pla-plus`, `petg`, `carbon-fiber`, `silky-pla`, `wood-pla`, `tpu`). Il nome del filamento mostrato nel pannello arriva da `src/content/materials/it.json`. Se cambi un materiale aggiorna anche la descrizione `label`.
-- **Colore dei filamenti**: `--tp-filament-<id>` in `src/styles/tokens.css`. Sono dimostrativi: vanno allineati alla palette reale. La resa (opaco, lucido, silk, fibre, venature) è in `LOOKS` in `src/scripts/print-stage.ts`.
-- **Forme**: funzioni `tag`, `cat`, `logo` in `src/scripts/print-stage.frag.glsl`. Se cambi un oggetto aggiorna anche `HEIGHTS` e `footprint` in `print-stage.ts` (altezza e ingombro, usati per l'ugello e il conteggio degli strati).
-- **Tempi del ciclo**: costanti `PRINT`, `SHOW`, `EXIT`, `GAP` in `print-stage.ts`.
+1. **Stampa base** (0-35%): l'ugello scende sul piatto PEI e stampa fino a metà altezza, con pareti e riempimento a nido d'ape in vista e il bordo dello strato attivo ancora caldo.
+2. **Inserimento NFC** (35-60%): l'ugello si parcheggia, la camera scende sulla sede circolare, il tag cala al suo posto e un'onda conferma l'inserimento.
+3. **Chiusura** (60-85%): la stampa riprende e sigilla il tag dentro il pezzo.
+4. **Prodotto finito** (85-100%): piatto e ugello svaniscono, il logo si alza e si può trascinare per ruotarlo. Passando sul centro (o con l'interruttore) i raggi X mostrano il tag all'interno.
 
-I test in `tests/smoke.spec.ts` ("scena di stampa dell'hero") coprono i tre casi: senza WebGL, con WebGL (avvio, pausa, ripresa) e con movimento ridotto.
+Tecnica: [three.js](https://threejs.org) per la scena, [GSAP](https://gsap.com) per la timeline. Niente React: il sito è Astro vanilla.
+
+- **File**: `src/scripts/logo-stage/` (`logo.ts` geometria e texture procedurali, `scene.ts` scena three.js, `timeline.ts` le fasi, `index.ts` controlli e interazione). Il markup è in `src/components/sections/Hero.astro`.
+- **Logo**: la geometria viene dal tracciato di `src/assets/brand/mark.svg`, estruso con smusso (`ExtrudeGeometry`). L'SVG è stato ricavato vettorizzando `mark.png`: se esiste il vettoriale originale, sostituiscilo (il tracciato deve usare solo comandi `M`, `C`, `Z` assoluti) e ricontrolla `POCKET_VIEW` in `logo.ts`, cioè dove sta il tag.
+- **Miglioramento progressivo**: il contenuto di base è il logo SVG statico. La scena parte solo con WebGL 2 e accelerazione hardware; in caso contrario (anche in Lighthouse e in CI) three.js e GSAP **non vengono nemmeno scaricati**. Se il contesto WebGL va perso torna il logo.
+- **Peso**: il modulo della scena è circa 660 KB (177 KB gzip), in un file separato caricato a pagina ferma. Il resto del sito resta sui 17 KB.
+- **Controlli**: le quattro fasi sono pulsanti (si salta a una fase e la si rivede), sei campioni cambiano il filamento al volo, un interruttore accende i raggi X a prodotto finito. Non c'è controllo via scroll: lo scroll verticale della pagina resta sempre libero, anche con il dito sulla scena (`touch-action: pan-y`).
+- **Accessibilità**: bottone pausa (WCAG 2.2.2), con `prefers-reduced-motion` la scena parte dal prodotto finito e le fasi si consultano a scatti. Il canvas ha `role="img"` con descrizione.
+- **Testi**: `hero.logoStage` in `src/content/ui/<lingua>.json`. I nomi dei filamenti arrivano da `src/content/materials/`.
+- **Colori**: filamenti in `--tp-filament-<id>`, scena in `--tp-stage-*` (`src/styles/tokens.css`). La resa dei filamenti (ruvidità, metallo, rilievo dei layer) è in `LOOKS` in `index.ts`.
+- **Tempi**: `DURATION` e i tween in `timeline.ts`.
+
+I test in `tests/smoke.spec.ts` ("scena 3D dell'hero") coprono: senza WebGL (logo statico, nessun download), con WebGL (fasi, raggi X, materiali, pausa) e movimento ridotto.
 
 ## Lingue
 
@@ -186,7 +197,7 @@ Cerca `TODO` nel codice per trovare ogni punto.
 **Asset da sostituire**
 
 - [ ] Foto reali di Leonardo e Lieke al posto delle illustrazioni SVG (`src/assets/team/`)
-- [ ] Logo in SVG vettoriale: ora è il PNG del sito attuale ridimensionato (`src/assets/brand/`)
+- [ ] Logo vettoriale originale: `mark.svg` è ricavato dal PNG per vettorizzazione automatica, il logotipo completo è ancora PNG (`src/assets/brand/`)
 - [ ] `public/og-image.png`: è quella attuale, con tagline in inglese
 
 **Da far validare**

@@ -76,35 +76,22 @@
         "alt": "Yellow pasta-shaped keychains on a chopping board"
       },
       {
-        "src": "../../assets/photos/nfc-keychains-branded.jpg",
-        "alt": "3D-printed keychains with client logos, a pizza slice and pasta shapes"
-      },
-      {
         "src": "../../assets/photos/nfc-business-cards.jpg",
         "alt": "Black carbon-fibre NFC business cards"
       }
     ],
-    "printStage": {
-      "label": "Animation: a 3D printer builds, layer by layer, an NFC keychain in PLA+, a figurine in Silky-PLA and a counter logo in carbon fibre",
-      "printing": "Printing",
-      "done": "Ready",
+    "logoStage": {
+      "label": "Interactive 3D scene: the Tonelli logo is printed layer by layer, receives an NFC tag halfway through, is sealed and shown as a finished piece",
+      "fallbackAlt": "Tonelli Prints logo",
+      "stepsLabel": "Production phases",
+      "steps": ["Base print", "NFC insert", "Sealing", "Finished piece"],
+      "xray": "X-ray view (NFC)",
+      "nfcReady": "NFC Ready • Tap to scan",
+      "material": "Material",
       "layer": "Layer",
-      "pause": "Pause the printing animation",
-      "play": "Resume the printing animation",
-      "objects": [
-        {
-          "name": "NFC keychain",
-          "material": "pla-plus"
-        },
-        {
-          "name": "Figurine",
-          "material": "silky-pla"
-        },
-        {
-          "name": "Counter logo",
-          "material": "carbon-fiber"
-        }
-      ]
+      "pause": "Pause the animation",
+      "play": "Resume the animation",
+      "defaultMaterial": "wood-pla"
     }
   },
   "marquee": {

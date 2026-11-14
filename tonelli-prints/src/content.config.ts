@@ -167,16 +167,23 @@ const ui = defineCollection({
             }),
           )
           .min(1),
-        images: z.array(picture(context)).length(3),
-        /** Scena animata al posto della foto centrale. `objects`: i tre oggetti nell'ordine dello shader, ognuno con il suo filamento */
-        printStage: z.object({
+        /** Le due foto ai lati della scena 3D (solo da tablet in su) */
+        images: z.array(picture(context)).length(2),
+        /** Scena 3D interattiva al centro dell'hero: il logo stampato con il tag NFC dentro */
+        logoStage: z.object({
           label: text,
-          printing: text,
-          done: text,
+          fallbackAlt: text,
+          stepsLabel: text,
+          /** Le quattro fasi, nell'ordine della timeline */
+          steps: z.array(text).length(4),
+          xray: text,
+          nfcReady: text,
+          material: text,
           layer: text,
           pause: text,
           play: text,
-          objects: z.array(z.object({ name: text, material: z.enum(MATERIAL_IDS) })).length(3),
+          /** Filamento con cui parte la scena */
+          defaultMaterial: z.enum(MATERIAL_IDS),
         }),
       }),
       marquee: z.object({ label: text, pause: text, play: text, items: z.array(text).min(3) }),

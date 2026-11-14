@@ -1,7 +1,9 @@
 ---
 import { site } from '../../config/site';
+import Mark from '../../assets/brand/mark.svg';
 import type { Locale } from '../../config/site';
 import { getContent, type Ui } from '../../lib/content';
+import { LAYERS } from '../../scripts/logo-stage/logo';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
@@ -17,14 +19,13 @@ const { locale } = Astro.props;
 const { hero } = Astro.props.ui;
 const printers = site.studios.find((studio) => studio.primary)?.printers ?? null;
 const [badgeBefore = '', badgeAfter = ''] = hero.liveBadge.split('{count}');
-const [left, center, right] = hero.images;
+const [left, right] = hero.images;
 const frame = 'rounded-panel bg-surface shadow-card overflow-hidden';
-const stage = hero.printStage;
-// Il nome del filamento arriva dal listino materiali: un solo posto in cui scriverlo
-const materials = (await getContent('materials', locale)).items;
-const stageObjects = stage.objects.map((object) => ({
-  ...object,
-  materialName: materials.find((material) => material.id === object.material)?.name ?? '',
+const stage = hero.logoStage;
+// I nomi dei filamenti arrivano dal listino materiali: un solo posto in cui scriverli
+const stageMaterials = (await getContent('materials', locale)).items.map(({ id, name }) => ({
+  id,
+  name,
 }));
 ---
 
@@ -64,22 +65,22 @@ const stageObjects = stage.objects.map((object) => ({
           <Photo src={left.src} alt={left.alt} sizes="(min-width: 75rem) 21rem, 28vw" parallax />
         </div>
       )}
-      <!-- La foto centrale è il contenuto di base: src/scripts/print-stage.ts le sovrappone la scena di stampa dove WebGL regge -->
-      {center && (
-        <div
-          data-print-stage
-          data-objects={JSON.stringify(stageObjects)}
-          class:list={[frame, 'print-stage relative aspect-[4/5] md:aspect-[3/4]']}
-        >
-          <div data-stage-fallback class="h-full w-full">
-            <Photo
-              src={center.src}
-              alt={center.alt}
-              sizes="(min-width: 75rem) 28rem, (min-width: 48rem) 38vw, 92vw"
-              priority
-              parallax
-            />
-          </div>
+      {/*
+        Il logo statico è il contenuto di base: src/scripts/logo-stage gli sovrappone la scena 3D dove WebGL regge.
+        La scheda ha proporzioni fisse: quando compaiono i controlli si restringe la scena, non si sposta la pagina.
+      */}
+      <div
+        data-logo-stage
+        data-config={JSON.stringify({ materials: stageMaterials, material: stage.defaultMaterial })}
+        class:list={[frame, 'logo-stage flex aspect-[3/5] flex-col md:aspect-[3/4]']}
+      >
+        <div data-stage-view class="logo-stage-view relative min-h-0 flex-1">
+          <Mark
+            data-stage-fallback
+            role="img"
+            aria-label={stage.fallbackAlt}
+            class="absolute inset-0 m-auto h-auto w-[56%]"
+          />
           <canvas
             data-stage-canvas
             hidden
@@ -87,39 +88,23 @@ const stageObjects = stage.objects.map((object) => ({
             aria-label={stage.label}
             class="absolute inset-0 h-full w-full"
           />
-          <div
-            data-stage-hud
+          <p
+            data-stage-readout
             hidden
             aria-hidden="true"
-            class="stage-panel absolute inset-x-3 bottom-3 rounded-[1.25rem] px-4 pt-3 pb-3.5 text-left sm:inset-x-4 sm:bottom-4"
+            class="bg-raised/85 text-muted absolute top-3 left-3 rounded-full px-3 py-2 font-mono text-[0.6875rem] leading-none tabular-nums"
           >
-            <p class="text-muted flex items-center gap-2 overflow-hidden text-[0.75rem] font-medium whitespace-nowrap">
-              <span class="stage-dot size-1.5 shrink-0 rounded-full" />
-              <span data-stage-status data-printing={stage.printing} data-done={stage.done}>
-                {stage.printing}
-              </span>
-              <span>·</span>
-              <span data-stage-material class="text-fg truncate">
-                {stageObjects[0]?.materialName}
-              </span>
-            </p>
-            <div class="mt-0.5 flex items-baseline justify-between gap-4">
-              <p data-stage-name class="truncate text-[0.9375rem] leading-tight font-semibold">
-                {stageObjects[0]?.name}
-              </p>
-              <p class="text-muted shrink-0 text-[0.75rem] tabular-nums">
-                {stage.layer}{' '}
-                <span data-stage-layer class="text-fg font-semibold">
-                  000
-                </span>
-                {' / '}
-                <span data-stage-total>300</span>
-              </p>
-            </div>
-            <div class="bg-fg/10 mt-2.5 h-1 overflow-hidden rounded-full">
-              <div data-stage-bar class="stage-bar bg-accent h-full rounded-full"></div>
-            </div>
-          </div>
+            Z <span data-stage-z>0.00</span> mm · {stage.layer} <span data-stage-layer>00</span>/
+            {LAYERS}
+          </p>
+          <p
+            data-stage-nfc
+            hidden
+            aria-hidden="true"
+            class="bg-fg text-bg pointer-events-none absolute inset-x-0 bottom-4 mx-auto w-max rounded-full px-3.5 py-2 font-mono text-[0.6875rem] leading-none"
+          >
+            {stage.nfcReady}
+          </p>
           <button
             type="button"
             data-stage-toggle
@@ -127,13 +112,74 @@ const stageObjects = stage.objects.map((object) => ({
             data-label-play={stage.play}
             aria-label={stage.pause}
             hidden
-            class="stage-panel text-fg group/toggle absolute top-3 right-3 inline-flex size-11 items-center justify-center rounded-full sm:top-4 sm:right-4"
+            class="border-line bg-raised text-fg group/toggle absolute top-2 right-2 inline-flex size-11 items-center justify-center rounded-full border"
           >
             <Icon name="pause" size={18} class="group-data-paused/toggle:hidden" />
             <Icon name="play" size={18} class="hidden group-data-paused/toggle:block" />
           </button>
         </div>
-      )}
+
+        <div data-stage-controls hidden class="border-line bg-raised border-t p-3 text-left">
+          <ol aria-label={stage.stepsLabel} class="grid grid-cols-4 gap-1.5">
+            {stage.steps.map((step, index) => (
+              <li>
+                <button
+                  type="button"
+                  data-stage-step={index}
+                  class="border-line text-muted hover:text-fg aria-[current]:border-fg aria-[current]:bg-surface aria-[current]:text-fg flex h-full min-h-13 w-full flex-col gap-1 rounded-xl border px-2 py-2 text-left text-[0.6875rem] leading-[1.15] font-medium transition-colors"
+                >
+                  <span class="text-accent-text font-mono">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{step}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+
+          <div class="mt-2 flex items-center justify-between gap-2">
+            <div role="radiogroup" aria-label={stage.material} class="-ml-2 flex">
+              {stageMaterials.map((material) => (
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={material.id === stage.defaultMaterial ? 'true' : 'false'}
+                  aria-label={material.name}
+                  title={material.name}
+                  data-stage-material={material.id}
+                  class="group/swatch inline-flex size-11 items-center justify-center max-[23rem]:w-10"
+                >
+                  <span
+                    class:list={[
+                      `filament-${material.id}`,
+                      'ring-line group-aria-checked/swatch:ring-fg ring-offset-raised size-5 rounded-full ring-1 ring-offset-2 transition-shadow group-aria-checked/swatch:ring-2',
+                    ]}
+                  />
+                </button>
+              ))}
+            </div>
+            <p
+              data-stage-material-name
+              aria-hidden="true"
+              class="text-muted truncate font-mono text-[0.6875rem]"
+            />
+          </div>
+
+          <button
+            type="button"
+            role="switch"
+            aria-checked="false"
+            data-stage-xray
+            disabled
+            class="group/switch border-line mt-1 flex min-h-11 w-full items-center justify-between gap-3 border-t pt-1 text-[0.8125rem] font-medium disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <span>{stage.xray}</span>
+            <span class="bg-field group-aria-checked/switch:bg-accent relative h-6 w-10 shrink-0 rounded-full transition-colors">
+              <span class="bg-raised absolute top-0.5 left-0.5 size-5 rounded-full transition-transform group-aria-checked/switch:translate-x-4" />
+            </span>
+          </button>
+        </div>
+      </div>
       {right && (
         <div class:list={[frame, 'hidden aspect-[4/5] md:block']}>
           <Photo src={right.src} alt={right.alt} sizes="(min-width: 75rem) 21rem, 28vw" parallax />

@@ -76,35 +76,22 @@
         "alt": "Gele sleutelhangers in pastavorm op een snijplank"
       },
       {
-        "src": "../../assets/photos/nfc-keychains-branded.jpg",
-        "alt": "3D-geprinte sleutelhangers met logo's van klanten, een pizzapunt en pastavormen"
-      },
-      {
         "src": "../../assets/photos/nfc-business-cards.jpg",
         "alt": "Zwarte NFC-visitekaartjes van carbonfiber"
       }
     ],
-    "printStage": {
-      "label": "Animatie: een 3D-printer bouwt laag voor laag een NFC-sleutelhanger in PLA+, een beeldje in Silky-PLA en een toonbanklogo in carbonfiber",
-      "printing": "Bezig met printen",
-      "done": "Klaar",
+    "logoStage": {
+      "label": "Interactieve 3D-scène: het Tonelli-logo wordt laag voor laag geprint, krijgt halverwege een NFC-tag, wordt afgesloten en als eindproduct getoond",
+      "fallbackAlt": "Logo van Tonelli Prints",
+      "stepsLabel": "Productiefasen",
+      "steps": ["Basisprint", "NFC plaatsen", "Afsluiten", "Eindproduct"],
+      "xray": "Röntgenweergave (NFC)",
+      "nfcReady": "NFC Ready • Tap to scan",
+      "material": "Materiaal",
       "layer": "Laag",
-      "pause": "Printanimatie pauzeren",
-      "play": "Printanimatie hervatten",
-      "objects": [
-        {
-          "name": "NFC-sleutelhanger",
-          "material": "pla-plus"
-        },
-        {
-          "name": "Beeldje",
-          "material": "silky-pla"
-        },
-        {
-          "name": "Toonbanklogo",
-          "material": "carbon-fiber"
-        }
-      ]
+      "pause": "Animatie pauzeren",
+      "play": "Animatie hervatten",
+      "defaultMaterial": "wood-pla"
     }
   },
   "marquee": {

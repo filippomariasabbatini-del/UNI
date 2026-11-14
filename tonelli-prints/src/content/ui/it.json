@@ -76,26 +76,22 @@
         "alt": "Portachiavi gialli a forma di pasta su un tagliere"
       },
       {
-        "src": "../../assets/photos/nfc-keychains-branded.jpg",
-        "alt": "Portachiavi stampati in 3D con i loghi dei clienti, uno spicchio di pizza e formati di pasta"
-      },
-      {
         "src": "../../assets/photos/nfc-business-cards.jpg",
         "alt": "Biglietti da visita NFC neri in fibra di carbonio"
       }
     ],
-    "printStage": {
-      "label": "Animazione: una stampante 3D realizza strato dopo strato un portachiavi NFC in PLA+, una statuetta in Silky-PLA e un logo da banco in fibra di carbonio",
-      "printing": "In stampa",
-      "done": "Pronto",
+    "logoStage": {
+      "label": "Scena 3D interattiva: il logo Tonelli viene stampato strato su strato, a metà stampa riceve un tag NFC, viene richiuso e mostrato finito",
+      "fallbackAlt": "Logo Tonelli Prints",
+      "stepsLabel": "Fasi della produzione",
+      "steps": ["Stampa base", "Inserimento NFC", "Chiusura", "Prodotto finito"],
+      "xray": "Vista raggi X (NFC)",
+      "nfcReady": "NFC Ready • Tap to scan",
+      "material": "Materiale",
       "layer": "Strato",
-      "pause": "Metti in pausa l'animazione di stampa",
-      "play": "Riavvia l'animazione di stampa",
-      "objects": [
-        { "name": "Portachiavi NFC", "material": "pla-plus" },
-        { "name": "Statuetta", "material": "silky-pla" },
-        { "name": "Logo da banco", "material": "carbon-fiber" }
-      ]
+      "pause": "Metti in pausa l'animazione",
+      "play": "Riavvia l'animazione",
+      "defaultMaterial": "wood-pla"
     }
   },
   "marquee": {

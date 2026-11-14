@@ -286,7 +286,7 @@ test.describe('sicurezza', () => {
   });
 });
 
-test.describe("scena di stampa dell'hero", () => {
+test.describe("scena 3D dell'hero", () => {
   /** In CI la GPU è software: il sito la rifiuta di proposito. Qui togliamo il veto per provare la scena. */
   const allowSoftwareWebGL = (): void => {
     const original = HTMLCanvasElement.prototype.getContext;
@@ -298,69 +298,110 @@ test.describe("scena di stampa dell'hero", () => {
       return original.call(this, type, { ...attributes, failIfMajorPerformanceCaveat: false });
     } as typeof original;
   };
+  const supportsWebGL = (): boolean =>
+    document.createElement('canvas').getContext('webgl2') !== null;
 
-  test('senza WebGL resta la foto', async ({ page }) => {
+  test('senza WebGL resta il logo statico e la scena non viene scaricata', async ({ page }) => {
     const errors: string[] = [];
+    const scripts: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
+    page.on('request', (request) => {
+      if (request.resourceType() === 'script') scripts.push(request.url());
+    });
     await page.addInitScript(() => {
       HTMLCanvasElement.prototype.getContext = () => null;
     });
     await page.goto('/');
-    const stage = page.locator('[data-print-stage]');
-    await expect(stage.getByRole('img', { name: /Portachiavi stampati in 3D/ })).toBeVisible();
-    // Il modulo parte a pagina ferma: gli diamo il tempo di provarci
+    const stage = page.locator('[data-logo-stage]');
+    await expect(stage.getByRole('img', { name: 'Logo Tonelli Prints' })).toBeVisible();
+    // Il modulo partirebbe a pagina ferma: gli diamo il tempo di provarci
     await page.waitForTimeout(1500);
     await expect(stage).not.toHaveAttribute('data-active');
     await expect(stage.locator('canvas')).toBeHidden();
-    await expect(stage.locator('[data-stage-toggle]')).toBeHidden();
+    await expect(stage.locator('[data-stage-controls]')).toBeHidden();
+    expect(scripts.filter((url) => url.includes('logo-stage'))).toEqual([]);
     expect(errors).toEqual([]);
   });
 
-  test('con WebGL parte, si mette in pausa e riparte', async ({ page }) => {
+  test('con WebGL: fasi, raggi X, materiali e pausa', async ({ page }) => {
+    test.slow();
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.addInitScript(allowSoftwareWebGL);
     await page.goto('/');
-    const supported = await page.evaluate(
-      () => document.createElement('canvas').getContext('webgl') !== null,
-    );
-    test.skip(!supported, 'WebGL non disponibile in questo browser');
+    test.skip(!(await page.evaluate(supportsWebGL)), 'WebGL 2 non disponibile in questo browser');
 
-    const stage = page.locator('[data-print-stage]');
+    const stage = page.locator('[data-logo-stage]');
     await stage.scrollIntoViewIfNeeded();
-    await expect(stage).toHaveAttribute('data-active', '');
-    await expect(stage.getByRole('img', { name: /stampante 3D/ })).toBeVisible();
+    await expect(stage).toHaveAttribute('data-active', '', { timeout: 20_000 });
+    await expect(stage.getByRole('img', { name: /Scena 3D interattiva/ })).toBeVisible();
     await expect(stage.locator('[data-stage-fallback]')).toHaveAttribute('aria-hidden', 'true');
-    await expect(stage.locator('[data-stage-name]')).toHaveText('Portachiavi NFC');
-    // Il nome del filamento arriva dal listino materiali
-    await expect(stage.locator('[data-stage-material]')).toHaveText('PLA+ 2.0');
 
-    const layer = stage.locator('[data-stage-layer]');
-    await expect(layer).not.toHaveText('000');
-    await stage.getByRole('button', { name: "Metti in pausa l'animazione di stampa" }).click();
-    const frozen = await layer.textContent();
-    await page.waitForTimeout(400);
-    await expect(layer).toHaveText(frozen ?? '');
+    const steps = stage.getByRole('list', { name: 'Fasi della produzione' });
+    await expect(steps.getByRole('button')).toHaveCount(4);
+    await expect(steps.getByRole('button', { name: /Stampa base/ })).toHaveAttribute(
+      'aria-current',
+      'step',
+    );
+    const xray = stage.getByRole('switch', { name: 'Vista raggi X (NFC)' });
+    await expect(xray).toBeDisabled();
+    // La stampa avanza da sola
+    await expect(stage.locator('[data-stage-layer]')).not.toHaveText('00', { timeout: 20_000 });
 
-    await stage.getByRole('button', { name: "Riavvia l'animazione di stampa" }).click();
-    await expect(layer).not.toHaveText(frozen ?? '');
+    // Salto alla fase 2: la timeline ci arriva e lo stepper la segue
+    await steps.getByRole('button', { name: /Inserimento NFC/ }).click();
+    await expect(steps.getByRole('button', { name: /Inserimento NFC/ })).toHaveAttribute(
+      'aria-current',
+      'step',
+      { timeout: 20_000 },
+    );
+    await expect(stage.locator('[data-stage-layer]')).toHaveText('13');
+
+    // Prodotto finito: si sbloccano i raggi X
+    await steps.getByRole('button', { name: /Prodotto finito/ }).click();
+    await expect(stage).toHaveAttribute('data-finished', '', { timeout: 30_000 });
+    await expect(xray).toBeEnabled();
+    await xray.click();
+    await expect(xray).toHaveAttribute('aria-checked', 'true');
+    await expect(stage.locator('[data-stage-nfc]')).toHaveAttribute('data-visible', '');
+
+    // Cambio materiale: il nome arriva dal listino
+    const petg = stage.getByRole('radio', { name: 'PETG' });
+    await petg.click();
+    await expect(petg).toHaveAttribute('aria-checked', 'true');
+    await expect(stage.getByRole('radio', { name: 'Wood-PLA' })).toHaveAttribute(
+      'aria-checked',
+      'false',
+    );
+    await expect(stage.locator('[data-stage-material-name]')).toHaveText('PETG');
+
+    await stage.getByRole('button', { name: "Metti in pausa l'animazione" }).click();
+    await expect(stage.getByRole('button', { name: "Riavvia l'animazione" })).toBeVisible();
+
+    // Tornando alla stampa il prodotto non è più "finito" e i raggi X si spengono
+    await steps.getByRole('button', { name: /Stampa base/ }).click();
+    await expect(stage).not.toHaveAttribute('data-finished', '', { timeout: 30_000 });
+    await expect(xray).toBeDisabled();
+    await expect(xray).toHaveAttribute('aria-checked', 'false');
     expect(errors).toEqual([]);
   });
 
-  test('con movimento ridotto mostra il pezzo finito, fermo', async ({ page }) => {
+  test('con movimento ridotto parte dal prodotto finito, fermo', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.addInitScript(allowSoftwareWebGL);
     await page.goto('/');
-    const supported = await page.evaluate(
-      () => document.createElement('canvas').getContext('webgl') !== null,
-    );
-    test.skip(!supported, 'WebGL non disponibile in questo browser');
+    test.skip(!(await page.evaluate(supportsWebGL)), 'WebGL 2 non disponibile in questo browser');
 
-    const stage = page.locator('[data-print-stage]');
-    await expect(stage).toHaveAttribute('data-active', '');
-    await expect(stage.locator('[data-stage-status]')).toHaveText('Pronto');
-    await expect(stage.locator('[data-stage-layer]')).toHaveText('300');
+    const stage = page.locator('[data-logo-stage]');
+    await expect(stage).toHaveAttribute('data-active', '', { timeout: 20_000 });
+    await expect(stage).toHaveAttribute('data-finished', '');
+    await expect(stage.locator('[data-stage-layer]')).toHaveText('25');
     await expect(stage.locator('[data-stage-toggle]')).toBeHidden();
+    await expect(stage.getByRole('switch', { name: 'Vista raggi X (NFC)' })).toBeEnabled();
+    // Le fasi restano consultabili, a scatti
+    await stage.getByRole('button', { name: /Inserimento NFC/ }).click();
+    await expect(stage.locator('[data-stage-layer]')).toHaveText('13');
+    await expect(stage).not.toHaveAttribute('data-finished', '');
   });
 });
 
