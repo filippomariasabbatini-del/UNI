@@ -333,7 +333,8 @@ test.describe("scena 3D dell'hero", () => {
 
     const stage = page.locator('[data-logo-stage]');
     await stage.scrollIntoViewIfNeeded();
-    await expect(stage).toHaveAttribute('data-active', '', { timeout: 20_000 });
+    // Con GPU software la compilazione degli shader può richiedere parecchi secondi
+    await expect(stage).toHaveAttribute('data-active', '', { timeout: 45_000 });
     await expect(stage.getByRole('img', { name: /Scena 3D interattiva/ })).toBeVisible();
     await expect(stage.locator('[data-stage-fallback]')).toHaveAttribute('aria-hidden', 'true');
 
@@ -360,6 +361,7 @@ test.describe("scena 3D dell'hero", () => {
     // Prodotto finito: si sbloccano i raggi X
     await steps.getByRole('button', { name: /Prodotto finito/ }).click();
     await expect(stage).toHaveAttribute('data-finished', '', { timeout: 30_000 });
+    await expect(stage.locator('[data-stage-z]')).toHaveText('5.00');
     await expect(xray).toBeEnabled();
     await xray.click();
     await expect(xray).toHaveAttribute('aria-checked', 'true');
@@ -387,13 +389,15 @@ test.describe("scena 3D dell'hero", () => {
   });
 
   test('con movimento ridotto parte dal prodotto finito, fermo', async ({ page }) => {
+    test.slow();
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.addInitScript(allowSoftwareWebGL);
     await page.goto('/');
     test.skip(!(await page.evaluate(supportsWebGL)), 'WebGL 2 non disponibile in questo browser');
 
     const stage = page.locator('[data-logo-stage]');
-    await expect(stage).toHaveAttribute('data-active', '', { timeout: 20_000 });
+    // Con GPU software la compilazione degli shader può richiedere parecchi secondi
+    await expect(stage).toHaveAttribute('data-active', '', { timeout: 45_000 });
     await expect(stage).toHaveAttribute('data-finished', '');
     await expect(stage.locator('[data-stage-layer]')).toHaveText('25');
     await expect(stage.locator('[data-stage-toggle]')).toBeHidden();

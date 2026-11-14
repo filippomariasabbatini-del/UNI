@@ -83,6 +83,7 @@ export function initLogoStage(stage: HTMLElement): void {
   let dirty = true;
   let shownPhase = -1;
   let shownLayer = -1;
+  let shownHeight = '';
   let finished = false;
   // Rotazione libera del prodotto finito
   let dragging = false;
@@ -125,7 +126,12 @@ export function initLogoStage(stage: HTMLElement): void {
     if (layer !== shownLayer) {
       shownLayer = layer;
       if (layerLabel) layerLabel.textContent = String(layer).padStart(2, '0');
-      if (heightLabel) heightLabel.textContent = ((state.z / HEIGHT) * HEIGHT_MM).toFixed(2);
+    }
+    // La quota cambia più spesso dello strato: va aggiornata per conto suo
+    const height = ((state.z / HEIGHT) * HEIGHT_MM).toFixed(2);
+    if (height !== shownHeight) {
+      shownHeight = height;
+      if (heightLabel) heightLabel.textContent = height;
     }
     const done = state.lift > 0.98;
     if (done !== finished) {
