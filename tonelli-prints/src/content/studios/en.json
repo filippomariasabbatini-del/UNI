@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": "nijmegen",
+      "city": "Nijmegen",
+      "label": "NL, main studio",
+      "description": "The main production floor. Eight printers, a small finishing room, and the warehouse the keychains ship from.",
+      "addressLine": null,
+      "todo": "TODO: indirizzo dello studio di Nimega."
+    },
+    {
+      "id": "roma",
+      "city": "Rome",
+      "label": "IT, Italian branch",
+      "description": "Closer to our hospitality clients in central and southern Italy. Smaller, faster turnarounds for the local market.",
+      "addressLine": "Via Monteciccardo",
+      "todo": "TODO: civico e CAP da confermare."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+---
+import { site, type Locale } from '../../config/site';
+import { localePath } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Percorso della pagina corrente senza prefisso di lingua: il cambio lingua resta sulla stessa pagina */
+  path: string;
+  /** Nome accessibile del gruppo */
+  label: string;
+  class?: string;
+}
+const { locale, path, label, class: className } = Astro.props;
+const languages = site.locales.filter((language) => language.enabled);
+---
+
+{languages.length > 1 && (
+  <div
+    role="group"
+    aria-label={label}
+    data-language-switch
+    class:list={['flex items-center', className]}
+  >
+    {languages.map((language) => (
+      <a
+        href={localePath(language.code, path)}
+        hreflang={language.code}
+        lang={language.code}
+        aria-current={language.code === locale ? 'true' : undefined}
+        class="language-option inline-flex min-h-11 min-w-11 items-center justify-center"
+      >
+        <span aria-hidden="true">{language.label}</span>
+        <span class="sr-only">{language.name}</span>
+      </a>
+    ))}
+  </div>
+)}

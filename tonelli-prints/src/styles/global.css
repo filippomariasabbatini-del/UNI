@@ -196,6 +196,29 @@
     }
   }
 
+  /* Cambio lingua nell'header: la lingua attiva è una pastiglia piena */
+  .language-option > span:first-child {
+    border-radius: 9999px;
+    padding: 0.25rem 0.625rem;
+    /* Come i link del menu: l'header è traslucido e passa anche sopra le sezioni scure */
+    color: color-mix(in srgb, var(--tp-fg) 80%, transparent);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    transition:
+      color 200ms ease,
+      background-color 200ms ease;
+  }
+
+  .language-option:hover > span:first-child {
+    color: var(--tp-fg);
+  }
+
+  .language-option[aria-current] > span:first-child {
+    background-color: var(--tp-fg);
+    color: var(--tp-bg);
+  }
+
   /* Scena di stampa dell'hero: canvas, pannello e bottone compaiono quando src/scripts/print-stage.ts li attiva */
   .stage-panel {
     border: 1px solid var(--tp-line);

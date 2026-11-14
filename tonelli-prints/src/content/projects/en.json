@@ -1,0 +1,81 @@
+{
+  "items": [
+    {
+      "id": "nfc-welcome-keychains",
+      "title": "NFC welcome keychains",
+      "quote": "The NFC keychains replaced our paper room cards. Guests tap them at arrival and the welcome guide lands on their phone, the lobby looks classier for it. We have already reordered twice.",
+      "author": "Sofia Marchetti",
+      "place": "Tuscany, IT",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "Branded NFC keychains on a light background"
+      }
+    },
+    {
+      "id": "wedding-menu-holders",
+      "title": "Wedding menu holders",
+      "quote": "We needed something warmer than acrylic for our outdoor weddings. Tonelli printed 80 holders in the same cream as our linens and finished them by hand. Couples ask where we got them every single weekend.",
+      "author": "Eva van der Berg",
+      "place": "Utrecht, NL",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "Cream menu holder with a wedding buffet menu, next to a vase of wild flowers"
+      }
+    },
+    {
+      "id": "pizza-slice-keychain",
+      "title": "Pizza slice keychains",
+      "quote": "We give them to delivery customers as a thank you for orders over 25 euros. Repeat orders went up roughly 15% the first month. Riccardo even tweaked the cheese pattern after I asked.",
+      "author": "Marco Greco",
+      "place": "Rome, IT",
+      "image": {
+        "src": "../../assets/photos/pizza-keychain.jpg",
+        "alt": "Keychain shaped like a slice of margherita pizza, with raised mozzarella and basil"
+      }
+    },
+    {
+      "id": "makita-wall-mounts",
+      "title": "Makita wall mounts",
+      "quote": "Our drill set was rattling around in toolboxes. Lieke prototyped a wall mount on the Friday, we tested it on Monday and ordered 24 the same week. Carbon fibre, holds the weight, no complaints six months in.",
+      "author": "Bram de Vries",
+      "place": "Nijmegen, NL",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Cordless drills hanging on black carbon-fibre wall mounts"
+      }
+    },
+    {
+      "id": "pasta-keychain-line",
+      "title": "Pasta keychain line",
+      "quote": "Tourists pick them off the shelf to take a photo before even checking the price. The bowtie pasta is our top seller. I am restocking every three weeks now.",
+      "author": "Giulia Rossi",
+      "place": "Florence, IT",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Yellow keychains shaped like farfalle, ravioli, fusilli and tortellini"
+      }
+    },
+    {
+      "id": "trade-show-spin-wheel",
+      "title": "Trade fair spin wheel",
+      "quote": "Three weeks from sketch to event-ready, including a custom dial in our client’s brand colours. We closed two new clients on the spot at the fair. Worth every euro.",
+      "author": "Tom Janssen",
+      "place": "Amsterdam, NL",
+      "image": {
+        "src": "../../assets/photos/spin-wheel.jpg",
+        "alt": "3D-printed tabletop spin wheel, with coloured segments in motion"
+      }
+    },
+    {
+      "id": "popartment-collection",
+      "title": "POPARTMENT collection",
+      "quote": "We briefed the David and the Duomo, they came back with a colour balance we could not have nailed ourselves. Our shop sells through the run before we even reorder.",
+      "author": "Lorenzo Bianchi",
+      "place": "Florence, IT",
+      "image": {
+        "src": "../../assets/photos/popartment-keychains.jpg",
+        "alt": "Two POPARTMENT keychains: the David in pop-art style and the Florence skyline with the Duomo"
+      }
+    }
+  ]
+}

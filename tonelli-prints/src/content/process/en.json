@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "title": "Tell us what you need",
+      "description": "A brief, a sketch, a Pinterest board. Even a verbal description works."
+    },
+    {
+      "title": "We quote in 48 hours",
+      "description": "Materials, run size, finish, lead time. Itemised. No surprises later."
+    },
+    {
+      "title": "Approve the prototype",
+      "description": "We ship a single sample first. You sign off before we run the batch."
+    },
+    {
+      "title": "Run, pack, ship",
+      "description": "Production runs in Nijmegen or Rome, whichever is closer to you."
+    }
+  ]
+}

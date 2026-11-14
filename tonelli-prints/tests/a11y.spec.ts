@@ -1,7 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
-const PAGES = ['/', '/privacy.html', '/cookies.html', '/terms.html', '/imprint.html', '/404.html'];
+const PAGES = [
+  '/',
+  '/en/',
+  '/privacy.html',
+  '/en/privacy.html',
+  '/cookies.html',
+  '/terms.html',
+  '/imprint.html',
+  '/404.html',
+];
 
 /** Scorre tutta la pagina per far partire i reveal e caricare le immagini lazy prima dell'analisi. */
 async function settle(page: Page): Promise<void> {

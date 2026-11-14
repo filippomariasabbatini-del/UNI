@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "id": "pla-plus",
+      "name": "PLA+ 2.0",
+      "tag": "Most popular",
+      "specs": "Bio-based · 20+ colours · matte",
+      "colors": [],
+      "todo": "TODO: palette colori reale (nome + hex) per mostrare i campioni nella scheda."
+    },
+    {
+      "id": "petg",
+      "name": "PETG",
+      "tag": "Hospitality",
+      "specs": null,
+      "colors": [],
+      "todo": "TODO: specifiche, palette colori. Prezzo e consegna in src/config/pricing.ts."
+    },
+    {
+      "id": "carbon-fiber",
+      "name": "Carbon fibre",
+      "tag": "Engineering",
+      "specs": null,
+      "colors": [],
+      "todo": "TODO: specifiche, palette colori. Prezzo e consegna in src/config/pricing.ts."
+    },
+    {
+      "id": "silky-pla",
+      "name": "Silky-PLA",
+      "tag": "Retail",
+      "specs": null,
+      "colors": [],
+      "todo": "TODO: specifiche, palette colori. Prezzo e consegna in src/config/pricing.ts."
+    },
+    {
+      "id": "wood-pla",
+      "name": "Wood-PLA",
+      "tag": "Souvenir",
+      "specs": null,
+      "colors": [],
+      "todo": "TODO: specifiche, palette colori. Prezzo e consegna in src/config/pricing.ts."
+    },
+    {
+      "id": "tpu",
+      "name": "Flexible TPU",
+      "tag": "Wearables",
+      "specs": null,
+      "colors": [],
+      "todo": "TODO: specifiche, palette colori. Prezzo e consegna in src/config/pricing.ts."
+    }
+  ]
+}

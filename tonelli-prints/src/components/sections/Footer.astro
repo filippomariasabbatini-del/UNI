@@ -9,9 +9,11 @@ import Icon from '../ui/Icon.astro';
 
 interface Props {
   locale: Locale;
+  /** Percorso della pagina corrente senza prefisso di lingua */
+  path: string;
   ui: Ui;
 }
-const { locale, ui } = Astro.props;
+const { locale, path, ui } = Astro.props;
 const { footer } = ui;
 const home = localePath(locale, '/');
 const studios = (await getContent('studios', locale)).items;
@@ -126,12 +128,12 @@ const columnTitle = 'text-fg mb-2 text-[0.9375rem] font-semibold';
       </nav>
 
       <nav aria-label={ui.a11y.languageSelector}>
-        <ul class="flex items-center gap-1">
+        <ul data-language-switch class="flex items-center gap-1">
           {languages.map((language) => (
             <li>
               {language.enabled ? (
                 <a
-                  href={localePath(language.code, '/')}
+                  href={localePath(language.code, path)}
                   hreflang={language.code}
                   lang={language.code}
                   aria-current={language.code === locale ? 'true' : undefined}

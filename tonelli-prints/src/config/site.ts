@@ -96,8 +96,7 @@ export const site = siteSchema.parse({
   defaultLocale: 'it',
   locales: [
     { code: 'it', label: 'IT', name: 'Italiano', enabled: true },
-    // TODO(i18n): aggiungere src/content/*/en.json e src/content/legal/en/, poi enabled: true
-    { code: 'en', label: 'EN', name: 'English', enabled: false },
+    { code: 'en', label: 'EN', name: 'English', enabled: true },
     // TODO(i18n): aggiungere src/content/*/nl.json e src/content/legal/nl/, poi enabled: true
     { code: 'nl', label: 'NL', name: 'Nederlands', enabled: false },
   ],

@@ -7,12 +7,15 @@ import { localePath } from '../../lib/i18n';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Icon from '../ui/Icon.astro';
+import LanguageSwitch from '../ui/LanguageSwitch.astro';
 
 interface Props {
   locale: Locale;
+  /** Percorso della pagina corrente senza prefisso di lingua */
+  path: string;
   ui: Ui;
 }
-const { locale, ui } = Astro.props;
+const { locale, path, ui } = Astro.props;
 const home = localePath(locale, '/');
 const LOGO_HEIGHT = 26;
 const logoWidth = Math.round((LOGO_HEIGHT * logo.width) / logo.height);
@@ -47,25 +50,27 @@ const logoWidth = Math.round((LOGO_HEIGHT * logo.width) / logo.height);
         </ul>
       </nav>
 
-      <div class="hidden lg:block">
-        <Button href={`${home}#contatti`} size="sm">
-          {ui.nav.cta}
-        </Button>
+      <div class="flex items-center gap-1 lg:gap-3">
+        <LanguageSwitch locale={locale} path={path} label={ui.a11y.languageSelector} />
+        <div class="hidden lg:block">
+          <Button href={`${home}#contatti`} size="sm">
+            {ui.nav.cta}
+          </Button>
+        </div>
+        <button
+          type="button"
+          data-menu-toggle
+          data-label-open={ui.a11y.openMenu}
+          data-label-close={ui.a11y.closeMenu}
+          aria-label={ui.a11y.openMenu}
+          aria-expanded="false"
+          aria-controls="menu-mobile"
+          class="-mr-2.5 inline-flex size-11 items-center justify-center rounded-full lg:hidden"
+        >
+          <Icon name="menu" size={24} class="group-data-menu-open/header:hidden" />
+          <Icon name="close" size={24} class="hidden group-data-menu-open/header:block" />
+        </button>
       </div>
-
-      <button
-        type="button"
-        data-menu-toggle
-        data-label-open={ui.a11y.openMenu}
-        data-label-close={ui.a11y.closeMenu}
-        aria-label={ui.a11y.openMenu}
-        aria-expanded="false"
-        aria-controls="menu-mobile"
-        class="-mr-2.5 inline-flex size-11 items-center justify-center rounded-full lg:hidden"
-      >
-        <Icon name="menu" size={24} class="group-data-menu-open/header:hidden" />
-        <Icon name="close" size={24} class="hidden group-data-menu-open/header:block" />
-      </button>
     </Container>
   </div>
 

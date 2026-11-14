@@ -1,3 +1,12 @@
+/** Cambio lingua: resta sulla stessa sezione della pagina (l'ancora non è nota in build). */
+export function initLanguageSwitch(): void {
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-language-switch] a')) {
+    link.addEventListener('click', () => {
+      if (location.hash) link.hash = location.hash;
+    });
+  }
+}
+
 /** Header: si compatta allo scroll e gestisce il menu mobile (aria-expanded, Esc, focus). */
 export function initNav(): void {
   const header = document.querySelector<HTMLElement>('[data-header]');

@@ -19,6 +19,8 @@ interface Props {
 const { locale, title, description, path, noindex = false } = Astro.props;
 const ui = await getContent('ui', locale);
 const { analytics } = site;
+// La pagina 404 esiste solo nella lingua di default: da lì il cambio lingua porta alla home
+const switchPath = path === '/404.html' ? '/' : path;
 ---
 
 <!doctype html>
@@ -52,11 +54,11 @@ const { analytics } = site;
       aria-hidden="true"
       class="pointer-events-none absolute top-0 h-6 w-px"
     ></div>
-    <Header locale={locale} ui={ui} />
+    <Header locale={locale} path={switchPath} ui={ui} />
     <main id="contenuto" tabindex="-1" class="outline-none">
       <slot />
     </main>
-    <Footer locale={locale} ui={ui} />
+    <Footer locale={locale} path={switchPath} ui={ui} />
     <CookieBanner locale={locale} ui={ui} />
     {analytics.provider && analytics.scriptUrl && (
       <script

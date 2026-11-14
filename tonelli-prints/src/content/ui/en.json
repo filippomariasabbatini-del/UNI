@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "title": "Tonelli Prints — Custom 3D printing for brands · Nijmegen · Rome",
+    "description": "B2B 3D-printing studio in Nijmegen and Rome. NFC keychains, branded accessories, custom merchandise and employee kit for hospitality, events and retail. In PLA, PETG and carbon fibre.",
+    "ogImageAlt": "Tonelli Prints: we print your brand into objects people want to keep"
+  },
+  "a11y": {
+    "skipLink": "Skip to content",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "homeLink": "Tonelli Prints, back to home",
+    "footerNav": "Footer links",
+    "legalNav": "Legal information",
+    "languageSelector": "Language",
+    "newTab": "opens in a new tab"
+  },
+  "nav": {
+    "items": [
+      {
+        "href": "#cosa-facciamo",
+        "label": "What we make"
+      },
+      {
+        "href": "#chi-siamo",
+        "label": "Who we are"
+      },
+      {
+        "href": "#studi",
+        "label": "Studios"
+      },
+      {
+        "href": "#processo",
+        "label": "Process"
+      },
+      {
+        "href": "#materiali",
+        "label": "Materials"
+      }
+    ],
+    "cta": "Start a project"
+  },
+  "hero": {
+    "eyebrow": "Made by hand. With machines.",
+    "title": "We print your brand into objects people want to keep.",
+    "sub": "Tonelli Prints is a B2B 3D-printing studio in Nijmegen and Rome. We make custom accessories, smart NFC keychains, souvenirs and employee kit, for hotels, restaurants, venues, and the brands they put on shelves.",
+    "primaryCta": "Start a project",
+    "secondaryCta": "See materials",
+    "liveBadge": "{count} printers warm in Nijmegen",
+    "stats": [
+      {
+        "value": 5,
+        "prefix": "",
+        "suffix": "-day",
+        "text": "",
+        "label": "typical lead time"
+      },
+      {
+        "value": 20,
+        "prefix": "",
+        "suffix": "+",
+        "text": "",
+        "label": "filament colours"
+      },
+      {
+        "value": null,
+        "prefix": "",
+        "suffix": "",
+        "text": "NL · IT",
+        "label": "two studios, one team"
+      }
+    ],
+    "images": [
+      {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Yellow pasta-shaped keychains on a chopping board"
+      },
+      {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "3D-printed keychains with client logos, a pizza slice and pasta shapes"
+      },
+      {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Black carbon-fibre NFC business cards"
+      }
+    ],
+    "printStage": {
+      "label": "Animation: a 3D printer builds, layer by layer, an NFC keychain in PLA+, a figurine in Silky-PLA and a counter logo in carbon fibre",
+      "printing": "Printing",
+      "done": "Ready",
+      "layer": "Layer",
+      "pause": "Pause the printing animation",
+      "play": "Resume the printing animation",
+      "objects": [
+        {
+          "name": "NFC keychain",
+          "material": "pla-plus"
+        },
+        {
+          "name": "Figurine",
+          "material": "silky-pla"
+        },
+        {
+          "name": "Counter logo",
+          "material": "carbon-fiber"
+        }
+      ]
+    }
+  },
+  "marquee": {
+    "label": "Materials and locations",
+    "items": [
+      "PLA+ 2.0",
+      "PETG",
+      "Carbon fibre",
+      "Silky-PLA",
+      "Wood-PLA",
+      "Flexible TPU",
+      "Made in EU",
+      "Nijmegen",
+      "Rome",
+      "5-day lead time"
+    ],
+    "pause": "Pause the scrolling",
+    "play": "Resume the scrolling"
+  },
+  "products": {
+    "eyebrow": "What we make",
+    "title": "Objects with your brand on them. That people want to keep.",
+    "more": "Tell me more",
+    "moreAbout": "Tell me more about {product}"
+  },
+  "projects": {
+    "eyebrow": "Selected work",
+    "title": "A few brands we already work with.",
+    "sub": "Real projects, real clients.",
+    "previous": "Previous project",
+    "next": "Next project",
+    "region": "Projects and testimonials, scroll horizontally"
+  },
+  "about": {
+    "eyebrow": "Who we are",
+    "title": "A small team. Two studios. Three people answer the phone.",
+    "body": "No call centres, no account-manager carousel. The three of us run Tonelli day-to-day. When you write, one of us writes back, by name.",
+    "rolePending": "Role coming soon",
+    "bioPending": "Bio coming soon.",
+    "linkedin": "{name}'s LinkedIn profile"
+  },
+  "studios": {
+    "eyebrow": "Studios",
+    "title": "Two studios. One team. Same hands.",
+    "call": "Call the {city} studio",
+    "localTime": "Local time",
+    "status": {
+      "open": "In studio until {time}",
+      "closedTomorrow": "Off the floor, back tomorrow",
+      "closedLaterToday": "Off the floor, back at {time}",
+      "closedUntilDay": "Off the floor, back on {day}",
+      "fallback": "We reply within one working day"
+    },
+    "weekdays": {
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday",
+      "sun": "Sunday"
+    }
+  },
+  "process": {
+    "eyebrow": "Process",
+    "title": "Four steps. Two weeks, usually less.",
+    "sub": "We do not run on quote-form-into-the-void. Every project gets a named contact who answers within a working day."
+  },
+  "materials": {
+    "eyebrow": "Materials",
+    "title": "Six filaments. One catalogue, growing.",
+    "sub": "We hold the materials our clients actually order.",
+    "hint": "Show details for {material}",
+    "lead": "Lead time",
+    "days": "{days} d",
+    "price": "per unit at 100 units",
+    "colors": "Colours",
+    "pending": "Details coming soon. In the meantime, ask us: we reply the same day."
+  },
+  "estimator": {
+    "eyebrow": "Live estimate",
+    "title": "Configure a run. See the number.",
+    "disclaimer": "Indicative only, final quotes are written by a human within two working days.",
+    "material": "Material",
+    "quantity": "Run size",
+    "pieces": "{quantity} units",
+    "total": "Estimated total",
+    "unit": "Price per unit",
+    "lead": "Door-to-door lead time",
+    "days": "{days} days",
+    "onRequest": "On request",
+    "onRequestNote": "For this material we write the price ourselves, item by item.",
+    "cta": "Lock in this run",
+    "prefill": "I'd like to lock in this run: {quantity} units in {material}. Indicative estimate: {total}.",
+    "prefillOnRequest": "I'd like a quote for this run: {quantity} units in {material}."
+  },
+  "contact": {
+    "eyebrow": "Start a project",
+    "title": "Tell us what you need. We'll write back within two working days.",
+    "noteBefore": "Or email us at",
+    "noteAfter": ", same hands answer.",
+    "fields": {
+      "company": "Company",
+      "email": "Email",
+      "material": "Material",
+      "materialUnsure": "Not sure, advise me",
+      "message": "What are you making?",
+      "honeypot": "Leave this field empty"
+    },
+    "selectedProduct": "You're interested in: {product}",
+    "removeProduct": "Remove {product} from the request",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "privacyBefore": "We only use this data to reply to you. Details in the",
+    "privacyLink": "privacy policy",
+    "errors": {
+      "summary": "Check the highlighted fields.",
+      "required": "We need this field.",
+      "email": "Enter a valid email address, like name@company.com.",
+      "tooShort": "Tell us a bit more: two lines are enough."
+    },
+    "success": {
+      "title": "Request received.",
+      "body": "One of us will write back within two working days, by name."
+    },
+    "mailto": {
+      "title": "We've opened your email app.",
+      "body": "The message is already filled in: just press send. If nothing opened, email us at {email}.",
+      "subject": "New project: {company}"
+    },
+    "failure": "Something went wrong and your request wasn't sent. Try again shortly or email us at {email}."
+  },
+  "footer": {
+    "tagline": "Tonelli Prints. B2B custom 3D printing. Hospitality, food, events, entertainment.",
+    "studio": {
+      "title": "Studio",
+      "links": [
+        {
+          "href": "#materiali",
+          "label": "Materials"
+        },
+        {
+          "href": "#cosa-facciamo",
+          "label": "What we make"
+        },
+        {
+          "href": "#processo",
+          "label": "Process"
+        },
+        {
+          "href": "#progetti",
+          "label": "Case studies"
+        }
+      ]
+    },
+    "contacts": {
+      "title": "Contact",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
+    "locations": {
+      "title": "Studios"
+    },
+    "copyright": "© {year} Tonelli Prints",
+    "kvkPending": "KVK pending",
+    "kvk": "KVK {kvk}",
+    "legal": {
+      "privacy": "Privacy",
+      "cookies": "Cookies",
+      "terms": "Terms",
+      "imprint": "Imprint"
+    },
+    "languageSoon": "{language}, coming soon"
+  },
+  "cookie": {
+    "label": "Cookies",
+    "text": "We only use essential cookies. No trackers, no profiling.",
+    "textNonEssential": "Non-essential cookies stay off until you accept them.",
+    "policy": "Cookie policy",
+    "ok": "OK, got it",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "heading": "We haven't printed this page.",
+    "body": "The link is wrong or the page no longer exists.",
+    "cta": "Back to home"
+  },
+  "legal": {
+    "draftNotice": "Draft: the items marked [TO BE COMPLETED] must be filled in and reviewed by a lawyer before publication.",
+    "back": "Back to home",
+    "updated": "Last updated: {date}"
+  }
+}

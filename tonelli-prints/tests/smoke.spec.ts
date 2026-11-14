@@ -363,3 +363,67 @@ test.describe("scena di stampa dell'hero", () => {
     await expect(stage.locator('[data-stage-toggle]')).toBeHidden();
   });
 });
+
+test.describe('lingue', () => {
+  test("il selettore nell'header passa da italiano a inglese e ritorno", async ({ page }) => {
+    await page.goto('/');
+    const header = page.getByRole('banner');
+    const language = header.getByRole('group', { name: 'Lingua' });
+    await expect(language.getByRole('link', { name: 'Italiano' })).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+
+    await language.getByRole('link', { name: 'English' }).click();
+    await expect(page).toHaveURL(/\/en\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('h1')).toContainText('We print your brand');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://tonelliprints.com/en/',
+    );
+    await expect(
+      header.getByRole('group', { name: 'Language' }).getByRole('link', { name: 'English' }),
+    ).toHaveAttribute('aria-current', 'true');
+
+    await header.getByRole('link', { name: 'Italiano' }).click();
+    await expect(page).toHaveURL(/localhost:\d+\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'it');
+    await expect(page.locator('h1')).toContainText('Stampiamo il tuo brand');
+  });
+
+  test('il cambio lingua resta sulla stessa pagina e sulla stessa sezione', async ({ page }) => {
+    await page.goto('/privacy.html');
+    await page.getByRole('banner').getByRole('link', { name: 'English' }).click();
+    await expect(page).toHaveURL(/\/en\/privacy\.html$/);
+    await expect(page.locator('h1')).toHaveText('Privacy policy');
+
+    await page.goto('/#materiali');
+    await page.getByRole('banner').getByRole('link', { name: 'English' }).click();
+    await expect(page).toHaveURL(/\/en\/#materiali$/);
+    await expect(page.locator('#materiali')).toBeInViewport();
+  });
+
+  test('la home inglese dichiara le alternative hreflang e non ha errori in console', async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('console', (message) => {
+      if (message.type() === 'error') errors.push(message.text());
+    });
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto('/en/');
+    await expect(page).toHaveTitle(/Custom 3D printing/);
+    const alternates = await page
+      .locator('link[rel="alternate"][hreflang]')
+      .evaluateAll((links) =>
+        links.map((link) => `${link.getAttribute('hreflang')} ${link.getAttribute('href')}`),
+      );
+    expect(alternates).toEqual([
+      'it https://tonelliprints.com/',
+      'en https://tonelliprints.com/en/',
+      'x-default https://tonelliprints.com/',
+    ]);
+    expect(errors).toEqual([]);
+  });
+});

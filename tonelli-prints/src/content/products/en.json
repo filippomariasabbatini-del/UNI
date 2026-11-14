@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": "nfc-keychains",
+      "title": "Smart NFC keychains",
+      "summary": "Phygital touchpoints. Tap-to-menu, tap-to-tip, tap-to-loyalty. Branded any way you like.",
+      "details": "Used by 40+ hotels and restaurants across Italy and the Netherlands. We program the chips, you write the URL. Refresh content any time.",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "3D-printed keychains with NFC chips: venue logos, a pizza slice, pasta shapes and the Florence skyline"
+      }
+    },
+    {
+      "id": "branded-accessories",
+      "title": "Branded accessories",
+      "summary": "Table numbers, bottle tags, signage, menu holders, printed in your colours, your typeface.",
+      "details": "Most orders ship within a week. We can match any Pantone, deboss your logo, or finish with a hand-rubbed wax for a softer touch.",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "White 3D-printed menu holder with a wedding menu, on a laid wooden table"
+      }
+    },
+    {
+      "id": "souvenirs",
+      "title": "Souvenirs that sell",
+      "summary": "Resell-quality keepsakes for hotels, venues, museums. Priced for retail margins.",
+      "details": "Wholesale pricing kicks in at 50 units. We help with shelf packaging, hangtags, and a small reorder UI for your front desk.",
+      "image": {
+        "src": "../../assets/photos/figurines.jpg",
+        "alt": "3D-printed figurines on a dark shelf: a white gnome, a sand-coloured bull and two black cats"
+      }
+    },
+    {
+      "id": "employee-kits",
+      "title": "Employee kit",
+      "summary": "NFC business cards, name tags, lanyards, badges. Things your team will actually use.",
+      "details": "Carbon-fibre NFC business cards that tap a contact into a phone in one second. Personalised per person at no extra cost above 25 units.",
+      "image": {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Two black carbon-fibre NFC business cards, one with name and contact details and one with a QR code"
+      }
+    },
+    {
+      "id": "retail-collections",
+      "title": "Retail-ready collections",
+      "summary": "Custom themed product lines. Pasta keychains, city landmarks, food shapes.",
+      "details": "We co-design the whole collection with you, print the first 50, and you decide whether to scale. We keep the moulds on file: reorders cost half.",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Yellow pasta-shaped keychains, ravioli, farfalle, fusilli, rigatoni and tortellini, on a chopping board"
+      }
+    },
+    {
+      "id": "functional-parts",
+      "title": "Functional parts & prototypes",
+      "summary": "Tool holders, brackets, jigs, fixtures. Design files in by Monday, parts in your hand by Friday.",
+      "details": "We accept STL, STEP, OBJ or .f3d. Carbon fibre and PA-CF for structural parts. We DFM-check every file and flag anything that will not survive use.",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Two cordless drills hanging on black 3D-printed mounts fixed to a concrete wall"
+      }
+    }
+  ]
+}
