@@ -9,6 +9,9 @@ const vec3 CAM = vec3(0., 2.05, 4.7);
 const vec3 TGT = vec3(0., .5, 0.);
 const vec3 LIG = vec3(-.36, .9, .25);
 
+// Rilievi di superficie: spenti quando il raggio viaggia dentro il vetro, così la rifrazione resta pulita
+float relief = 1.;
+
 float smin(float a, float b, float k) {
   float h = max(k - abs(a - b), 0.) / k;
   return min(a, b) - h * h * k * .25;
@@ -42,7 +45,7 @@ float tag(vec3 p) {
   // Pancia a cuscino: la faccia curva riflette lo studio invece di restare piatta
   d = smin(d, ell(vec3(q, p.z), vec3(.36, .55, .15)), .14);
   vec2 c = q + vec2(0., .1);
-  d -= .02 * (smoothstep(.065, 0., abs(length(c) - .2)) + smoothstep(.11, .04, length(c)));
+  d -= .02 * relief * (smoothstep(.065, 0., abs(length(c) - .2)) + smoothstep(.11, .04, length(c)));
   return -smin(-d, length(q - vec2(0., .4)) - .085, .03);
 }
 float cat(vec3 p) {
@@ -189,7 +192,8 @@ void main() {
       vec3 refl = env(reflect(rd, n));
 
       vec3 ri = refract(rd, n, 1. / 1.46);
-      float ti = .02;
+      relief = 0.;
+      float ti = .045;
       vec3 pi = p;
       for (int i = 0; i < 20; i++) {
         pi = p + ri * ti;
