@@ -93,24 +93,19 @@ const stageObjects = stage.objects.map((object) => ({
             aria-hidden="true"
             class="stage-panel absolute inset-x-3 bottom-3 rounded-[1.25rem] px-4 pt-3 pb-3.5 text-left sm:inset-x-4 sm:bottom-4"
           >
-            <div class="flex items-end justify-between gap-4">
-              <p class="min-w-0">
-                <span class="text-muted flex items-center gap-2 text-[0.75rem] font-medium">
-                  <span class="stage-dot size-1.5 rounded-full" />
-                  <span data-stage-status data-printing={stage.printing} data-done={stage.done}>
-                    {stage.printing}
-                  </span>
-                  <span aria-hidden="true">·</span>
-                  <span data-stage-material class="text-fg">
-                    {stageObjects[0]?.materialName}
-                  </span>
-                </span>
-                <span
-                  data-stage-name
-                  class="mt-0.5 block truncate text-[0.9375rem] leading-tight font-semibold"
-                >
-                  {stageObjects[0]?.name}
-                </span>
+            <p class="text-muted flex items-center gap-2 overflow-hidden text-[0.75rem] font-medium whitespace-nowrap">
+              <span class="stage-dot size-1.5 shrink-0 rounded-full" />
+              <span data-stage-status data-printing={stage.printing} data-done={stage.done}>
+                {stage.printing}
+              </span>
+              <span>·</span>
+              <span data-stage-material class="text-fg truncate">
+                {stageObjects[0]?.materialName}
+              </span>
+            </p>
+            <div class="mt-0.5 flex items-baseline justify-between gap-4">
+              <p data-stage-name class="truncate text-[0.9375rem] leading-tight font-semibold">
+                {stageObjects[0]?.name}
               </p>
               <p class="text-muted shrink-0 text-[0.75rem] tabular-nums">
                 {stage.layer}{' '}
