@@ -285,3 +285,79 @@ test.describe('sicurezza', () => {
     expect(violations).toEqual([]);
   });
 });
+
+test.describe("scena di stampa dell'hero", () => {
+  /** In CI la GPU è software: il sito la rifiuta di proposito. Qui togliamo il veto per provare la scena. */
+  const allowSoftwareWebGL = (): void => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      type: string,
+      attributes?: Record<string, unknown>,
+    ) {
+      return original.call(this, type, { ...attributes, failIfMajorPerformanceCaveat: false });
+    } as typeof original;
+  };
+
+  test('senza WebGL resta la foto', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.addInitScript(() => {
+      HTMLCanvasElement.prototype.getContext = () => null;
+    });
+    await page.goto('/');
+    const stage = page.locator('[data-print-stage]');
+    await expect(stage.getByRole('img', { name: /Portachiavi stampati in 3D/ })).toBeVisible();
+    // Il modulo parte a pagina ferma: gli diamo il tempo di provarci
+    await page.waitForTimeout(1500);
+    await expect(stage).not.toHaveAttribute('data-active');
+    await expect(stage.locator('canvas')).toBeHidden();
+    await expect(stage.locator('[data-stage-toggle]')).toBeHidden();
+    expect(errors).toEqual([]);
+  });
+
+  test('con WebGL parte, si mette in pausa e riparte', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.addInitScript(allowSoftwareWebGL);
+    await page.goto('/');
+    const supported = await page.evaluate(
+      () => document.createElement('canvas').getContext('webgl') !== null,
+    );
+    test.skip(!supported, 'WebGL non disponibile in questo browser');
+
+    const stage = page.locator('[data-print-stage]');
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage).toHaveAttribute('data-active', '');
+    await expect(stage.getByRole('img', { name: /stampante 3D/ })).toBeVisible();
+    await expect(stage.locator('[data-stage-fallback]')).toHaveAttribute('aria-hidden', 'true');
+    await expect(stage.locator('[data-stage-name]')).toHaveText('Portachiavi NFC');
+
+    const layer = stage.locator('[data-stage-layer]');
+    await expect(layer).not.toHaveText('000');
+    await stage.getByRole('button', { name: "Metti in pausa l'animazione di stampa" }).click();
+    const frozen = await layer.textContent();
+    await page.waitForTimeout(400);
+    await expect(layer).toHaveText(frozen ?? '');
+
+    await stage.getByRole('button', { name: "Riavvia l'animazione di stampa" }).click();
+    await expect(layer).not.toHaveText(frozen ?? '');
+    expect(errors).toEqual([]);
+  });
+
+  test('con movimento ridotto mostra il pezzo finito, fermo', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addInitScript(allowSoftwareWebGL);
+    await page.goto('/');
+    const supported = await page.evaluate(
+      () => document.createElement('canvas').getContext('webgl') !== null,
+    );
+    test.skip(!supported, 'WebGL non disponibile in questo browser');
+
+    const stage = page.locator('[data-print-stage]');
+    await expect(stage).toHaveAttribute('data-active', '');
+    await expect(stage.locator('[data-stage-status]')).toHaveText('Pronto');
+    await expect(stage.locator('[data-stage-layer]')).toHaveText('300');
+    await expect(stage.locator('[data-stage-toggle]')).toBeHidden();
+  });
+});

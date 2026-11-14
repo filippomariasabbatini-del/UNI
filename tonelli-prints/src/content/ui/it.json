@@ -83,7 +83,16 @@
         "src": "../../assets/photos/nfc-business-cards.jpg",
         "alt": "Biglietti da visita NFC neri in fibra di carbonio"
       }
-    ]
+    ],
+    "printStage": {
+      "label": "Animazione: una stampante 3D realizza strato dopo strato un portachiavi NFC, una statuetta e un logo da banco in materiale traslucido",
+      "printing": "In stampa",
+      "done": "Pronto",
+      "layer": "Strato",
+      "pause": "Metti in pausa l'animazione di stampa",
+      "play": "Riavvia l'animazione di stampa",
+      "objects": ["Portachiavi NFC", "Statuetta", "Logo da banco"]
+    }
   },
   "marquee": {
     "label": "Materiali e sedi",

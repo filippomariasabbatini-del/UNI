@@ -168,6 +168,16 @@ const ui = defineCollection({
           )
           .min(1),
         images: z.array(picture(context)).length(3),
+        /** Scena animata al posto della foto centrale. `objects`: i tre oggetti, nell'ordine dello shader */
+        printStage: z.object({
+          label: text,
+          printing: text,
+          done: text,
+          layer: text,
+          pause: text,
+          play: text,
+          objects: z.array(text).length(3),
+        }),
       }),
       marquee: z.object({ label: text, pause: text, play: text, items: z.array(text).min(3) }),
       products: z.object({ eyebrow: text, title: text, more: text, moreAbout: text }),

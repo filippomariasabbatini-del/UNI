@@ -5,6 +5,7 @@ import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import Heading from '../ui/Heading.astro';
+import Icon from '../ui/Icon.astro';
 import Photo from '../ui/Photo.astro';
 
 interface Props {
@@ -15,6 +16,7 @@ const printers = site.studios.find((studio) => studio.primary)?.printers ?? null
 const [badgeBefore = '', badgeAfter = ''] = hero.liveBadge.split('{count}');
 const [left, center, right] = hero.images;
 const frame = 'rounded-panel bg-surface shadow-card overflow-hidden';
+const stage = hero.printStage;
 ---
 
 <section aria-labelledby="hero-title" class="overflow-hidden pt-[clamp(7rem,13vw,11rem)] pb-16">
@@ -53,15 +55,75 @@ const frame = 'rounded-panel bg-surface shadow-card overflow-hidden';
           <Photo src={left.src} alt={left.alt} sizes="(min-width: 75rem) 21rem, 28vw" parallax />
         </div>
       )}
+      <!-- La foto centrale è il contenuto di base: src/scripts/print-stage.ts le sovrappone la scena di stampa dove WebGL regge -->
       {center && (
-        <div class:list={[frame, 'aspect-[4/5] md:aspect-[3/4]']}>
-          <Photo
-            src={center.src}
-            alt={center.alt}
-            sizes="(min-width: 75rem) 28rem, (min-width: 48rem) 38vw, 92vw"
-            priority
-            parallax
+        <div
+          data-print-stage
+          data-objects={JSON.stringify(stage.objects)}
+          class:list={[frame, 'print-stage relative aspect-[4/5] md:aspect-[3/4]']}
+        >
+          <div data-stage-fallback class="h-full w-full">
+            <Photo
+              src={center.src}
+              alt={center.alt}
+              sizes="(min-width: 75rem) 28rem, (min-width: 48rem) 38vw, 92vw"
+              priority
+              parallax
+            />
+          </div>
+          <canvas
+            data-stage-canvas
+            hidden
+            role="img"
+            aria-label={stage.label}
+            class="absolute inset-0 h-full w-full"
           />
+          <div
+            data-stage-hud
+            hidden
+            aria-hidden="true"
+            class="glass absolute inset-x-3 bottom-3 rounded-[1.25rem] px-4 pt-3 pb-3.5 text-left sm:inset-x-4 sm:bottom-4"
+          >
+            <div class="flex items-end justify-between gap-4">
+              <p class="min-w-0">
+                <span class="text-muted flex items-center gap-2 text-[0.75rem] font-medium">
+                  <span class="stage-dot size-1.5 rounded-full" />
+                  <span data-stage-status data-printing={stage.printing} data-done={stage.done}>
+                    {stage.printing}
+                  </span>
+                </span>
+                <span
+                  data-stage-name
+                  class="mt-0.5 block truncate text-[0.9375rem] leading-tight font-semibold"
+                >
+                  {stage.objects[0]}
+                </span>
+              </p>
+              <p class="text-muted shrink-0 text-[0.75rem] tabular-nums">
+                {stage.layer}{' '}
+                <span data-stage-layer class="text-fg font-semibold">
+                  000
+                </span>
+                {' / '}
+                <span data-stage-total>300</span>
+              </p>
+            </div>
+            <div class="bg-fg/10 mt-2.5 h-1 overflow-hidden rounded-full">
+              <div data-stage-bar class="stage-bar bg-accent h-full rounded-full"></div>
+            </div>
+          </div>
+          <button
+            type="button"
+            data-stage-toggle
+            data-label-pause={stage.pause}
+            data-label-play={stage.play}
+            aria-label={stage.pause}
+            hidden
+            class="glass text-fg group/toggle absolute top-3 right-3 inline-flex size-11 items-center justify-center rounded-full sm:top-4 sm:right-4"
+          >
+            <Icon name="pause" size={18} class="group-data-paused/toggle:hidden" />
+            <Icon name="play" size={18} class="hidden group-data-paused/toggle:block" />
+          </button>
         </div>
       )}
       {right && (

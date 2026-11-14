@@ -18,6 +18,11 @@
   --tp-ok: #1f7a3d;
   --tp-danger: #b3261e;
 
+  /* Tinte del vetro nella scena di stampa dell'hero (lette da src/scripts/print-stage.ts) */
+  --tp-glass-1: #d0693d;
+  --tp-glass-2: #6f7480;
+  --tp-glass-3: #dbe6ee;
+
   --tp-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 14px 36px -18px rgb(0 0 0 / 0.16);
   --tp-shadow-float: 0 2px 4px rgb(0 0 0 / 0.05), 0 28px 56px -24px rgb(0 0 0 / 0.26);
   --tp-radius-card: 1.5rem;
