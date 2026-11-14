@@ -42,7 +42,7 @@ const structuredData = [
 
 <BaseLayout locale={locale} title={ui.meta.title} description={ui.meta.description} path="/">
   <JsonLd slot="head" data={structuredData} />
-  <Hero ui={ui} />
+  <Hero locale={locale} ui={ui} />
   <Marquee ui={ui} />
   <Products locale={locale} ui={ui} />
   <Projects locale={locale} ui={ui} />

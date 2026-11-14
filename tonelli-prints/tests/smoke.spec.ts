@@ -332,6 +332,8 @@ test.describe("scena di stampa dell'hero", () => {
     await expect(stage.getByRole('img', { name: /stampante 3D/ })).toBeVisible();
     await expect(stage.locator('[data-stage-fallback]')).toHaveAttribute('aria-hidden', 'true');
     await expect(stage.locator('[data-stage-name]')).toHaveText('Portachiavi NFC');
+    // Il nome del filamento arriva dal listino materiali
+    await expect(stage.locator('[data-stage-material]')).toHaveText('PLA+ 2.0');
 
     const layer = stage.locator('[data-stage-layer]');
     await expect(layer).not.toHaveText('000');

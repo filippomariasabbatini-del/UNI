@@ -1,6 +1,6 @@
 # Tonelli Prints
 
-Sito B2B single page di Tonelli Prints. Statico (Astro SSG), contenuti in file JSON/Markdown validati con Zod, JavaScript solo dove serve: circa 17 KB non compressi, più 13,5 KB (5,7 KB gzip) per la scena di stampa dell'hero, caricati solo in home e a pagina ferma.
+Sito B2B single page di Tonelli Prints. Statico (Astro SSG), contenuti in file JSON/Markdown validati con Zod, JavaScript solo dove serve: circa 17 KB non compressi, più 14 KB (6,1 KB gzip) per la scena di stampa dell'hero, caricati solo in home e a pagina ferma.
 
 ## Stack
 
@@ -100,15 +100,15 @@ I campi `todo` nei JSON sono note per chi compila i dati: non compaiono mai nel 
 
 ## Scena di stampa dell'hero
 
-Il riquadro centrale dell'hero mostra tre oggetti in vetro stampati strato dopo strato, in loop: stampa, giro di presentazione, fusione, pezzo successivo. È uno shader WebGL scritto a mano (raymarching di superfici implicite), senza librerie.
+Il riquadro centrale dell'hero mostra tre oggetti stampati strato dopo strato, in loop, ognuno in un filamento del listino: portachiavi NFC in PLA+ 2.0, statuetta in Silky-PLA, logo da banco in fibra di carbonio. Ogni ciclo: stampa (con linee di layer e riempimento a griglia in sezione), giro di presentazione, ritiro del pezzo, pezzo successivo. È uno shader WebGL scritto a mano (raymarching di superfici implicite), senza librerie.
 
 - **Miglioramento progressivo**: la foto resta il contenuto di base. La scena la sostituisce solo se WebGL è disponibile con accelerazione hardware. Senza JavaScript, senza WebGL, con GPU software (è il caso di Lighthouse e della CI) o se il contesto va perso, resta la foto.
 - **Prestazioni**: gira solo quando è visibile, parte a pagina ferma, la risoluzione è limitata a 1,5× e scala da sola se i frame superano 26 ms di media. Se scalare non aiuta (es. risparmio energetico a 30 fps) torna alla risoluzione piena; se il dispositivo non regge nemmeno al minimo, torna la foto.
 - **Accessibilità**: bottone pausa (WCAG 2.2.2). Con `prefers-reduced-motion` mostra il primo oggetto finito e fermo. Il canvas ha `role="img"` con descrizione; il pannello con strato e avanzamento è decorativo (`aria-hidden`).
-- **Testi** (nomi degli oggetti, etichette, descrizione): `hero.printStage` in `src/content/ui/it.json`.
-- **Colori del vetro**: `--tp-glass-1/2/3` in `src/styles/tokens.css`. Accento, sfondo e inchiostro dello shader arrivano dagli stessi token del sito.
-- **Forme**: funzioni `tag`, `cat`, `logo` in `src/scripts/print-stage.frag.glsl`. Se cambi un oggetto aggiorna anche `HEIGHTS` e `footprint` in `src/scripts/print-stage.ts` (altezza e ingombro, usati per l'ugello e il conteggio degli strati).
-- **Tempi del ciclo**: costanti `PRINT`, `SHOW`, `MELT`, `GAP` in `print-stage.ts`.
+- **Oggetti e materiali**: `hero.printStage.objects` in `src/content/ui/it.json`. Ogni oggetto ha `name` e `material` (un id del listino: `pla-plus`, `petg`, `carbon-fiber`, `silky-pla`, `wood-pla`, `tpu`). Il nome del filamento mostrato nel pannello arriva da `src/content/materials/it.json`. Se cambi un materiale aggiorna anche la descrizione `label`.
+- **Colore dei filamenti**: `--tp-filament-<id>` in `src/styles/tokens.css`. Sono dimostrativi: vanno allineati alla palette reale. La resa (opaco, lucido, silk, fibre, venature) è in `LOOKS` in `src/scripts/print-stage.ts`.
+- **Forme**: funzioni `tag`, `cat`, `logo` in `src/scripts/print-stage.frag.glsl`. Se cambi un oggetto aggiorna anche `HEIGHTS` e `footprint` in `print-stage.ts` (altezza e ingombro, usati per l'ugello e il conteggio degli strati).
+- **Tempi del ciclo**: costanti `PRINT`, `SHOW`, `EXIT`, `GAP` in `print-stage.ts`.
 
 I test in `tests/smoke.spec.ts` ("scena di stampa dell'hero") coprono i tre casi: senza WebGL, con WebGL (avvio, pausa, ripresa) e con movimento ridotto.
 

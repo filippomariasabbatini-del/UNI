@@ -85,13 +85,17 @@
       }
     ],
     "printStage": {
-      "label": "Animazione: una stampante 3D realizza strato dopo strato un portachiavi NFC, una statuetta e un logo da banco in materiale traslucido",
+      "label": "Animazione: una stampante 3D realizza strato dopo strato un portachiavi NFC in PLA+, una statuetta in Silky-PLA e un logo da banco in fibra di carbonio",
       "printing": "In stampa",
       "done": "Pronto",
       "layer": "Strato",
       "pause": "Metti in pausa l'animazione di stampa",
       "play": "Riavvia l'animazione di stampa",
-      "objects": ["Portachiavi NFC", "Statuetta", "Logo da banco"]
+      "objects": [
+        { "name": "Portachiavi NFC", "material": "pla-plus" },
+        { "name": "Statuetta", "material": "silky-pla" },
+        { "name": "Logo da banco", "material": "carbon-fiber" }
+      ]
     }
   },
   "marquee": {

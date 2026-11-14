@@ -1,6 +1,7 @@
 ---
 import { site } from '../../config/site';
-import type { Ui } from '../../lib/content';
+import type { Locale } from '../../config/site';
+import { getContent, type Ui } from '../../lib/content';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
@@ -9,14 +10,22 @@ import Icon from '../ui/Icon.astro';
 import Photo from '../ui/Photo.astro';
 
 interface Props {
+  locale: Locale;
   ui: Ui;
 }
+const { locale } = Astro.props;
 const { hero } = Astro.props.ui;
 const printers = site.studios.find((studio) => studio.primary)?.printers ?? null;
 const [badgeBefore = '', badgeAfter = ''] = hero.liveBadge.split('{count}');
 const [left, center, right] = hero.images;
 const frame = 'rounded-panel bg-surface shadow-card overflow-hidden';
 const stage = hero.printStage;
+// Il nome del filamento arriva dal listino materiali: un solo posto in cui scriverlo
+const materials = (await getContent('materials', locale)).items;
+const stageObjects = stage.objects.map((object) => ({
+  ...object,
+  materialName: materials.find((material) => material.id === object.material)?.name ?? '',
+}));
 ---
 
 <section aria-labelledby="hero-title" class="overflow-hidden pt-[clamp(7rem,13vw,11rem)] pb-16">
@@ -59,7 +68,7 @@ const stage = hero.printStage;
       {center && (
         <div
           data-print-stage
-          data-objects={JSON.stringify(stage.objects)}
+          data-objects={JSON.stringify(stageObjects)}
           class:list={[frame, 'print-stage relative aspect-[4/5] md:aspect-[3/4]']}
         >
           <div data-stage-fallback class="h-full w-full">
@@ -82,7 +91,7 @@ const stage = hero.printStage;
             data-stage-hud
             hidden
             aria-hidden="true"
-            class="glass absolute inset-x-3 bottom-3 rounded-[1.25rem] px-4 pt-3 pb-3.5 text-left sm:inset-x-4 sm:bottom-4"
+            class="stage-panel absolute inset-x-3 bottom-3 rounded-[1.25rem] px-4 pt-3 pb-3.5 text-left sm:inset-x-4 sm:bottom-4"
           >
             <div class="flex items-end justify-between gap-4">
               <p class="min-w-0">
@@ -91,12 +100,16 @@ const stage = hero.printStage;
                   <span data-stage-status data-printing={stage.printing} data-done={stage.done}>
                     {stage.printing}
                   </span>
+                  <span aria-hidden="true">·</span>
+                  <span data-stage-material class="text-fg">
+                    {stageObjects[0]?.materialName}
+                  </span>
                 </span>
                 <span
                   data-stage-name
                   class="mt-0.5 block truncate text-[0.9375rem] leading-tight font-semibold"
                 >
-                  {stage.objects[0]}
+                  {stageObjects[0]?.name}
                 </span>
               </p>
               <p class="text-muted shrink-0 text-[0.75rem] tabular-nums">
@@ -119,7 +132,7 @@ const stage = hero.printStage;
             data-label-play={stage.play}
             aria-label={stage.pause}
             hidden
-            class="glass text-fg group/toggle absolute top-3 right-3 inline-flex size-11 items-center justify-center rounded-full sm:top-4 sm:right-4"
+            class="stage-panel text-fg group/toggle absolute top-3 right-3 inline-flex size-11 items-center justify-center rounded-full sm:top-4 sm:right-4"
           >
             <Icon name="pause" size={18} class="group-data-paused/toggle:hidden" />
             <Icon name="play" size={18} class="hidden group-data-paused/toggle:block" />

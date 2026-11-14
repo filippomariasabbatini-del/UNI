@@ -168,7 +168,7 @@ const ui = defineCollection({
           )
           .min(1),
         images: z.array(picture(context)).length(3),
-        /** Scena animata al posto della foto centrale. `objects`: i tre oggetti, nell'ordine dello shader */
+        /** Scena animata al posto della foto centrale. `objects`: i tre oggetti nell'ordine dello shader, ognuno con il suo filamento */
         printStage: z.object({
           label: text,
           printing: text,
@@ -176,7 +176,7 @@ const ui = defineCollection({
           layer: text,
           pause: text,
           play: text,
-          objects: z.array(text).length(3),
+          objects: z.array(z.object({ name: text, material: z.enum(MATERIAL_IDS) })).length(3),
         }),
       }),
       marquee: z.object({ label: text, pause: text, play: text, items: z.array(text).min(3) }),

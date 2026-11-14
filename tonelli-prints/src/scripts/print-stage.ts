@@ -1,26 +1,45 @@
+import type { MaterialId } from '../config/pricing';
 import { readJson } from './dom';
 import { prefersReducedMotion } from './motion';
 import fragment from './print-stage.frag.glsl?raw';
 
 /**
- * Scena di stampa dell'hero: tre oggetti in vetro, stampati strato dopo strato in WebGL
+ * Scena di stampa dell'hero: tre oggetti, ognuno in un filamento del listino, stampati strato dopo strato in WebGL
  * (raymarching, vedi print-stage.frag.glsl). Miglioramento progressivo: senza WebGL, con GPU
  * software o se il dispositivo non regge il ritmo, resta la foto.
  */
 
 const VERTEX = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
 
-/** Fasi di un ciclo, in ms: stampa, giro di presentazione, fusione, pausa prima del pezzo successivo */
+/** Fasi di un ciclo, in ms: stampa, giro di presentazione, ritiro del pezzo, pausa prima del successivo */
 const PRINT = 5200;
 const SHOW = 2600;
-const MELT = 1100;
+const EXIT = 900;
 const GAP = 450;
-const CYCLE = PRINT + SHOW + MELT + GAP;
+const CYCLE = PRINT + SHOW + EXIT + GAP;
 
 /** Altezza dei tre oggetti in unità dello shader. 1 unità = 50 mm, strati da 0,2 mm */
 const HEIGHTS = [1.2, 1.24, 1.18];
 const LAYERS_PER_UNIT = 250;
-const TINTS = ['--tp-glass-1', '--tp-glass-2', '--tp-glass-3'];
+
+/**
+ * Resa di ogni filamento nello shader: [forza del riflesso, esponente, lucentezza "silk" lungo gli
+ * strati, grana (> 0 fibre lucenti, < 0 venature)]. Il colore è il token --tp-filament-<id>.
+ */
+const LOOKS: Record<MaterialId, [number, number, number, number]> = {
+  'pla-plus': [0.16, 22, 0, 0],
+  petg: [0.6, 80, 0.15, 0],
+  'carbon-fiber': [0.14, 16, 0, 1],
+  'silky-pla': [0.45, 48, 0.9, 0],
+  'wood-pla': [0.06, 10, 0, -1],
+  tpu: [0.08, 8, 0, 0],
+};
+
+interface StageObject {
+  name: string;
+  material: MaterialId;
+  materialName: string;
+}
 
 /**
  * Sopra SLOW_FRAME_MS di media il rendering scala di risoluzione. Se scalare non aiuta, il limite
@@ -39,7 +58,8 @@ interface Frame {
   object: number;
   /** Quota del taglio di stampa. Oltre la cima = oggetto intero */
   height: number;
-  melt: number;
+  /** Ritiro del pezzo finito: 0 = sul piano, 1 = sollevato e svanito */
+  exit: number;
   yaw: number;
   glow: number;
   nozzle: [number, number, number, number];
@@ -83,7 +103,7 @@ function frameAt(clock: number, pointer: number): Frame {
     return {
       object,
       height,
-      melt: 0,
+      exit: 0,
       yaw,
       glow: 1,
       nozzle: [x * sweepX, height + 0.012, z * sweepZ, 1],
@@ -98,7 +118,7 @@ function frameAt(clock: number, pointer: number): Frame {
     return {
       object,
       height: 9,
-      melt: 0,
+      exit: 0,
       yaw: yaw + Math.PI * 2 * smooth(s),
       glow: 1 - smooth(s * 4),
       nozzle: [
@@ -111,16 +131,16 @@ function frameAt(clock: number, pointer: number): Frame {
       done: true,
     };
   }
-  if (t < PRINT + SHOW + MELT) {
-    const melt = (t - PRINT - SHOW) / MELT;
-    return { object, height: 9, melt, yaw, glow: 0, nozzle: [0, 9, 0, 0], progress: 1, done: true };
+  if (t < PRINT + SHOW + EXIT) {
+    const exit = smooth((t - PRINT - SHOW) / EXIT);
+    return { object, height: 9, exit, yaw, glow: 0, nozzle: [0, 9, 0, 0], progress: 1, done: true };
   }
   // Piano vuoto: l'ugello scende per il pezzo successivo
-  const g = smooth((t - PRINT - SHOW - MELT) / GAP);
+  const g = smooth((t - PRINT - SHOW - EXIT) / GAP);
   return {
     object: (object + 1) % HEIGHTS.length,
     height: -1,
-    melt: 0,
+    exit: 0,
     yaw,
     glow: g,
     nozzle: [0, 0.012 + 1.6 * (1 - g), 0, g],
@@ -133,7 +153,7 @@ function frameAt(clock: number, pointer: number): Frame {
 const STILL: Frame = {
   object: 0,
   height: 9,
-  melt: 0,
+  exit: 0,
   yaw: 0.45,
   glow: 0,
   nozzle: [0, 9, 0, 0],
@@ -205,15 +225,15 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
     res: uniform('uRes'),
     time: uniform('uTime'),
     height: uniform('uH'),
-    melt: uniform('uMelt'),
+    exit: uniform('uExit'),
     yaw: uniform('uYaw'),
     glow: uniform('uGlow'),
     object: uniform('uObj'),
     tint: uniform('uTint'),
     nozzle: uniform('uNoz'),
+    material: uniform('uMat'),
   };
   const style = getComputedStyle(stage);
-  const tints = TINTS.map((name) => token(style, name));
   gl.uniform3fv(uniform('uAccent'), token(style, '--tp-accent'));
   gl.uniform3fv(uniform('uBg'), token(style, '--tp-surface'));
   gl.uniform3fv(uniform('uInk'), token(style, '--tp-fg'));
@@ -226,7 +246,9 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
   const layerLabel = stage.querySelector<HTMLElement>('[data-stage-layer]');
   const totalLabel = stage.querySelector<HTMLElement>('[data-stage-total]');
   const bar = stage.querySelector<HTMLElement>('[data-stage-bar]');
-  const names = readJson<string[]>(stage, 'objects') ?? [];
+  const materialLabel = stage.querySelector<HTMLElement>('[data-stage-material]');
+  const objects = readJson<StageObject[]>(stage, 'objects') ?? [];
+  const tints = objects.map((object) => token(style, `--tp-filament-${object.material}`));
   const still = prefersReducedMotion();
 
   let clock = 0;
@@ -262,7 +284,9 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
     const layer = Math.round(frame.progress * layers);
     if (frame.object !== shownObject) {
       shownObject = frame.object;
-      if (nameLabel) nameLabel.textContent = names[frame.object] ?? '';
+      const object = objects[frame.object];
+      if (nameLabel) nameLabel.textContent = object?.name ?? '';
+      if (materialLabel) materialLabel.textContent = object?.materialName ?? '';
       if (totalLabel) totalLabel.textContent = String(layers);
     }
     if (layer !== shownLayer) {
@@ -284,11 +308,12 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
     const frame = still ? STILL : frameAt(clock, pointer);
     gl.uniform1f(u.time, clock / 1000);
     gl.uniform1f(u.height, frame.height);
-    gl.uniform1f(u.melt, frame.melt);
+    gl.uniform1f(u.exit, frame.exit);
     gl.uniform1f(u.yaw, frame.yaw);
     gl.uniform1f(u.glow, frame.glow);
     gl.uniform1i(u.object, frame.object);
     gl.uniform3fv(u.tint, tints[frame.object] ?? [0.8, 0.8, 0.8]);
+    gl.uniform4fv(u.material, LOOKS[objects[frame.object]?.material ?? 'pla-plus']);
     gl.uniform4fv(u.nozzle, frame.nozzle);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     updateHud(frame);
