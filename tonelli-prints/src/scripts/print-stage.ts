@@ -22,9 +22,16 @@ const HEIGHTS = [1.2, 1.24, 1.18];
 const LAYERS_PER_UNIT = 250;
 const TINTS = ['--tp-glass-1', '--tp-glass-2', '--tp-glass-3'];
 
-/** Sotto questa media il rendering scala di risoluzione; se non basta, torna la foto */
+/**
+ * Sopra SLOW_FRAME_MS di media il rendering scala di risoluzione. Se scalare non aiuta, il limite
+ * non è la GPU (es. risparmio energetico a 30 fps): la risoluzione torna com'era. Sopra
+ * GIVE_UP_MS, alla risoluzione minima, torna la foto.
+ */
 const SLOW_FRAME_MS = 26;
+const GIVE_UP_MS = 42;
 const SAMPLE_FRAMES = 45;
+/** Frame ignorati dopo ogni avvio: caricamento della pagina e primo disegno falsano la misura */
+const WARM_UP_FRAMES = 20;
 
 type Vec3 = [number, number, number];
 
@@ -233,6 +240,8 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
   let quality = 1;
   let sampled = 0;
   let elapsed = 0;
+  let previousAverage = 0;
+  let settled = false;
   let shownObject = -1;
   let shownLayer = -1;
   let shownDone: boolean | null = null;
@@ -304,19 +313,29 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
 
   const measure = (delta: number): void => {
     // I salti lunghi sono cambi di scheda o scroll, non frame lenti
-    if (delta > 120) return;
-    elapsed += delta;
+    if (settled || delta > 120) return;
     sampled += 1;
+    if (sampled <= 0) return;
+    elapsed += delta;
     if (sampled < SAMPLE_FRAMES) return;
     const average = elapsed / sampled;
     sampled = 0;
     elapsed = 0;
     if (average < SLOW_FRAME_MS) return;
-    if (quality <= 0.5) {
+    const helped = previousAverage === 0 || average < previousAverage * 0.85;
+    if (helped && quality > 0.5) {
+      previousAverage = average;
+      quality -= 0.25;
+      resize();
+      return;
+    }
+    if (average > GIVE_UP_MS) {
       giveUp();
       return;
     }
-    quality -= 0.25;
+    // Scalare non è servito: si torna alla risoluzione precedente e si smette di misurare
+    if (!helped) quality += 0.25;
+    settled = true;
     resize();
   };
 
@@ -338,7 +357,7 @@ export async function initPrintStage(stage: HTMLElement): Promise<void> {
       return;
     }
     running = true;
-    sampled = 0;
+    sampled = -WARM_UP_FRAMES;
     elapsed = 0;
     last = performance.now();
     request = requestAnimationFrame(tick);
