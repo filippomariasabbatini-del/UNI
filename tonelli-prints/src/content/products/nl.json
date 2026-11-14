@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": "nfc-keychains",
+      "title": "Smart NFC-sleutelhangers",
+      "summary": "Phygital touchpoints. Tap-to-menu, tap-to-tip, tap-to-loyalty. Gebrand zoals jij wilt.",
+      "details": "Gebruikt door 40+ hotels en restaurants in Italië en Nederland. Wij programmeren de chips, jij schrijft de URL. Updaten kan altijd.",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "3D-geprinte sleutelhangers met NFC-chip: logo's van horecazaken, een pizzapunt, pastavormen en de skyline van Florence"
+      }
+    },
+    {
+      "id": "branded-accessories",
+      "title": "Gebrande accessoires",
+      "summary": "Tafelnummers, fleslabels, signage, menuhouders, geprint in jouw kleuren, met jouw lettertype.",
+      "details": "De meeste orders zijn binnen een week onderweg. Pantone-matching, ingegraveerde logo’s of een wasafwerking voor een zachtere look, allemaal mogelijk.",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "Witte 3D-geprinte menuhouder met een bruiloftsmenu, op een gedekte houten tafel"
+      }
+    },
+    {
+      "id": "souvenirs",
+      "title": "Souvenirs die verkopen",
+      "summary": "Verkoopwaardige aandenkens voor hotels, locaties en musea. Geprijsd voor retailmarges.",
+      "details": "Groothandelsprijzen vanaf 50 stuks. We helpen met schapverpakking, hangtags en een kleine reorder-UI voor de receptie.",
+      "image": {
+        "src": "../../assets/photos/figurines.jpg",
+        "alt": "3D-geprinte beeldjes op een donkere plank: een witte kabouter, een zandkleurige stier en twee zwarte katten"
+      }
+    },
+    {
+      "id": "employee-kits",
+      "title": "Personeelsmateriaal",
+      "summary": "NFC-visitekaartjes, naambadges, lanyards, sleutelhangers. Spullen die je team echt gebruikt.",
+      "details": "Carbonfiber NFC-visitekaartjes die een contact in één seconde in een telefoon zetten. Boven 25 stuks zonder meerprijs per persoon gepersonaliseerd.",
+      "image": {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Twee zwarte NFC-visitekaartjes van carbonfiber, één met naam en contactgegevens en één met een QR-code"
+      }
+    },
+    {
+      "id": "retail-collections",
+      "title": "Retail-collecties",
+      "summary": "Themacollecties op maat. Pasta-sleutelhangers, stadsiconen, voedselvormen.",
+      "details": "We co-designen de hele collectie, printen de eerste 50, jij beslist of we opschalen. De mallen bewaren we, dus herhalingsorders kosten de helft.",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Gele sleutelhangers in pastavorm, ravioli, farfalle, fusilli, rigatoni en tortellini, op een snijplank"
+      }
+    },
+    {
+      "id": "functional-parts",
+      "title": "Functionele onderdelen & prototypes",
+      "summary": "Gereedschapshouders, beugels, mallen, jigs. Maandag bestanden binnen, vrijdag onderdelen in handen.",
+      "details": "STL, STEP, OBJ of .f3d welkom. Carbonfiber en PA-CF voor structurele delen. We DFM-checken elk bestand vooraf en melden wat het gebruik niet overleeft.",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Twee accuboormachines aan zwarte 3D-geprinte houders, bevestigd aan een betonnen muur"
+      }
+    }
+  ]
+}

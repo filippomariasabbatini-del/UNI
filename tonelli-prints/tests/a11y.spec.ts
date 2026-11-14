@@ -4,6 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 const PAGES = [
   '/',
   '/en/',
+  '/nl/',
   '/privacy.html',
   '/en/privacy.html',
   '/cookies.html',

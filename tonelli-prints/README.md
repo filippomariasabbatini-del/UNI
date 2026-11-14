@@ -114,19 +114,20 @@ I test in `tests/smoke.spec.ts` ("scena di stampa dell'hero") coprono i tre casi
 
 ## Lingue
 
-Italiano (lingua di default, `/`) e inglese (`/en/`) sono pubblicati. L'olandese è predisposto ma spento.
+Italiano (lingua di default, `/`), inglese (`/en/`) e olandese (`/nl/`) sono pubblicati.
 
-- **Cambio lingua**: selettore IT/EN in alto a destra nell'header (`src/components/ui/LanguageSwitch.astro`) e nel footer. Porta alla stessa pagina nell'altra lingua e mantiene l'ancora della sezione. Mostra solo le lingue con `enabled: true`.
-- **Testi inglesi**: `src/content/<collection>/en.json` e `src/content/legal/en/`. Dove esisteva, il testo viene dal sito inglese originale; il resto è tradotto dall'italiano. Ogni modifica a un file `it.json` va riportata nel corrispondente `en.json`: stessa struttura, la build fallisce se manca un campo.
+- **Cambio lingua**: selettore IT/EN/NL in alto a destra nell'header (`src/components/ui/LanguageSwitch.astro`) e nel footer. Porta alla stessa pagina nell'altra lingua e mantiene l'ancora della sezione. Mostra solo le lingue con `enabled: true`.
+- **Testi inglesi e olandesi**: `src/content/<collection>/<lingua>.json` e `src/content/legal/<lingua>/`. Dove esisteva, il testo viene dal sito originale; il resto è tradotto dall'italiano. Ogni modifica a un file `it.json` va riportata negli altri due: stessa struttura, la build fallisce se manca un campo.
 - **Pagina 404**: esiste solo in italiano.
 
-Per accendere un'altra lingua (es. olandese):
+Per aggiungere un'altra lingua:
 
-1. copia ogni `src/content/<collection>/it.json` in `<lingua>.json` e traducilo;
-2. copia `src/content/legal/it/` in `src/content/legal/<lingua>/`;
-3. in `src/config/site.ts` metti `enabled: true` sulla lingua.
+1. aggiungi il codice a `LOCALE_CODES` in `src/config/constants.ts` e la voce in `locales` di `src/config/site.ts`;
+2. copia ogni `src/content/<collection>/it.json` in `<lingua>.json` e traducilo;
+3. copia `src/content/legal/it/` in `src/content/legal/<lingua>/`;
+4. metti `enabled: true` sulla lingua.
 
-La build genera `/<lingua>/`, aggiunge gli `hreflang`, aggiorna la sitemap e fa comparire la lingua nei due selettori. Se manca un file, la build fallisce dicendo quale. Gli `hreflang` vengono emessi solo per le lingue pubblicate, per non puntare a pagine inesistenti.
+La build genera `/<lingua>/`, aggiunge gli `hreflang`, aggiorna la sitemap e fa comparire la lingua nei due selettori. Se manca un file, la build fallisce dicendo quale.
 
 ## Form contatti
 
@@ -191,8 +192,7 @@ Cerca `TODO` nel codice per trovare ogni punto.
 **Da far validare**
 
 - [ ] Pagine legali: tutti i punti `[DA COMPILARE]`, da un legale (`src/content/legal/it/`)
-- [ ] Traduzione EN: far rileggere a un madrelingua, soprattutto le pagine legali
-- [ ] Traduzione NL (non presente)
+- [ ] Traduzioni EN e NL: far rileggere a un madrelingua, soprattutto le pagine legali
 - [ ] Affermazioni dei testi originali riportate così come sono ("oltre 40 hotel e ristoranti", "+15% di riordini", ecc.)
 - [ ] Data "Ultimo aggiornamento" delle pagine legali (campo `updated` nel frontmatter)
 

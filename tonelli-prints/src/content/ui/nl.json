@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "title": "Tonelli Prints — 3D-printen op maat voor merken · Nijmegen · Rome",
+    "description": "B2B 3D-printstudio in Nijmegen en Rome. NFC-sleutelhangers, gebrande accessoires, merchandise op maat en personeelsmateriaal voor hospitality, events en retail. In PLA, PETG en carbonfiber.",
+    "ogImageAlt": "Tonelli Prints: we printen jouw merk in objecten die mensen willen bewaren"
+  },
+  "a11y": {
+    "skipLink": "Naar de inhoud",
+    "mainNav": "Hoofdnavigatie",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "homeLink": "Tonelli Prints, terug naar home",
+    "footerNav": "Footerlinks",
+    "legalNav": "Juridische informatie",
+    "languageSelector": "Taal",
+    "newTab": "opent in een nieuw tabblad"
+  },
+  "nav": {
+    "items": [
+      {
+        "href": "#cosa-facciamo",
+        "label": "Wat we maken"
+      },
+      {
+        "href": "#chi-siamo",
+        "label": "Wie we zijn"
+      },
+      {
+        "href": "#studi",
+        "label": "Studio's"
+      },
+      {
+        "href": "#processo",
+        "label": "Proces"
+      },
+      {
+        "href": "#materiali",
+        "label": "Materialen"
+      }
+    ],
+    "cta": "Start een project"
+  },
+  "hero": {
+    "eyebrow": "Met de hand gemaakt. Met machines.",
+    "title": "We printen jouw merk in objecten die mensen willen bewaren.",
+    "sub": "Tonelli Prints is een B2B 3D-printstudio in Nijmegen en Rome. We maken op maat gemaakte accessoires, slimme NFC-sleutelhangers, souvenirs en personeelsmateriaal, voor hotels, restaurants, locaties en de merken die op de plank willen liggen.",
+    "primaryCta": "Start een project",
+    "secondaryCta": "Bekijk materialen",
+    "liveBadge": "{count} printers warm in Nijmegen",
+    "stats": [
+      {
+        "value": 5,
+        "prefix": "",
+        "suffix": " dagen",
+        "text": "",
+        "label": "gemiddelde levertijd"
+      },
+      {
+        "value": 20,
+        "prefix": "",
+        "suffix": "+",
+        "text": "",
+        "label": "filamentkleuren"
+      },
+      {
+        "value": null,
+        "prefix": "",
+        "suffix": "",
+        "text": "NL · IT",
+        "label": "twee studio's, één team"
+      }
+    ],
+    "images": [
+      {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Gele sleutelhangers in pastavorm op een snijplank"
+      },
+      {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "3D-geprinte sleutelhangers met logo's van klanten, een pizzapunt en pastavormen"
+      },
+      {
+        "src": "../../assets/photos/nfc-business-cards.jpg",
+        "alt": "Zwarte NFC-visitekaartjes van carbonfiber"
+      }
+    ],
+    "printStage": {
+      "label": "Animatie: een 3D-printer bouwt laag voor laag een NFC-sleutelhanger in PLA+, een beeldje in Silky-PLA en een toonbanklogo in carbonfiber",
+      "printing": "Bezig met printen",
+      "done": "Klaar",
+      "layer": "Laag",
+      "pause": "Printanimatie pauzeren",
+      "play": "Printanimatie hervatten",
+      "objects": [
+        {
+          "name": "NFC-sleutelhanger",
+          "material": "pla-plus"
+        },
+        {
+          "name": "Beeldje",
+          "material": "silky-pla"
+        },
+        {
+          "name": "Toonbanklogo",
+          "material": "carbon-fiber"
+        }
+      ]
+    }
+  },
+  "marquee": {
+    "label": "Materialen en locaties",
+    "items": [
+      "PLA+ 2.0",
+      "PETG",
+      "Carbonfiber",
+      "Silky-PLA",
+      "Wood-PLA",
+      "Flexibele TPU",
+      "Made in EU",
+      "Nijmegen",
+      "Rome",
+      "Levertijd 5 dagen"
+    ],
+    "pause": "Scrollen pauzeren",
+    "play": "Scrollen hervatten"
+  },
+  "products": {
+    "eyebrow": "Wat we maken",
+    "title": "Objecten met jouw merk erop. Die mensen willen bewaren.",
+    "more": "Meer weten",
+    "moreAbout": "Meer weten over {product}"
+  },
+  "projects": {
+    "eyebrow": "Geselecteerd werk",
+    "title": "Een paar merken waar we al voor werken.",
+    "sub": "Echte projecten, echte klanten.",
+    "previous": "Vorig project",
+    "next": "Volgend project",
+    "region": "Projecten en ervaringen, scroll horizontaal"
+  },
+  "about": {
+    "eyebrow": "Wie we zijn",
+    "title": "Een klein team. Twee studio's. Drie mensen nemen de telefoon op.",
+    "body": "Geen callcenters, geen carousel van accountmanagers. Wij drieën runnen Tonelli dagelijks. Als je schrijft, schrijft één van ons terug, met naam.",
+    "rolePending": "Rol volgt binnenkort",
+    "bioPending": "Bio volgt binnenkort.",
+    "linkedin": "LinkedIn-profiel van {name}"
+  },
+  "studios": {
+    "eyebrow": "Studio's",
+    "title": "Twee studio's. Eén team. Dezelfde handen.",
+    "call": "Bel de studio in {city}",
+    "localTime": "Lokale tijd",
+    "status": {
+      "open": "In de studio, tot {time}",
+      "closedTomorrow": "Klaar voor vandaag, morgen verder",
+      "closedLaterToday": "Niet in de studio, terug om {time}",
+      "closedUntilDay": "Niet in de studio, {day} zijn we terug",
+      "fallback": "We reageren binnen één werkdag"
+    },
+    "weekdays": {
+      "mon": "maandag",
+      "tue": "dinsdag",
+      "wed": "woensdag",
+      "thu": "donderdag",
+      "fri": "vrijdag",
+      "sat": "zaterdag",
+      "sun": "zondag"
+    }
+  },
+  "process": {
+    "eyebrow": "Proces",
+    "title": "Vier stappen. Twee weken, meestal minder.",
+    "sub": "We werken niet met offerteformulieren-in-het-niets. Elk project krijgt een vast contactpersoon die binnen één werkdag reageert."
+  },
+  "materials": {
+    "eyebrow": "Materialen",
+    "title": "Zes filamenten. Eén catalogus, groeiend.",
+    "sub": "We hebben de materialen op voorraad die onze klanten echt bestellen.",
+    "hint": "Toon details van {material}",
+    "lead": "Levertijd",
+    "days": "{days} d",
+    "price": "per stuk bij 100 stuks",
+    "colors": "Kleuren",
+    "pending": "Details volgen binnenkort. Vraag het ons intussen: we reageren dezelfde dag."
+  },
+  "estimator": {
+    "eyebrow": "Live schatting",
+    "title": "Configureer een productie. Zie het getal.",
+    "disclaimer": "Alleen indicatief, definitieve offertes worden binnen twee werkdagen door een mens geschreven.",
+    "material": "Materiaal",
+    "quantity": "Aantal",
+    "pieces": "{quantity} stuks",
+    "total": "Geschat totaal",
+    "unit": "Prijs per stuk",
+    "lead": "Levertijd deur-tot-deur",
+    "days": "{days} dagen",
+    "onRequest": "Op aanvraag",
+    "onRequestNote": "Voor dit materiaal schrijven we de prijs zelf uit, regel voor regel.",
+    "cta": "Bevestig deze productie",
+    "prefill": "Ik wil deze productie bevestigen: {quantity} stuks in {material}. Indicatieve schatting: {total}.",
+    "prefillOnRequest": "Ik wil graag een offerte voor deze productie: {quantity} stuks in {material}."
+  },
+  "contact": {
+    "eyebrow": "Start een project",
+    "title": "Vertel wat je nodig hebt. We schrijven binnen twee werkdagen terug.",
+    "noteBefore": "Of mail naar",
+    "noteAfter": ", dezelfde handen antwoorden.",
+    "fields": {
+      "company": "Bedrijf",
+      "email": "E-mail",
+      "material": "Materiaal",
+      "materialUnsure": "Geen idee, adviseer me",
+      "message": "Wat wil je maken?",
+      "honeypot": "Laat dit veld leeg"
+    },
+    "selectedProduct": "Je bent geïnteresseerd in: {product}",
+    "removeProduct": "Verwijder {product} uit de aanvraag",
+    "submit": "Verstuur aanvraag",
+    "sending": "Versturen…",
+    "privacyBefore": "We gebruiken deze gegevens alleen om je te antwoorden. Details in de",
+    "privacyLink": "privacyverklaring",
+    "errors": {
+      "summary": "Controleer de gemarkeerde velden.",
+      "required": "Dit veld hebben we nodig.",
+      "email": "Vul een geldig e-mailadres in, zoals naam@bedrijf.nl.",
+      "tooShort": "Vertel ons iets meer: twee regels zijn genoeg."
+    },
+    "success": {
+      "title": "Aanvraag ontvangen.",
+      "body": "Een van ons schrijft binnen twee werkdagen terug, met naam."
+    },
+    "mailto": {
+      "title": "We hebben je mailapp geopend.",
+      "body": "Het bericht is al ingevuld: je hoeft alleen op verzenden te drukken. Is er niets geopend, mail ons dan op {email}.",
+      "subject": "Nieuw project: {company}"
+    },
+    "failure": "Er ging iets mis en je aanvraag is niet verstuurd. Probeer het zo opnieuw of mail ons op {email}."
+  },
+  "footer": {
+    "tagline": "Tonelli Prints. B2B custom 3D-printen. Hospitality, food, events, entertainment.",
+    "studio": {
+      "title": "Studio",
+      "links": [
+        {
+          "href": "#materiali",
+          "label": "Materialen"
+        },
+        {
+          "href": "#cosa-facciamo",
+          "label": "Wat we maken"
+        },
+        {
+          "href": "#processo",
+          "label": "Proces"
+        },
+        {
+          "href": "#progetti",
+          "label": "Case studies"
+        }
+      ]
+    },
+    "contacts": {
+      "title": "Contact",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
+    "locations": {
+      "title": "Studio's"
+    },
+    "copyright": "© {year} Tonelli Prints",
+    "kvkPending": "KVK in aanvraag",
+    "kvk": "KVK {kvk}",
+    "legal": {
+      "privacy": "Privacy",
+      "cookies": "Cookies",
+      "terms": "Voorwaarden",
+      "imprint": "Colofon"
+    },
+    "languageSoon": "{language}, binnenkort"
+  },
+  "cookie": {
+    "label": "Cookies",
+    "text": "We gebruiken alleen technische cookies. Geen trackers, geen profilering.",
+    "textNonEssential": "Niet-essentiële cookies staan uit tot je ze accepteert.",
+    "policy": "Cookiebeleid",
+    "ok": "Oké, begrepen",
+    "accept": "Accepteren",
+    "reject": "Weigeren"
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "heading": "Deze pagina hebben we niet geprint.",
+    "body": "De link klopt niet of de pagina bestaat niet meer.",
+    "cta": "Terug naar home"
+  },
+  "legal": {
+    "draftNotice": "Concept: de punten gemarkeerd met [IN TE VULLEN] moeten worden aangevuld en door een jurist worden nagekeken vóór publicatie.",
+    "back": "Terug naar home",
+    "updated": "Laatst bijgewerkt: {date}"
+  }
+}

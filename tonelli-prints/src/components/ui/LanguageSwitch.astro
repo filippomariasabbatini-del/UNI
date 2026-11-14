@@ -27,7 +27,7 @@ const languages = site.locales.filter((language) => language.enabled);
         hreflang={language.code}
         lang={language.code}
         aria-current={language.code === locale ? 'true' : undefined}
-        class="language-option inline-flex min-h-11 min-w-11 items-center justify-center"
+        class="language-option inline-flex min-h-11 min-w-10 items-center justify-center min-[23rem]:min-w-11"
       >
         <span aria-hidden="true">{language.label}</span>
         <span class="sr-only">{language.name}</span>

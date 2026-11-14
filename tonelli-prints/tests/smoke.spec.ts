@@ -404,6 +404,16 @@ test.describe('lingue', () => {
     await expect(page.locator('#materiali')).toBeInViewport();
   });
 
+  test("il selettore porta anche all'olandese", async ({ page }) => {
+    await page.goto('/en/');
+    await page.getByRole('banner').getByRole('link', { name: 'Nederlands' }).click();
+    await expect(page).toHaveURL(/\/nl\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+    await expect(page.locator('h1')).toContainText('We printen jouw merk');
+    await page.goto('/nl/terms.html');
+    await expect(page.locator('h1')).toHaveText('Algemene voorwaarden');
+  });
+
   test('la home inglese dichiara le alternative hreflang e non ha errori in console', async ({
     page,
   }) => {
@@ -422,6 +432,7 @@ test.describe('lingue', () => {
     expect(alternates).toEqual([
       'it https://tonelliprints.com/',
       'en https://tonelliprints.com/en/',
+      'nl https://tonelliprints.com/nl/',
       'x-default https://tonelliprints.com/',
     ]);
     expect(errors).toEqual([]);

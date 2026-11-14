@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": "nijmegen",
+      "city": "Nijmegen",
+      "label": "NL, hoofdstudio",
+      "description": "De hoofdproductievloer. Acht printers, een kleine afwerkruimte en het magazijn waar de sleutelhangers vandaan gaan.",
+      "addressLine": null,
+      "todo": "TODO: indirizzo dello studio di Nimega."
+    },
+    {
+      "id": "roma",
+      "city": "Rome",
+      "label": "IT, Italiaans filiaal",
+      "description": "Dichter bij onze hospitality-klanten in Midden- en Zuid-Italië. Kleiner, snellere doorlooptijden voor de lokale markt.",
+      "addressLine": "Via Monteciccardo",
+      "todo": "TODO: civico e CAP da confermare."
+    }
+  ]
+}

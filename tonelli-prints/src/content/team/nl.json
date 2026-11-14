@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "id": "leonardo-tonelli",
+      "name": "Leonardo Tonelli",
+      "role": "CEO",
+      "place": "Rome",
+      "bio": "Riccardo's partner en de dagelijkse ruggengraat van Rome. Leonardo runt de Italiaanse werkvloer: elke print die Via Monteciccardo verlaat is door zijn handen en kwaliteitsbank gegaan.",
+      "avatar": {
+        "src": "../../assets/team/leonardo.svg",
+        "alt": "Illustratie van Leonardo Tonelli"
+      },
+      "linkedin": null,
+      "todo": "Sostituire l'illustrazione con una foto reale (src/assets/team/)."
+    },
+    {
+      "id": "lieke-terbraak",
+      "name": "Lieke Terbraak",
+      "role": "Operational Manager, Nederland",
+      "place": "Nijmegen",
+      "bio": "Lieke ondersteunt de organisatorische kant van het bedrijf en richt zich op de B2C-tak van Tonelli Prints, en houdt orders, afwerking en verzending op koers.",
+      "avatar": {
+        "src": "../../assets/team/lieke.svg",
+        "alt": "Illustratie van Lieke Terbraak"
+      },
+      "linkedin": null,
+      "todo": "Sostituire l'illustrazione con una foto reale (src/assets/team/)."
+    },
+    {
+      "id": "riccardo-tonelli",
+      "name": "Riccardo Tonelli",
+      "role": null,
+      "place": null,
+      "bio": null,
+      "avatar": null,
+      "linkedin": "https://www.linkedin.com/in/riccardotonelli02",
+      "todo": "TODO: ruolo, sede, bio e foto di Riccardo mancano nel sito attuale."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "items": [
+    {
+      "id": "nfc-welcome-keychains",
+      "title": "NFC-welkomstsleutelhangers",
+      "quote": "De NFC-sleutelhangers vervingen onze papieren kamerkaarten. Gasten tikken bij aankomst en onze welkomstgids verschijnt op hun telefoon, de lobby oogt klassieker. We hebben al twee keer bijbesteld.",
+      "author": "Sofia Marchetti",
+      "place": "Toscane, IT",
+      "image": {
+        "src": "../../assets/photos/nfc-keychains-branded.jpg",
+        "alt": "NFC-sleutelhangers met branding op een lichte achtergrond"
+      }
+    },
+    {
+      "id": "wedding-menu-holders",
+      "title": "Menuhouders voor bruiloften",
+      "quote": "We wilden iets warmers dan acryl voor onze buitenbruiloften. Tonelli printte 80 houders in dezelfde crème als ons linnen en werkte ze handmatig af. Bruidsparen vragen elk weekend waar ze vandaan komen.",
+      "author": "Eva van der Berg",
+      "place": "Utrecht, NL",
+      "image": {
+        "src": "../../assets/photos/menu-holder.jpg",
+        "alt": "Crèmekleurige menuhouder met het menu van een bruiloftsbuffet, naast een vaas met veldbloemen"
+      }
+    },
+    {
+      "id": "pizza-slice-keychain",
+      "title": "Pizzapunt-sleutelhangers",
+      "quote": "We geven ze aan bezorgklanten als dankjewel boven 25 euro. Herhaalbestellingen stegen de eerste maand met ongeveer 15%. Riccardo paste zelfs het kaaspatroon aan toen ik het vroeg.",
+      "author": "Marco Greco",
+      "place": "Rome, IT",
+      "image": {
+        "src": "../../assets/photos/pizza-keychain.jpg",
+        "alt": "Sleutelhanger in de vorm van een punt pizza margherita, met mozzarella en basilicum in reliëf"
+      }
+    },
+    {
+      "id": "makita-wall-mounts",
+      "title": "Makita-wandhouders",
+      "quote": "Onze boorset rammelde rond in gereedschapskisten. Lieke prototypeerde een wandhouder op vrijdag, maandag testten we, en dezelfde week bestelden we er 24. Carbonfiber, houdt het gewicht, na zes maanden nog steeds geen klachten.",
+      "author": "Bram de Vries",
+      "place": "Nijmegen, NL",
+      "image": {
+        "src": "../../assets/photos/drill-holders.jpg",
+        "alt": "Accuboormachines aan zwarte wandhouders van carbonfiber"
+      }
+    },
+    {
+      "id": "pasta-keychain-line",
+      "title": "Pasta-sleutelhangers",
+      "quote": "Toeristen pakken ze van het schap om een foto te maken nog voordat ze de prijs zien. De farfalle is de bestseller. Ik bestel nu elke drie weken bij.",
+      "author": "Giulia Rossi",
+      "place": "Florence, IT",
+      "image": {
+        "src": "../../assets/photos/pasta-keychains.jpg",
+        "alt": "Gele sleutelhangers in de vorm van farfalle, ravioli, fusilli en tortellini"
+      }
+    },
+    {
+      "id": "trade-show-spin-wheel",
+      "title": "Rad van fortuin voor beurs",
+      "quote": "Drie weken van schets tot beurs, inclusief een wijzer in de huisstijlkleuren van de klant. We sloten twee nieuwe klanten ter plekke. Elke euro waard.",
+      "author": "Tom Janssen",
+      "place": "Amsterdam, NL",
+      "image": {
+        "src": "../../assets/photos/spin-wheel.jpg",
+        "alt": "3D-geprint tafelmodel rad van fortuin, met gekleurde vakken in beweging"
+      }
+    },
+    {
+      "id": "popartment-collection",
+      "title": "POPARTMENT-collectie",
+      "quote": "We briefden de David en de Duomo, ze kwamen terug met een kleurbalans die wijzelf niet voor elkaar hadden gekregen. De winkel verkoopt de hele oplage uit voor we überhaupt bijbestellen.",
+      "author": "Lorenzo Bianchi",
+      "place": "Florence, IT",
+      "image": {
+        "src": "../../assets/photos/popartment-keychains.jpg",
+        "alt": "Twee POPARTMENT-sleutelhangers: de David in pop-artstijl en de skyline van Florence met de Duomo"
+      }
+    }
+  ]
+}
