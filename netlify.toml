@@ -1,0 +1,14 @@
+# Netlify build config (read from the repo root)
+[build]
+  base = "valkyrien-site"
+  command = "npm ci && npm run build"
+  publish = "dist"   # relative to base
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Not yet approved by the client: keep it out of search engines
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
