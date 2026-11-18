@@ -20,6 +20,8 @@
   }
   .skip-link:focus { top: 0.75rem; color: var(--color-paper); }
 
+  .nowrap { white-space: nowrap; }
+
   .sr-only {
     position: absolute !important;
     width: 1px; height: 1px;
@@ -45,7 +47,7 @@
     content: '';
     width: 2rem;
     height: 1px;
-    background: var(--color-gold);
+    background: var(--gradient-rule);
   }
 
   /*

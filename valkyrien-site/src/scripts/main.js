@@ -90,6 +90,21 @@ function initReveal() {
   reducedMotion.addEventListener('change', (e) => e.matches && (io.disconnect(), revealAll()));
 }
 
+function initHeaderState() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  let ticking = false;
+  const update = () => {
+    header.dataset.scrolled = String(window.scrollY > 8);
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+}
+
 initNav();
+initHeaderState();
 initHeroMotion();
 initReveal();

@@ -20,7 +20,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--hero-surface);
+    background: var(--gradient-hero-glow), var(--hero-surface);
     color: var(--hero-ink);
     border-bottom: 1px solid var(--hero-line);
   }
@@ -32,6 +32,7 @@
     --hero-muted: #c9ced6;
     --hero-line: rgb(255 255 255 / 0.14);
     --hero-accent: var(--color-gold);
+    background: var(--gradient-navy);
   }
 
   .hero__media {

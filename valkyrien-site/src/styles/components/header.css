@@ -16,14 +16,21 @@
     min-height: 4.5rem;
   }
 
+  .site-header {
+    transition: box-shadow var(--duration-base) var(--ease-institutional);
+  }
+  .site-header[data-scrolled='true'] { box-shadow: 0 10px 30px -18px rgb(10 25 47 / 0.35); }
+
   .brand {
     display: inline-flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     color: var(--color-ink);
     text-decoration: none;
     line-height: 1.1;
   }
   .brand:hover { color: var(--color-ink); }
+  .brand__text { display: flex; flex-direction: column; }
   .brand__name {
     font-family: var(--font-display);
     font-size: 1.0625rem;
@@ -36,6 +43,21 @@
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     color: var(--color-ink-muted);
+  }
+
+  /* Logo mark: 32-unit grid; stroke-width compensates the scale so strokes render at 1.5px */
+  .brand__mark { flex: none; width: 2.25rem; height: 2.25rem; fill: none; stroke-width: 1.333; stroke-linecap: square; }
+  .brand__frame, .brand__outer { stroke: var(--color-ink); }
+  .brand__inner { stroke: var(--color-gold); }
+
+  /* Load: the mark is drawn frame -> structure -> route, then holds */
+  @media (prefers-reduced-motion: no-preference) {
+    .brand__mark:not(.brand__mark--static) * {
+      stroke-dasharray: 1;
+      animation: iconTrace var(--duration-focus) var(--ease-focus) both;
+    }
+    .brand__mark:not(.brand__mark--static) .brand__outer { animation-delay: 150ms; }
+    .brand__mark:not(.brand__mark--static) .brand__inner { animation-delay: 320ms; }
   }
 
   .site-nav { display: flex; align-items: center; gap: 2rem; }

@@ -63,6 +63,13 @@ for (const [fg, bg, usage] of overlay) {
   if (!ok) failed++;
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${r.toFixed(2)}:1  (min 4.5)  ${fg} on ${bg}  - ${usage}`);
 }
+// Closing band gradient: worst (lightest) point = 16% gold glow over #112240
+const bandPeak = mix(tokens.gold, tokens['ink-raised'], 0.16);
+for (const [fg, label] of [['#c9ced6', 'closing band body'], [tokens.paper, 'closing band heading']]) {
+  const r = ratio(fg, bandPeak);
+  if (r < 4.5) failed++;
+  console.log(`${r >= 4.5 ? 'PASS' : 'FAIL'}  ${r.toFixed(2)}:1  (min 4.5)  ${fg} on ${bandPeak}  - ${label} at gradient peak`);
+}
 const darkMuted = ratio('#c9ced6', mix(tokens.ink, '#ffffff', 0.8));
 console.log(`${darkMuted >= 4.5 ? 'PASS' : 'FAIL'}  ${darkMuted.toFixed(2)}:1  (min 4.5)  #c9ced6 - dark hero lead on white frame`);
 if (darkMuted < 4.5) failed++;

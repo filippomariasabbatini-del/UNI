@@ -20,6 +20,16 @@
   --color-signal: #1d4ed8;             /* electric blue: links, focus, secondary CTA */
   --color-signal-strong: #1e3a8a;
 
+  /* Gradients: low-amplitude, always behind decorative layers, never behind body text */
+  --gradient-hero-glow:
+    radial-gradient(55% 75% at 82% 42%, rgb(29 78 216 / 0.07), transparent 70%),
+    radial-gradient(35% 45% at 64% 78%, rgb(184 147 90 / 0.08), transparent 70%);
+  --gradient-navy:
+    radial-gradient(70% 140% at 100% 0%, rgb(184 147 90 / 0.16), transparent 60%),
+    linear-gradient(135deg, #0a192f 0%, #112240 100%);
+  --gradient-surface: linear-gradient(180deg, #f7f6f2 0%, #ffffff 100%);
+  --gradient-rule: linear-gradient(90deg, #b8935a 0%, rgb(184 147 90 / 0) 100%);
+
   /* Typography */
   --font-sans: 'Inter Variable', 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Montserrat Variable', 'Inter Variable', system-ui, sans-serif;
