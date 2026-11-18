@@ -2,6 +2,7 @@
  * Home intro: globe -> shield parries arrow -> globe outline squares into the logo frame ->
  * chevrons draw (same curves as the header mark) -> mark docks into the header.
  * Gate (inline script in index.html): first visit in the session, motion allowed, no #hash.
+ * Duration 2s. Skippable only by scrolling down.
  */
 @layer components {
   /* Anti-flash cover until main.js mounts the intro. Fail-safe: removes itself after 4s if JS never runs. */
@@ -25,7 +26,6 @@
     z-index: 200;
     display: grid;
     place-items: center;
-    cursor: pointer;
   }
   .intro__bg { position: absolute; inset: 0; background: var(--gradient-hero-glow), var(--color-paper-alt); }
 
@@ -50,23 +50,4 @@
   .intro__sparks { stroke: var(--color-gold); stroke-width: 0.75; opacity: 0; }
   .intro__pulse { transform-box: fill-box; transform-origin: center; }
   .intro__arrow { stroke: var(--color-ink); stroke-width: 1; opacity: 0; }
-
-  .intro__skip {
-    position: absolute;
-    right: var(--space-gutter);
-    bottom: 1.25rem;
-    min-height: 2.25rem;
-    padding: 0.375rem 0.875rem;
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    background: var(--color-paper);
-    box-shadow: inset 0 0 0 1px transparent;
-    color: var(--color-ink-muted);
-    font: 500 var(--text-xs) / 1 var(--font-sans);
-    cursor: pointer;
-    transition-property: color, border-color, box-shadow;
-    transition-duration: var(--duration-tactical);
-    transition-timing-function: var(--ease-institutional);
-  }
-  .intro__skip:hover { color: var(--color-ink); border-color: var(--color-gold); box-shadow: inset 0 0 0 1px var(--color-gold); }
 }

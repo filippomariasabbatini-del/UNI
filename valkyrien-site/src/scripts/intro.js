@@ -1,5 +1,6 @@
 /*
- * Home intro timeline (~3s). Web Animations API for every CSS-animatable value;
+ * Home intro timeline (2s total). Skippable only by scrolling down (wheel, swipe up, scroll keys).
+ * Web Animations API for every CSS-animatable value;
  * the globe -> frame morph tweens the rect's rx attribute (not reliably CSS-animatable in Safari).
  */
 const EASE = {
@@ -9,7 +10,7 @@ const EASE = {
 };
 const MARK_SCALE = 2.5263;     // logo 32-grid -> scene units (frame 28.5u -> 72u)
 const SCENE_W = 240;           // viewBox width
-const T = { impact: 930, fade: 1250, morph: 1300, outer: 1420, inner: 1590, dock: 2450, dockDur: 650 };
+const T = { impact: 600, fade: 800, morph: 840, outer: 900, dock: 1580, dockDur: 420 };
 
 export function playIntro() {
   const root = document.documentElement;
@@ -42,13 +43,13 @@ export function playIntro() {
   const at = (ms, fn) => timers.push(setTimeout(fn, ms));
 
   // 1. Globe
-  draw(frame, 0, 550);
-  overlay.querySelectorAll('.intro__grid > *').forEach((el, i) => draw(el, 120 + i * 60, 450));
+  draw(frame, 0, 360);
+  overlay.querySelectorAll('.intro__grid > *').forEach((el, i) => draw(el, 80 + i * 40, 300));
 
   // 2. Shield raised
   const shield = q('.intro__shield');
-  A(shield, [{ opacity: 0 }, { opacity: 1 }], { delay: 250, duration: 300, easing: EASE.inst });
-  draw(shield, 250, 450);
+  A(shield, [{ opacity: 0 }, { opacity: 1 }], { delay: 160, duration: 200, easing: EASE.inst });
+  draw(shield, 160, 300);
 
   // 3. Arrow strikes, shield parries
   const arrow = q('.intro__arrow');
@@ -56,33 +57,33 @@ export function playIntro() {
     { transform: 'translate(-130px, 80px)', opacity: 0 },
     { opacity: 1, offset: 0.25 },
     { transform: 'translate(74px, 80px)', opacity: 1 },
-  ], { delay: 450, duration: T.impact - 450, easing: EASE.strike });
+  ], { delay: 300, duration: T.impact - 300, easing: EASE.strike });
   A(arrow, [
     { transform: 'translate(74px, 80px) rotate(0deg)', opacity: 1 },
     { transform: 'translate(63px, 95px) rotate(-24deg)', opacity: 0 },
-  ], { delay: T.impact, duration: 420, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: 280, easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__defence'), [
     { transform: 'translateX(0)' }, { transform: 'translateX(1.5px)', offset: 0.3 }, { transform: 'translateX(0)' },
-  ], { delay: T.impact, duration: 260, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: 180, easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__pulse'), [
     { opacity: 0.9, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(1.45)' },
-  ], { delay: T.impact, duration: 520, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: 340, easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__sparks'), [
     { opacity: 0, transform: 'translateX(0)' }, { opacity: 1, offset: 0.3 }, { opacity: 0, transform: 'translateX(-4px)' },
-  ], { delay: T.impact, duration: 380, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: 250, easing: EASE.inst, fill: 'forwards' });
 
   // 4. Defence and globe grid recede; the globe outline squares into the logo frame
-  A(q('.intro__defence'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 350, easing: EASE.inst, fill: 'forwards' });
-  A(q('.intro__grid'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 350, easing: EASE.inst, fill: 'forwards' });
-  at(T.morph, () => tweenAttr(frame, 'rx', 36, 1.5 * MARK_SCALE, 500));
+  A(q('.intro__defence'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 230, easing: EASE.inst, fill: 'forwards' });
+  A(q('.intro__grid'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 230, easing: EASE.inst, fill: 'forwards' });
+  at(T.morph, () => tweenAttr(frame, 'rx', 36, 1.5 * MARK_SCALE, 320));
 
-  // 5. Chevrons: same stagger and curve as the header mark (0 / +150 / +320 ms, 800 ms)
-  draw(marks[0], T.outer, 800);
-  draw(marks[1], T.outer + 170, 800);
+  // 5. Chevrons: header-mark curve and stagger, compressed to fit the 2s budget
+  draw(marks[0], T.outer, 520);
+  draw(marks[1], T.outer + 110, 520);
 
   // 6. Dock into the header
   at(T.dock, dock);
-  at(T.dock + T.dockDur + 50, () => finish(false));
+  at(T.dock + T.dockDur, () => finish(false));
 
   function tweenAttr(el, attr, from, to, duration) {
     const t0 = performance.now();
@@ -118,8 +119,7 @@ export function playIntro() {
     A(frame, [{ strokeWidth: 1 }, { strokeWidth: endStroke }], o);
     marks.forEach((m) => A(m, [{ strokeWidth: 1 / MARK_SCALE }, { strokeWidth: endStroke / MARK_SCALE }], o));
     // cover lifts after the mark has started travelling, so the flight reads
-    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 200, easing: 'cubic-bezier(0.45, 0, 0.55, 1)', fill: 'forwards' });
-    A(q('.intro__skip'), [{ opacity: 1 }, { opacity: 0 }], { ...o, duration: 200 });
+    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: 300, delay: 120, easing: 'cubic-bezier(0.45, 0, 0.55, 1)', fill: 'forwards' });
   }
 
   function finish(skipped) {
@@ -139,13 +139,34 @@ export function playIntro() {
     overlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: EASE.inst, fill: 'forwards' }).finished.then(teardown);
   }
 
-  const skip = () => finish(true);
-  const onKey = (e) => e.key === 'Escape' && skip();
-  const events = [['click', skip], ['wheel', skip], ['touchstart', skip]];
-  events.forEach(([t, fn]) => overlay.addEventListener(t, fn, { passive: true }));
-  document.addEventListener('keydown', onKey);
+  // Skip = the user keeps scrolling down. The gesture that skips also scrolls the page.
+  const skip = (dy = 0) => {
+    finish(true);
+    if (dy > 0) requestAnimationFrame(() => window.scrollBy({ top: dy, behavior: 'auto' }));
+  };
+  const onWheel = (e) => e.deltaY > 0 && skip(e.deltaY);
+  let touchY = null;
+  const onTouchStart = (e) => (touchY = e.touches[0].clientY);
+  const onTouchMove = (e) => {
+    if (touchY === null) return;
+    const dy = touchY - e.touches[0].clientY;   // finger moving up = scrolling down
+    if (dy > 12) skip(dy);
+  };
+  const SCROLL_KEYS = { ArrowDown: 40, PageDown: window.innerHeight * 0.9, ' ': window.innerHeight * 0.9, End: 0 };
+  const onKey = (e) => {
+    if (!(e.key in SCROLL_KEYS) || e.shiftKey) return;
+    e.preventDefault();
+    if (e.key === 'End') { finish(true); requestAnimationFrame(() => window.scrollTo({ top: document.body.scrollHeight })); }
+    else skip(SCROLL_KEYS[e.key]);
+  };
+  const listeners = [
+    [window, 'wheel', onWheel, { passive: true }],
+    [window, 'touchstart', onTouchStart, { passive: true }],
+    [window, 'touchmove', onTouchMove, { passive: true }],
+    [document, 'keydown', onKey, false],
+  ];
+  listeners.forEach(([t, ev, fn, o]) => t.addEventListener(ev, fn, o));
   function removeListeners() {
-    events.forEach(([t, fn]) => overlay.removeEventListener(t, fn));
-    document.removeEventListener('keydown', onKey);
+    listeners.forEach(([t, ev, fn, o]) => t.removeEventListener(ev, fn, o));
   }
 }
