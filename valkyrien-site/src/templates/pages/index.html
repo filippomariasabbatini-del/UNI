@@ -53,9 +53,14 @@
             <path class="net-line" d="M700 400 L780 520 L560 470"/>
           </g>
           <g class="net-routes">
-            <path class="net-route" d="M300 190 C 350 220, 390 260, 430 300"/>
-            <path class="net-route" d="M430 300 C 445 340, 450 380, 450 420"/>
-            <path class="net-route" d="M300 190 C 330 300, 380 380, 450 420"/>
+            <path class="net-route" data-from="uk" data-to="lu" d="M300 190 C 350 220, 390 260, 430 300"/>
+            <path class="net-route" data-from="lu" data-to="ch" d="M430 300 C 445 340, 450 380, 450 420"/>
+            <path class="net-route" data-from="uk" data-to="ch" d="M300 190 C 330 300, 380 380, 450 420"/>
+          </g>
+          <!-- Flight layer: one aircraft at a time, random origin/destination among the three hubs (scripts/flights.js) -->
+          <g class="net-flight">
+            <circle class="net-ping" cx="0" cy="0" r="9"/>
+            <g class="net-plane"><path d="M10 0c0-.9-.9-1.5-2-1.5H3.2L-2.5-8.5H-5l3.2 7H-6.8l-2-2.7h-1.7L-9.2 0l-1.3 4.2h1.7l2-2.7h5L-5 8.5h2.5l5.7-7H8c1.1 0 2-.6 2-1.5z"/></g>
           </g>
           <g class="net-nodes">
             <circle class="net-node" cx="40" cy="120" r="3"/>
@@ -76,9 +81,9 @@
             <circle class="net-node" cx="780" cy="520" r="3"/>
           </g>
           <g class="net-hubs">
-            <circle class="net-node" cx="300" cy="190" r="9"/><circle class="net-hub" cx="300" cy="190" r="3.5"/>
-            <circle class="net-node" cx="430" cy="300" r="9"/><circle class="net-hub" cx="430" cy="300" r="3.5"/>
-            <circle class="net-node" cx="450" cy="420" r="9"/><circle class="net-hub" cx="450" cy="420" r="3.5"/>
+            <circle class="net-node" data-hub="uk" cx="300" cy="190" r="9"/><circle class="net-hub" cx="300" cy="190" r="3.5"/>
+            <circle class="net-node" data-hub="lu" cx="430" cy="300" r="9"/><circle class="net-hub" cx="430" cy="300" r="3.5"/>
+            <circle class="net-node" data-hub="ch" cx="450" cy="420" r="9"/><circle class="net-hub" cx="450" cy="420" r="3.5"/>
             <text class="net-label" x="318" y="180">UK</text>
             <text class="net-label" x="448" y="292">LU</text>
             <text class="net-label" x="468" y="440">CH</text>
@@ -114,9 +119,6 @@
         </dl>
       </div>
 
-      <button class="hero__motion-toggle" type="button" aria-pressed="false" data-motion-toggle data-label-pause="{{t:hero.motion.pause}}" data-label-play="{{t:hero.motion.play}}">
-        <span data-motion-label>{{t:hero.motion.pause}}</span>
-      </button>
     </section>
 
     <section class="section" id="problem" aria-labelledby="problem-title">

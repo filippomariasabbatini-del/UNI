@@ -176,27 +176,23 @@
     color: var(--hero-muted);
   }
 
-  /* WCAG 2.2.2: looping background motion must be pausable */
-  .hero__motion-toggle {
-    position: absolute;
-    right: var(--space-gutter);
-    bottom: 1rem;
-    min-height: 2rem;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid var(--hero-line);
-    border-radius: var(--radius-sm);
-    background: var(--hero-surface);
-    box-shadow: inset 0 0 0 1px transparent;
-    color: var(--hero-muted);
-    font: 500 var(--text-xs) / 1 var(--font-sans);
-    cursor: pointer;
-    transition-property: color, border-color, box-shadow;
-    transition-duration: var(--duration-tactical);
-    transition-timing-function: var(--ease-institutional);
+  /* Flight layer: aircraft along the dashed routes (positioned by scripts/flights.js) */
+  .hero__network .net-plane { opacity: 0; }
+  .hero__network .net-plane path {
+    fill: var(--hero-surface);
+    stroke: var(--hero-ink);
+    stroke-width: 1.2;
+    stroke-linejoin: round;
   }
-  .hero__motion-toggle:hover { color: var(--hero-ink); border-color: var(--color-gold); box-shadow: inset 0 0 0 1px var(--color-gold); }
-  .hero[data-motion='paused'] .net-route { animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) { .hero__motion-toggle { display: none; } }
+  .hero__network .net-ping {
+    fill: none;
+    stroke: var(--color-gold);
+    stroke-width: 1.5;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @media (prefers-reduced-motion: reduce) { .hero__network .net-flight { display: none; } }
 
   .nowrap { white-space: nowrap; }
 

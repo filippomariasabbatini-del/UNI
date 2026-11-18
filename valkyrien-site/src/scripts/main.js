@@ -1,3 +1,4 @@
+import { createFlights } from './flights.js';
 import { playIntro } from './intro.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -27,34 +28,24 @@ function initHeroMotion() {
   if (!hero) return;
 
   const video = hero.querySelector('[data-hero-video]');
-  const toggle = hero.querySelector('[data-motion-toggle]');
-  const label = hero.querySelector('[data-motion-label]');
   const videoReady = video?.dataset.ready === 'true';
-
   if (!videoReady) video?.remove();
 
-  const play = () => {
-    hero.dataset.motion = 'running';
-    toggle?.setAttribute('aria-pressed', 'false');
-    if (label) label.textContent = toggle.dataset.labelPause;
-    if (videoReady && video) {
-      video.play().then(() => (video.dataset.playing = 'true')).catch(() => {});
+  const art = hero.querySelector('[data-hero-art]');
+  const flights = art ? createFlights(art, hero) : null;
+
+  // Background motion follows the OS setting only (no on-page control, by client decision).
+  const apply = () => {
+    if (reducedMotion.matches) {
+      flights?.stop();
+      if (videoReady) { video.pause(); video.dataset.playing = 'false'; }
+    } else {
+      flights?.start();
+      if (videoReady) video.play().then(() => (video.dataset.playing = 'true')).catch(() => {});
     }
   };
-
-  const pause = () => {
-    hero.dataset.motion = 'paused';
-    toggle?.setAttribute('aria-pressed', 'true');
-    if (label) label.textContent = toggle.dataset.labelPlay;
-    if (videoReady && video) {
-      video.pause();
-      video.dataset.playing = 'false';
-    }
-  };
-
-  toggle?.addEventListener('click', () => (hero.dataset.motion === 'paused' ? play() : pause()));
-  reducedMotion.matches ? pause() : play();
-  reducedMotion.addEventListener('change', (e) => (e.matches ? pause() : play()));
+  apply();
+  reducedMotion.addEventListener('change', apply);
 }
 
 /*
