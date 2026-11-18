@@ -3,7 +3,20 @@
     "21st": {
       "type": "http",
       "url": "https://21st.dev/api/mcp",
-      "headers": { "x-api-key": "${API_KEY_21ST}" }
+      "headers": {
+        "x-api-key": "${API_KEY_21ST}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--no-sandbox",
+        "--executable-path",
+        "/opt/pw-browsers/chromium"
+      ]
     }
   }
 }
