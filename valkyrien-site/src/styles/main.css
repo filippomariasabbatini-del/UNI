@@ -18,10 +18,11 @@
 @import './components/footer.css';
 @import './components/motion.css';
 @import './components/intro.css';
+@import './components/vest.css';
 
 @layer base {
   html {
-    color-scheme: light;
+    color-scheme: dark;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 5rem;
   }

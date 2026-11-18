@@ -1,3 +1,4 @@
+import { initVest } from './vest.js';
 import { createFlights } from './flights.js';
 import { playIntro } from './intro.js';
 
@@ -116,3 +117,4 @@ initLangSwitch();
 initHeaderState();
 initHeroMotion();
 initReveal();
+initVest(reducedMotion);

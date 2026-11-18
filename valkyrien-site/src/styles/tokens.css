@@ -4,30 +4,31 @@
  * checked against WCAG 2.2 AA by tools/contrast-check.mjs (keep both in sync).
  */
 @theme {
-  /* Surfaces */
-  --color-paper: #ffffff;
-  --color-paper-alt: #f7f6f2;          /* off-white */
-  --color-line: #d9d6cc;               /* hairlines, decorative only */
+  /* Surfaces (inverted theme: navy surfaces, white type) */
+  --color-paper: #0a192f;              /* page background, navy */
+  --color-paper-alt: #0f213d;          /* hero, alternate sections */
+  --color-line: #22365a;               /* hairlines, decorative only */
 
   /* Ink */
-  --color-ink: #0a192f;                /* navy, primary text */
-  --color-ink-raised: #112240;         /* navy hover state on dark surfaces */
-  --color-ink-muted: #3b4451;          /* gunmetal grey, secondary text */
+  --color-ink: #ffffff;                /* primary text */
+  --color-ink-raised: #172b4d;         /* raised surface: hover fills, closing band */
+  --color-ink-muted: #c3cad6;          /* secondary text */
+  --color-on-gold: #0a192f;            /* text on gold fills */
 
   /* Accents */
-  --color-gold: #b8935a;               /* muted gold: CTA fill (with ink text), rules */
-  --color-gold-strong: #8a6a35;        /* gold usable as text on paper */
-  --color-signal: #1d4ed8;             /* electric blue: links, focus, secondary CTA */
-  --color-signal-strong: #1e3a8a;
+  --color-gold: #b8935a;               /* muted gold: CTA fill (with on-gold text), rules */
+  --color-gold-strong: #d2b07a;        /* gold usable as text on navy */
+  --color-signal: #7ea6ff;             /* electric blue, lightened for navy: links, focus */
+  --color-signal-strong: #b4c9ff;
 
   /* Gradients: low-amplitude, always behind decorative layers, never behind body text */
   --gradient-hero-glow:
-    radial-gradient(55% 75% at 82% 42%, rgb(29 78 216 / 0.07), transparent 70%),
+    radial-gradient(55% 75% at 82% 42%, rgb(126 166 255 / 0.09), transparent 70%),
     radial-gradient(35% 45% at 64% 78%, rgb(184 147 90 / 0.08), transparent 70%);
   --gradient-navy:
     radial-gradient(70% 140% at 100% 0%, rgb(184 147 90 / 0.16), transparent 60%),
-    linear-gradient(135deg, #0a192f 0%, #112240 100%);
-  --gradient-surface: linear-gradient(180deg, #f7f6f2 0%, #ffffff 100%);
+    linear-gradient(135deg, #172b4d 0%, #0f213d 100%);
+  --gradient-surface: linear-gradient(180deg, #0f213d 0%, #0a192f 100%);
   --gradient-rule: linear-gradient(90deg, #b8935a 0%, rgb(184 147 90 / 0) 100%);
 
   /* Typography */

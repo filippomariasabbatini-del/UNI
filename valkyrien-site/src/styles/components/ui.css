@@ -7,12 +7,12 @@
     top: -100%;
     z-index: 100;
     padding: 0.75rem 1rem;
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--color-gold);
+    color: var(--color-on-gold);
     font-weight: 600;
     text-decoration: none;
   }
-  .skip-link:focus { top: 0.75rem; color: var(--color-paper); }
+  .skip-link:focus { top: 0.75rem; color: var(--color-on-gold); }
 
   .nowrap { white-space: nowrap; }
 
@@ -51,7 +51,7 @@
    */
   .btn {
     --btn-bg: var(--color-gold);
-    --btn-fg: var(--color-ink);
+    --btn-fg: var(--color-on-gold);
     --btn-border: var(--color-gold);
     --btn-ring: transparent;
     display: inline-flex;
@@ -76,16 +76,16 @@
     transition-timing-function: var(--ease-institutional);
   }
   .btn:hover {
-    --btn-bg: var(--color-ink);
-    --btn-fg: var(--color-paper);
-    --btn-border: var(--color-ink);
+    --btn-bg: var(--color-ink-raised);
+    --btn-fg: var(--color-ink);
+    --btn-border: var(--color-ink-raised);
     --btn-ring: var(--color-gold);
     color: var(--btn-fg);
   }
   .btn:active { --btn-ring: var(--color-signal); }
   .btn:disabled,
   .btn[aria-disabled='true'] { cursor: not-allowed; opacity: 0.55; }
-  .btn:disabled:hover { --btn-bg: var(--color-gold); --btn-fg: var(--color-ink); --btn-border: var(--color-gold); --btn-ring: transparent; }
+  .btn:disabled:hover { --btn-bg: var(--color-gold); --btn-fg: var(--color-on-gold); --btn-border: var(--color-gold); --btn-ring: transparent; }
 
   .btn svg { width: 1.125rem; height: 1.125rem; stroke-width: var(--stroke-icon); }
 

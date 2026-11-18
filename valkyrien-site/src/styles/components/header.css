@@ -19,7 +19,7 @@
   .site-header {
     transition: box-shadow var(--duration-base) var(--ease-institutional);
   }
-  .site-header[data-scrolled='true'] { box-shadow: 0 10px 30px -18px rgb(10 25 47 / 0.35); }
+  .site-header[data-scrolled='true'] { box-shadow: 0 12px 30px -16px rgb(0 0 0 / 0.6); }
 
   .brand {
     margin-right: auto;
@@ -184,7 +184,7 @@
     background: var(--color-paper);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-sm);
-    box-shadow: 0 18px 40px -20px rgb(10 25 47 / 0.35);
+    box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.65);
     animation: langIn var(--duration-tactical) var(--ease-institutional) both;
   }
   @keyframes langIn { from { opacity: 0; transform: translateY(-4px); } }

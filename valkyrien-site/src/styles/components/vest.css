@@ -1,0 +1,51 @@
+/* Scroll companion: plate carrier. Fixed in the right gutter on wide screens, compact chip below 1400px. */
+@layer components {
+  .vest {
+    position: fixed;
+    top: 50%;
+    right: 1.25rem;
+    z-index: 40;
+    width: 5.5rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(0, calc(-50% + var(--reveal-distance)), 0);
+    transition:
+      opacity var(--duration-base) var(--ease-institutional),
+      transform var(--duration-base) var(--ease-institutional);
+  }
+  .vest[data-visible='true'] { opacity: 1; transform: translate3d(0, -50%, 0); }
+  html.intro-playing .vest { visibility: hidden; }
+
+  .vest__svg { width: 100%; height: auto; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .vest__body * { vector-effect: non-scaling-stroke; stroke-width: 1.5; }
+  .vest__shell { fill: var(--color-paper-alt); stroke: var(--color-ink); }
+  .vest__detail { stroke: var(--color-ink-muted); stroke-width: 1 !important; opacity: 0.7; }
+  .vest__plate { fill: var(--color-ink-raised); stroke: var(--color-gold); transition: stroke var(--duration-tactical) var(--ease-institutional); }
+  .vest__emblem { stroke: var(--color-gold); stroke-linecap: square; stroke-linejoin: miter; }
+  .vest[data-hit='true'] .vest__plate { stroke: var(--color-ink); }
+
+  .vest__dent { fill: var(--color-paper); stroke: var(--color-gold-strong); stroke-width: 1; opacity: 0; }
+  .vest__flash { fill: var(--color-gold-strong); opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .vest__sparks { stroke: var(--color-gold-strong); stroke-width: 1.5; opacity: 0; }
+  .vest__round { opacity: 0; }
+  .vest__bullet { fill: var(--color-ink); }
+  .vest__trail { stroke: var(--color-gold-strong); stroke-width: 1.5; opacity: 0.6; }
+
+  @media (max-width: 87.5rem) {
+    .vest {
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      width: 3.75rem;
+      padding: 0.375rem;
+      background: color-mix(in srgb, var(--color-paper) 85%, transparent);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(6px);
+      transform: translate3d(0, var(--reveal-distance), 0);
+    }
+    .vest[data-visible='true'] { transform: none; }
+  }
+
+  @media print { .vest { display: none; } }
+}

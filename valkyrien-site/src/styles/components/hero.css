@@ -6,7 +6,7 @@
  *   2nd  network line-art (SVG) + text-column fade
  *   1st  content
  * Text contrast never depends on the media layers: tools/contrast-check.mjs tests the
- * worst case (overlay over a pure white / pure black video frame).
+ * worst case (overlay over a pure white video frame).
  */
 @layer components {
   .hero {
@@ -23,16 +23,6 @@
     background: var(--gradient-hero-glow), var(--hero-surface);
     color: var(--hero-ink);
     border-bottom: 1px solid var(--hero-line);
-  }
-
-  /* Dark variant: overlay is exactly #0A192F at 80% */
-  .hero--dark {
-    --hero-surface: var(--color-ink);
-    --hero-ink: var(--color-paper);
-    --hero-muted: #c9ced6;
-    --hero-line: rgb(255 255 255 / 0.14);
-    --hero-accent: var(--color-gold);
-    background: var(--gradient-navy);
   }
 
   .hero__media {
@@ -138,9 +128,6 @@
     margin-top: 2.5rem;
   }
 
-  .hero--dark .btn--ghost { --btn-fg: var(--color-paper); --btn-border: var(--color-paper); }
-  .hero--dark .btn--ghost:hover { --btn-fg: var(--color-paper); --btn-border: var(--color-gold); --btn-ring: var(--color-gold); }
-  .hero--dark .btn:not(.btn--ghost):hover { --btn-bg: var(--color-ink-raised); --btn-border: var(--color-gold); }
 
   .hero__microcopy {
     display: flex;

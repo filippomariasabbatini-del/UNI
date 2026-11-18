@@ -2,27 +2,31 @@
   "color": {
     "paper": {
       "$type": "color",
-      "$value": "#ffffff"
+      "$value": "#0a192f"
     },
     "paper-alt": {
       "$type": "color",
-      "$value": "#f7f6f2"
+      "$value": "#0f213d"
     },
     "line": {
       "$type": "color",
-      "$value": "#d9d6cc"
+      "$value": "#22365a"
     },
     "ink": {
       "$type": "color",
-      "$value": "#0a192f"
+      "$value": "#ffffff"
     },
     "ink-raised": {
       "$type": "color",
-      "$value": "#112240"
+      "$value": "#172b4d"
     },
     "ink-muted": {
       "$type": "color",
-      "$value": "#3b4451"
+      "$value": "#c3cad6"
+    },
+    "on-gold": {
+      "$type": "color",
+      "$value": "#0a192f"
     },
     "gold": {
       "$type": "color",
@@ -30,31 +34,31 @@
     },
     "gold-strong": {
       "$type": "color",
-      "$value": "#8a6a35"
+      "$value": "#d2b07a"
     },
     "signal": {
       "$type": "color",
-      "$value": "#1d4ed8"
+      "$value": "#7ea6ff"
     },
     "signal-strong": {
       "$type": "color",
-      "$value": "#1e3a8a"
+      "$value": "#b4c9ff"
     }
   },
   "gradient": {
     "hero-glow": {
       "$type": "string",
-      "$value": "radial-gradient(55% 75% at 82% 42%, rgb(29 78 216 / 0.07), transparent 70%), radial-gradient(35% 45% at 64% 78%, rgb(184 147 90 / 0.08), transparent 70%)",
+      "$value": "radial-gradient(55% 75% at 82% 42%, rgb(126 166 255 / 0.09), transparent 70%), radial-gradient(35% 45% at 64% 78%, rgb(184 147 90 / 0.08), transparent 70%)",
       "$description": "CSS gradient; rebuild as a Figma paint style"
     },
     "navy": {
       "$type": "string",
-      "$value": "radial-gradient(70% 140% at 100% 0%, rgb(184 147 90 / 0.16), transparent 60%), linear-gradient(135deg, #0a192f 0%, #112240 100%)",
+      "$value": "radial-gradient(70% 140% at 100% 0%, rgb(184 147 90 / 0.16), transparent 60%), linear-gradient(135deg, #172b4d 0%, #0f213d 100%)",
       "$description": "CSS gradient; rebuild as a Figma paint style"
     },
     "surface": {
       "$type": "string",
-      "$value": "linear-gradient(180deg, #f7f6f2 0%, #ffffff 100%)",
+      "$value": "linear-gradient(180deg, #0f213d 0%, #0a192f 100%)",
       "$description": "CSS gradient; rebuild as a Figma paint style"
     },
     "rule": {
