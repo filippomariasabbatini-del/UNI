@@ -11,6 +11,7 @@
 
   /* Ink */
   --color-ink: #0a192f;                /* navy, primary text */
+  --color-ink-raised: #112240;         /* navy hover state on dark surfaces */
   --color-ink-muted: #3b4451;          /* gunmetal grey, secondary text */
 
   /* Accents */
@@ -41,11 +42,40 @@
   --container-site: 76rem;
   --container-prose: 42rem;
 
-  /* Shape & motion */
+  /* Shape */
   --radius-sm: 2px;
   --radius-md: 4px;
   --stroke-icon: 1.5px;
+
+  /* Motion: "institutional stealth". No overshoot, no scale, max 12px travel. */
+  --ease-institutional: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-focus: cubic-bezier(0.33, 1, 0.68, 1);   /* softer than institutional: the focus pull stays perceptible across 800ms */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --duration-fast: 160ms;
+  --duration-tactical: 180ms;          /* hover / press: 150-200ms */
   --duration-base: 320ms;
+  --duration-reveal: 640ms;
+  --duration-focus: 800ms;
+  --reveal-distance: 12px;
+  --reveal-stagger: 80ms;
+
+  --animate-blur-focus: blurFocus var(--duration-focus) var(--ease-focus) both;
+  --animate-micro-fade-up: microFadeUp var(--duration-reveal) var(--ease-institutional) both;
+  --animate-icon-trace: iconTrace var(--duration-tactical) var(--ease-institutional) both;
+
+  @keyframes blurFocus {
+    from { opacity: 0; filter: blur(4px); }
+    to   { opacity: 1; filter: blur(0); }
+  }
+
+  @keyframes microFadeUp {
+    from { opacity: 0; transform: translate3d(0, var(--reveal-distance), 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  /* Vector redraw: requires pathLength="1" on the traced element */
+  @keyframes iconTrace {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
+  }
 }

@@ -1,15 +1,37 @@
 /*
  * Hero - Home
- * Layers (back to front): paper-alt field -> network line-art (SVG) ->
- * optional video loop (only when an asset is shipped and motion is allowed) -> content.
+ * Spatial reading order (back to front):
+ *   3rd  video loop (luminosity-blended, only when an asset ships and motion is allowed)
+ *        + data-flow overlay: hero surface at 80% opacity
+ *   2nd  network line-art (SVG) + text-column fade
+ *   1st  content
+ * Text contrast never depends on the media layers: tools/contrast-check.mjs tests the
+ * worst case (overlay over a pure white / pure black video frame).
  */
 @layer components {
   .hero {
+    --hero-surface: var(--color-paper-alt);
+    --hero-ink: var(--color-ink);
+    --hero-muted: var(--color-ink-muted);
+    --hero-line: var(--color-line);
+    --hero-accent: var(--color-gold-strong);
+    --hero-overlay-opacity: 80%;
+
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--color-paper-alt);
-    border-bottom: 1px solid var(--color-line);
+    background: var(--hero-surface);
+    color: var(--hero-ink);
+    border-bottom: 1px solid var(--hero-line);
+  }
+
+  /* Dark variant: overlay is exactly #0A192F at 80% */
+  .hero--dark {
+    --hero-surface: var(--color-ink);
+    --hero-ink: var(--color-paper);
+    --hero-muted: #c9ced6;
+    --hero-line: rgb(255 255 255 / 0.14);
+    --hero-accent: var(--color-gold);
   }
 
   .hero__media {
@@ -19,6 +41,26 @@
     pointer-events: none;
   }
 
+  /* 3rd reading: video + data-flow overlay */
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: luminosity;    /* strips the footage's hue: palette stays institutional */
+    opacity: 0;
+    transition: opacity 600ms var(--ease-institutional);
+  }
+  .hero__video[data-playing='true'] { opacity: 1; }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--hero-surface) var(--hero-overlay-opacity), transparent);
+  }
+
+  /* 2nd reading: network line-art */
   .hero__network {
     position: absolute;
     top: 50%;
@@ -26,10 +68,9 @@
     width: min(62rem, 120%);
     height: auto;
     transform: translateY(-50%);
-    color: var(--color-ink);
     opacity: 0.9;
   }
-  .hero__network .net-line { stroke: var(--color-line); stroke-width: 1; fill: none; }
+  .hero__network .net-line { stroke: var(--hero-line); stroke-width: 1; fill: none; }
   .hero__network .net-route {
     stroke: var(--color-gold);
     stroke-width: 1.5;
@@ -37,43 +78,32 @@
     stroke-dasharray: 4 6;
     animation: hero-route 18s linear infinite;
   }
-  .hero__network .net-node { fill: var(--color-paper); stroke: var(--color-ink-muted); stroke-width: 1.5; }
-  .hero__network .net-hub { fill: var(--color-ink); }
+  .hero__network .net-node { fill: var(--hero-surface); stroke: var(--hero-muted); stroke-width: 1.5; }
+  .hero__network .net-hub { fill: var(--hero-ink); }
   .hero__network .net-label {
     font-family: var(--font-display);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.14em;
-    fill: var(--color-ink-muted);
+    fill: var(--hero-muted);
   }
 
   @keyframes hero-route { to { stroke-dashoffset: -200; } }
 
-  .hero__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 600ms var(--ease-out-quart);
-  }
-  .hero__video[data-playing='true'] { opacity: 0.18; }
-
-  /* Fade the art out behind the text column so contrast never depends on it */
-  .hero__media::after {
-    content: '';
+  /* Fade the art out behind the text column */
+  .hero__fade {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       90deg,
-      var(--color-paper-alt) 0%,
-      var(--color-paper-alt) 38%,
-      color-mix(in srgb, var(--color-paper-alt) 55%, transparent) 70%,
+      var(--hero-surface) 0%,
+      var(--hero-surface) 38%,
+      color-mix(in srgb, var(--hero-surface) 55%, transparent) 70%,
       transparent 100%
     );
   }
 
+  /* 1st reading: content */
   .hero__inner {
     display: grid;
     gap: 2.5rem;
@@ -82,8 +112,11 @@
 
   .hero__content { max-width: 46rem; }
 
+  .hero .eyebrow { color: var(--hero-accent); }
+
   .hero__title {
     margin-top: 1.5rem;
+    color: var(--hero-ink);
     font-size: var(--text-display);
     font-weight: 600;
     line-height: 1.08;
@@ -94,7 +127,7 @@
     margin-top: 1.75rem;
     max-width: 38rem;
     font-size: var(--text-lg);
-    color: var(--color-ink-muted);
+    color: var(--hero-muted);
   }
 
   .hero__actions {
@@ -104,6 +137,10 @@
     margin-top: 2.5rem;
   }
 
+  .hero--dark .btn--ghost { --btn-fg: var(--color-paper); --btn-border: var(--color-paper); }
+  .hero--dark .btn--ghost:hover { --btn-fg: var(--color-paper); --btn-border: var(--color-gold); --btn-ring: var(--color-gold); }
+  .hero--dark .btn:not(.btn--ghost):hover { --btn-bg: var(--color-ink-raised); --btn-border: var(--color-gold); }
+
   .hero__microcopy {
     display: flex;
     align-items: flex-start;
@@ -111,9 +148,9 @@
     margin-top: 1.25rem;
     max-width: 34rem;
     font-size: var(--text-sm);
-    color: var(--color-ink-muted);
+    color: var(--hero-muted);
   }
-  .hero__microcopy .icon { flex: none; width: 1.125rem; height: 1.125rem; margin-top: 0.15rem; color: var(--color-gold-strong); }
+  .hero__microcopy .icon { flex: none; width: 1.125rem; height: 1.125rem; margin-top: 0.15rem; color: var(--hero-accent); }
 
   .hero__jurisdictions {
     display: grid;
@@ -121,26 +158,21 @@
     max-width: 40rem;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-line);
+    border-top: 1px solid var(--hero-line);
   }
-  .hero__jurisdictions div {
-    padding: 1.25rem 1.25rem 0 0;
-  }
-  .hero__jurisdictions div + div {
-    padding-left: 1.25rem;
-    border-left: 1px solid var(--color-line);
-  }
+  .hero__jurisdictions div { padding: 1.25rem 1.25rem 0 0; }
+  .hero__jurisdictions div + div { padding-left: 1.25rem; border-left: 1px solid var(--hero-line); }
   .hero__jurisdictions dt {
     font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 600;
-    color: var(--color-ink);
+    color: var(--hero-ink);
   }
   .hero__jurisdictions dd {
     margin: 0.25rem 0 0;
     font-size: var(--text-xs);
     line-height: 1.4;
-    color: var(--color-ink-muted);
+    color: var(--hero-muted);
   }
 
   /* WCAG 2.2.2: looping background motion must be pausable */
@@ -150,14 +182,18 @@
     bottom: 1rem;
     min-height: 2rem;
     padding: 0.25rem 0.75rem;
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--hero-line);
     border-radius: var(--radius-sm);
-    background: var(--color-paper);
-    color: var(--color-ink-muted);
+    background: var(--hero-surface);
+    box-shadow: inset 0 0 0 1px transparent;
+    color: var(--hero-muted);
     font: 500 var(--text-xs) / 1 var(--font-sans);
     cursor: pointer;
+    transition-property: color, border-color, box-shadow;
+    transition-duration: var(--duration-tactical);
+    transition-timing-function: var(--ease-institutional);
   }
-  .hero__motion-toggle:hover { color: var(--color-ink); border-color: var(--color-ink-muted); }
+  .hero__motion-toggle:hover { color: var(--hero-ink); border-color: var(--color-gold); box-shadow: inset 0 0 0 1px var(--color-gold); }
   .hero[data-motion='paused'] .net-route { animation-play-state: paused; }
   @media (prefers-reduced-motion: reduce) { .hero__motion-toggle { display: none; } }
 
@@ -168,11 +204,11 @@
     .hero__title { margin-top: 1rem; }
     .hero__lead { margin-top: 1.25rem; }
     .hero__actions { margin-top: 1.75rem; }
-    .hero__network { top: auto; bottom: -8%; right: -45%; width: 140%; transform: none; opacity: 0.5; }
-    .hero__media::after {
-      background: linear-gradient(180deg, var(--color-paper-alt) 0%, var(--color-paper-alt) 62%, color-mix(in srgb, var(--color-paper-alt) 40%, transparent) 100%);
-    }
     .hero__actions .btn { width: 100%; }
+    .hero__network { top: auto; bottom: -8%; right: -45%; width: 140%; transform: none; opacity: 0.5; }
+    .hero__fade {
+      background: linear-gradient(180deg, var(--hero-surface) 0%, var(--hero-surface) 62%, color-mix(in srgb, var(--hero-surface) 40%, transparent) 100%);
+    }
     .hero__jurisdictions div + div { padding-left: 0.875rem; }
   }
 }

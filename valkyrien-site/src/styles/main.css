@@ -6,7 +6,9 @@
 @import './components/ui.css';
 @import './components/header.css';
 @import './components/hero.css';
+@import './components/cards.css';
 @import './components/footer.css';
+@import './components/motion.css';
 
 @layer base {
   html {

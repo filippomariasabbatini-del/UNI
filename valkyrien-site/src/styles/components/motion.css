@@ -1,0 +1,22 @@
+/*
+ * Scroll reveal (Micro-Fade-Up)
+ * Hidden state applies only once main.js has added .reveal-ready to <html>:
+ * without JS, or if the script fails, every block stays visible.
+ * Stagger delay (--reveal-delay) is assigned per batch of blocks entering the viewport together.
+ */
+@layer components {
+  .reveal-ready [data-reveal]:not([data-revealed='true']) {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-distance), 0);
+  }
+
+  .reveal-ready [data-reveal][data-revealed='true'] {
+    animation: var(--animate-micro-fade-up);
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready [data-reveal]:not([data-revealed='true']) { opacity: 1; transform: none; }
+    .reveal-ready [data-reveal][data-revealed='true'] { animation: none; }
+  }
+}

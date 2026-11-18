@@ -30,6 +30,11 @@ const pairs = [
   ['signal', 'paper', 4.5, 'links'],
   ['signal', 'paper-alt', 3, 'focus ring (1.4.11)'],
   ['gold', 'ink', 3, 'CTA fill on navy band (1.4.11)'],
+  ['paper', 'ink-raised', 4.5, 'CTA hover label on navy band'],
+  ['gold', 'ink-raised', 3, 'tactical ring on navy hover (1.4.11)'],
+  ['signal-strong', 'paper-alt', 4.5, 'ghost CTA hover label'],
+  ['signal', 'paper-alt', 3, 'ghost CTA hover ring (1.4.11)'],
+  ['gold-strong', 'paper', 3, 'card hover ring (1.4.11)'],
 ];
 
 let failed = 0;
@@ -43,5 +48,23 @@ for (const [fg, bg, min, usage] of pairs) {
 const band = ratio('#c9ced6', tokens.ink);
 console.log(`${band >= 4.5 ? 'PASS' : 'FAIL'}  ${band.toFixed(2)}:1  (min 4.5)  #c9ced6 on ink  - closing band body`);
 if (band < 4.5) failed++;
+
+// Data-flow overlay: surface at 80% over the worst possible video frame
+const mix = (a, b, t) =>
+  '#' + [1, 3, 5].map((i) => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
+const overlay = [
+  ['ink', mix(tokens['paper-alt'], '#000000', 0.8), 'light hero: ink over overlay on black frame'],
+  ['ink-muted', mix(tokens['paper-alt'], '#000000', 0.8), 'light hero: lead over overlay on black frame'],
+  ['paper', mix(tokens.ink, '#ffffff', 0.8), 'dark hero: text over #0A192F/80% on white frame'],
+];
+for (const [fg, bg, usage] of overlay) {
+  const r = ratio(tokens[fg], bg);
+  const ok = r >= 4.5;
+  if (!ok) failed++;
+  console.log(`${ok ? 'PASS' : 'FAIL'}  ${r.toFixed(2)}:1  (min 4.5)  ${fg} on ${bg}  - ${usage}`);
+}
+const darkMuted = ratio('#c9ced6', mix(tokens.ink, '#ffffff', 0.8));
+console.log(`${darkMuted >= 4.5 ? 'PASS' : 'FAIL'}  ${darkMuted.toFixed(2)}:1  (min 4.5)  #c9ced6 - dark hero lead on white frame`);
+if (darkMuted < 4.5) failed++;
 
 process.exit(failed ? 1 : 0);

@@ -55,5 +55,41 @@ function initHeroMotion() {
   reducedMotion.addEventListener('change', (e) => (e.matches ? pause() : play()));
 }
 
+/*
+ * Micro-Fade-Up scroll reveal.
+ * Blocks entering the viewport in the same frame are staggered in DOM order;
+ * a block that enters alone appears without delay.
+ */
+function initReveal() {
+  const items = [...document.querySelectorAll('[data-reveal]')];
+  if (!items.length) return;
+
+  const revealAll = () => items.forEach((el) => (el.dataset.revealed = 'true'));
+  if (reducedMotion.matches || !('IntersectionObserver' in window)) return revealAll();
+
+  const stagger = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--reveal-stagger')) || 80;
+  const order = new Map(items.map((el, i) => [el, i]));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries
+        .filter((e) => e.isIntersecting)
+        .map((e) => e.target)
+        .sort((a, b) => order.get(a) - order.get(b))
+        .forEach((el, i) => {
+          el.style.setProperty('--reveal-delay', `${Math.min(i, 5) * stagger}ms`);
+          el.dataset.revealed = 'true';
+          io.unobserve(el);
+        });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+  );
+
+  document.documentElement.classList.add('reveal-ready');
+  items.forEach((el) => io.observe(el));
+  reducedMotion.addEventListener('change', (e) => e.matches && (io.disconnect(), revealAll()));
+}
+
 initNav();
 initHeroMotion();
+initReveal();
