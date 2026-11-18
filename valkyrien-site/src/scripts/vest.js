@@ -3,8 +3,10 @@
  * a round strikes the plate at a random point and ricochets off at a random angle.
  * Hidden at the top of the page; static (no hits) with prefers-reduced-motion.
  */
-const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)';
-const EASE_IN = 'cubic-bezier(0.55, 0, 1, 0.45)';
+import { easing } from './tokens.js';
+
+let EASE_OUT;
+let EASE_IN;
 const IN_MS = 180;          // incoming flight
 const OUT_MS = 560;         // ricochet
 const HIT_MS = IN_MS + OUT_MS;
@@ -12,6 +14,7 @@ const rand = (a, b) => a + Math.random() * (b - a);
 const deg = (rad) => (rad * 180) / Math.PI;
 
 export function initVest(reducedMotion) {
+  ({ inst: EASE_OUT, strike: EASE_IN } = easing());
   const vest = document.querySelector('[data-vest]');
   if (!vest) return;
   const q = (s) => vest.querySelector(s);

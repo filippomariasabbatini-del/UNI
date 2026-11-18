@@ -34,7 +34,7 @@
     },
     "gold-strong": {
       "$type": "color",
-      "$value": "#d2b07a"
+      "$value": "#dcbc88"
     },
     "signal": {
       "$type": "color",
@@ -86,6 +86,17 @@
         "Inter Variable",
         "system-ui",
         "sans-serif"
+      ]
+    },
+    "mono": {
+      "$type": "fontFamily",
+      "$value": [
+        "ui-monospace",
+        "SF Mono",
+        "Cascadia Mono",
+        "Roboto Mono",
+        "Menlo",
+        "monospace"
       ]
     }
   },

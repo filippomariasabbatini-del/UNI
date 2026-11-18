@@ -3,11 +3,9 @@
  * Web Animations API for every CSS-animatable value;
  * the globe -> frame morph tweens the rect's rx attribute (not reliably CSS-animatable in Safari).
  */
-const EASE = {
-  inst: 'cubic-bezier(0.22, 1, 0.36, 1)',
-  focus: 'cubic-bezier(0.33, 1, 0.68, 1)',
-  strike: 'cubic-bezier(0.55, 0, 1, 0.45)',
-};
+import { easing } from './tokens.js';
+
+let EASE;
 const MARK_SCALE = 2.5263;     // logo 32-grid -> scene units (frame 28.5u -> 72u)
 const SCENE_W = 240;           // viewBox width
 // Timeline authored on a 2000ms grid and scaled to TOTAL: change one number to retime everything.
@@ -18,6 +16,7 @@ const T = Object.fromEntries(
 );
 
 export function playIntro() {
+  EASE = easing();
   const root = document.documentElement;
   const tpl = document.getElementById('intro-template');
   if (!tpl || !root.classList.contains('intro-pending')) return;
@@ -124,7 +123,7 @@ export function playIntro() {
     A(frame, [{ strokeWidth: 1 }, { strokeWidth: endStroke }], o);
     marks.forEach((m) => A(m, [{ strokeWidth: 1 / MARK_SCALE }, { strokeWidth: endStroke / MARK_SCALE }], o));
     // cover lifts after the mark has started travelling, so the flight reads
-    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: ms(300), delay: ms(120), easing: 'cubic-bezier(0.45, 0, 0.55, 1)', fill: 'forwards' });
+    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: ms(300), delay: ms(120), easing: EASE.fade, fill: 'forwards' });
   }
 
   function finish(skipped) {

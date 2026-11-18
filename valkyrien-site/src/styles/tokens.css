@@ -17,7 +17,7 @@
 
   /* Accents */
   --color-gold: #b8935a;               /* muted gold: CTA fill (with on-gold text), rules */
-  --color-gold-strong: #d2b07a;        /* gold usable as text on navy */
+  --color-gold-strong: #dcbc88;        /* gold usable as text on navy */
   --color-signal: #7ea6ff;             /* electric blue, lightened for navy: links, focus */
   --color-signal-strong: #b4c9ff;
 
@@ -31,11 +31,19 @@
   --gradient-surface: linear-gradient(180deg, #0f213d 0%, #0a192f 100%);
   --gradient-rule: linear-gradient(90deg, #b8935a 0%, rgb(184 147 90 / 0) 100%);
 
+  /* Hero mesh fields (alpha-capped: tools/contrast-check.mjs stacks all four at peak) */
+  --mesh-1: rgb(59 79 216 / 0.20);
+  --mesh-2: rgb(126 166 255 / 0.12);
+  --mesh-3: rgb(184 147 90 / 0.12);
+  --mesh-4: rgb(31 79 122 / 0.22);
+
   /* Typography */
   --font-sans: 'Inter Variable', 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Montserrat Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Menlo, monospace;
 
   /* Fluid type scale (min @ 360px, max @ 1440px) */
+  --text-2xs: 0.75rem;                /* micro labels: brand descriptor, chips */
   --text-xs: 0.8125rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -53,6 +61,13 @@
   --container-site: 80rem;
   --container-prose: 42rem;
 
+  /* Elevation: layered shadows tuned for navy surfaces + a 1px top light edge */
+  --shadow-edge: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.30), 0 1px 1px rgb(0 0 0 / 0.20);
+  --shadow-2: 0 18px 36px -18px rgb(0 0 0 / 0.65), 0 30px 60px -30px rgb(2 8 23 / 0.70);
+  --shadow-header: 0 12px 30px -16px rgb(0 0 0 / 0.6);
+  --shadow-popover: 0 18px 40px -18px rgb(0 0 0 / 0.65);
+
   /* Shape */
   --radius-sm: 2px;
   --radius-md: 4px;
@@ -61,8 +76,8 @@
   /* Motion: "institutional stealth". No overshoot, no scale, max 12px travel. */
   --ease-institutional: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-focus: cubic-bezier(0.33, 1, 0.68, 1);   /* softer than institutional: the focus pull stays perceptible across 800ms */
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-  --duration-fast: 160ms;
+  --ease-strike: cubic-bezier(0.55, 0, 1, 0.45);   /* projectiles only: accelerating approach */
+  --ease-fade: cubic-bezier(0.45, 0, 0.55, 1);     /* symmetric cross-fades (intro cover) */
   --duration-tactical: 180ms;          /* hover / press: 150-200ms */
   --duration-base: 320ms;
   --duration-reveal: 640ms;

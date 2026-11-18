@@ -39,6 +39,14 @@ const pairs = [
   ['ink', 'paper-alt', 3, 'ghost CTA border (1.4.11)'],
   ['on-gold', 'gold', 4.5, 'skip link'],
   // worst cases on layered backgrounds
+  // hero mesh: all four colour fields stacked at peak alpha over the hero surface (read from the --mesh-* tokens)
+  ...(() => {
+    const fields = [...css.matchAll(/--mesh-\d+:\s*rgb\((\d+) (\d+) (\d+) \/ ([\d.]+)\)/g)]
+      .map(([, r, g, b, a]) => ['#' + [r, g, b].map((n) => (+n).toString(16).padStart(2, '0')).join(''), +a]);
+    if (fields.length !== 4) throw new Error('expected 4 --mesh-* tokens');
+    const peak = fields.reduce((bg, [c, a]) => mix(c, bg, a), tokens['paper-alt']);
+    return [['ink', peak, 4.5, 'hero title over stacked mesh peak'], ['ink-muted', peak, 4.5, 'hero lead over stacked mesh peak'], ['gold-strong', peak, 4.5, 'hero eyebrow over stacked mesh peak']];
+  })(),
   ['ink-muted', mix('gold', 'ink-raised', 0.16), 4.5, 'closing band body at gold-glow peak'],
   ['ink', mix('paper-alt', '#ffffff', 0.8), 4.5, 'hero text over 80% overlay on a white video frame'],
   ['ink-muted', mix('paper-alt', '#ffffff', 0.8), 4.5, 'hero lead over 80% overlay on a white video frame'],

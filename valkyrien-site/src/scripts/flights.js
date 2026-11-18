@@ -4,6 +4,8 @@
  * (never repeating the previous leg), then waits a random interval.
  * Runs only while the hero is on screen and the tab is visible.
  */
+import { easing } from './tokens.js';
+
 const SPEED = 80;                  // scene units per second
 const DUR_MIN = 2200;
 const DUR_MAX = 4200;
@@ -77,7 +79,7 @@ export function createFlights(svg, hero) {
     ping.setAttribute('cy', node.getAttribute('cy'));
     ping.animate(
       [{ opacity: 0.9, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(1.9)' }],
-      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      { duration: 700, easing: easing().inst },
     );
   }
 
