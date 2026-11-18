@@ -31,5 +31,9 @@
     text-decoration-thickness: 1px;
     transition: color var(--duration-tactical) var(--ease-institutional), text-decoration-color var(--duration-tactical) var(--ease-institutional);
   }
+  @media (pointer: coarse) {
+    .site-footer__links { gap: 0 1.25rem; }
+    .site-footer__links a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  }
   .site-footer__links a:hover { color: var(--color-ink); text-decoration-color: var(--color-gold); }
 }

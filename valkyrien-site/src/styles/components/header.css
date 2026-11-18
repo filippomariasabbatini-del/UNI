@@ -215,6 +215,12 @@
 }
 
 @layer components {
+  /* Touch: every control outside running text reaches 44px */
+  @media (pointer: coarse) {
+    .brand { min-height: 2.75rem; }
+    .lang-switch__toggle, .lang-switch__link, .site-nav .btn--sm { min-height: 2.75rem; }
+  }
+
   /* Narrow phones: mark + name only (the group line repeats in the footer); compact switcher */
   @media (max-width: 30rem) {
     .brand__group { display: none; }

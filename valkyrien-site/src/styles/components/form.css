@@ -1,0 +1,25 @@
+/* Forms: visible labels, dark fields, 48px targets, focus ring from the system */
+@layer components {
+  [data-qualification-form] { display: grid; gap: 1.25rem; max-width: 36rem; margin-top: 2rem; }
+  [data-qualification-form] p { display: grid; gap: 0.5rem; }
+  [data-qualification-form] label { font-size: var(--text-sm); font-weight: 600; color: var(--color-ink); }
+  [data-qualification-form] :is(input, textarea) {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper-alt);
+    box-shadow: var(--shadow-edge);
+    color: var(--color-ink);
+    font: inherit;
+    transition-property: border-color, box-shadow;
+    transition-duration: var(--duration-tactical);
+    transition-timing-function: var(--ease-institutional);
+  }
+  [data-qualification-form] textarea { resize: vertical; }
+  [data-qualification-form] :is(input, textarea)::placeholder { color: var(--color-ink-muted); opacity: 1; }
+  [data-qualification-form] :is(input, textarea):hover { border-color: var(--color-ink-muted); }
+  [data-qualification-form] :is(input, textarea):focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; border-color: var(--color-signal); }
+  .form-note { font-size: var(--text-sm); color: var(--color-ink-muted); }
+}

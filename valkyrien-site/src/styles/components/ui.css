@@ -49,6 +49,21 @@
    * Hover never changes geometry (no scale, no translate): only fill, border and an
    * inset 1px ring drawn with box-shadow, so layout is pixel-identical across states.
    */
+  /* Dossier numbering: eyebrows of content sections read "§ 01 ——— LABEL" */
+  main { counter-reset: dossier; }
+  main > .section .section__head .eyebrow { counter-increment: dossier; }
+  main > .section .section__head .eyebrow::before {
+    content: '§ ' counter(dossier, decimal-leading-zero);
+    content: '§ ' counter(dossier, decimal-leading-zero) / '';    /* decorative: hidden from screen readers where supported */
+    width: auto;
+    height: auto;
+    padding-right: 2.75rem;
+    background: var(--gradient-rule) no-repeat right center / 2rem 1px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+  }
+
   .btn {
     --btn-bg: var(--color-gold);
     --btn-fg: var(--color-on-gold);

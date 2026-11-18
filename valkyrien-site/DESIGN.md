@@ -9,12 +9,14 @@ source:
   - src/styles/components/hero.css
   - src/styles/components/cards.css
   - src/styles/components/process.css
+  - src/styles/components/form.css
   - src/styles/components/footer.css
   - src/styles/components/motion.css
   - src/styles/components/intro.css
   - src/styles/components/vest.css
   - src/scripts/tokens.js
   - tools/contrast-check.mjs
+  - tools/ui-audit.mjs
 generatedAt: "2026-11-18"
 colors:
   paper: "#0a192f"
@@ -123,7 +125,7 @@ components:
     radius: "{radius.sm}"
     padding: "1.75rem 1.5rem"
     shadow: "{shadows.edge}, {shadows.1}"
-    hover: { border: "{colors.gold-strong}", shadow: "{shadows.edge}, {shadows.2}, inset 1px {colors.gold-strong}", topRule: "{gradients.rule}" }
+    hover: { border: "{colors.gold-strong}", shadow: "{shadows.edge}, {shadows.2}, inset 1px {colors.gold-strong}", marks: "four 10px registration ticks, 8px outside the box, {colors.gold-strong}" }
   card-link:
     source: "src/styles/components/cards.css (.card--link)"
     note: "Whole card is the link; CTA row uses {colors.signal}"
@@ -139,6 +141,21 @@ components:
     radius: "{radius.md}"
     shadow: "{shadows.edge}, {shadows.2}"
     stepStates: { done: "{colors.gold-strong}", current: "{colors.signal}", pending: "{colors.ink-muted} + dashed index" }
+  form-field:
+    source: "src/styles/components/form.css"
+    backgroundColor: "{colors.paper-alt}"
+    border: "1px {colors.line}"
+    radius: "{radius.sm}"
+    minHeight: "3rem"
+    focus: "2px {colors.signal} outline, 2px offset"
+    label: "visible, above the field, 600 weight"
+  jurisdiction-clock:
+    source: "src/styles/components/hero.css (.clock), src/scripts/main.js (initClocks)"
+    typography: "{typography.mono}, tabular-nums, {colors.gold-strong}"
+    data: "Intl.DateTimeFormat in the page locale, per IANA zone; hidden without JS"
+  dossier-number:
+    source: "src/styles/components/ui.css (main > .section .eyebrow::before)"
+    pattern: "§ NN (CSS counter per page) + 2rem gold rule, decorative (alt text empty)"
   site-header:
     source: "src/styles/components/header.css (.site-header)"
     backgroundColor: "color-mix({colors.paper} 92%, transparent) + backdrop blur"
@@ -220,6 +237,10 @@ A night palette: two navies for surfaces, white for reading, one warm metal for 
 - **Chip** (600, 12px, 0.1em, uppercase): tags such as PDF, Illustrative, step states.
 - **Mono** (12px): console paths and machine-like values only.
 
+**The Typesetting Rule.** Copy uses typographic characters: `…` not `...`, curly quotes in each language's own form (“ ” EN/IT, « » FR/ES, „ “ DE), a no-break space between a number and its unit (`24 business hours`), and in French a narrow no-break space before `; ? !` and inside « », a no-break space before `:`.
+
+**The Do-Not-Translate Rule.** Company names, the brand wordmark, jurisdiction codes and regime codes carry `translate="no"`.
+
 **The Tabular Rule.** Indices (01-05), registration numbers and any figure in a list or console use `font-variant-numeric: tabular-nums`.
 
 German headings hyphenate automatically only for words of 12+ letters (`hyphenate-limit-chars: 12 5 5`). The 11px labels inside the hero network SVG are SVG user units, outside the CSS type scale.
@@ -227,6 +248,8 @@ German headings hyphenate automatically only for words of 12+ letters (`hyphenat
 ## Elevation
 
 Layered, not flat. A raised surface carries two things: a 1px inner light edge on its top (`shadows.edge`) and a soft shadow (`shadows.1` at rest). Interaction deepens the shadow to `shadows.2` and adds an inset ring; the surface itself never moves. Floating panels (console, language menu) start at `shadows.2` / `shadows.popover`.
+
+**The 44px Touch Rule.** On coarse pointers every control outside running text (nav, language switcher, footer links, brand link, buttons) is at least 44px tall. `tools/ui-audit.mjs` enforces it, together with axe WCAG 2.2 AA, Tab order, visible focus and focus not obscured.
 
 **The No-Geometry-Hover Rule.** Hover and press never change an element's size or position: no `scale`, no `translate` on the element box. Only fill, border, inset ring and shadow change. Icons inside may redraw or shift up to 2px within the box.
 
@@ -274,6 +297,7 @@ The implementation in each `source` is the truth; nothing here copies its markup
 - **Card:** Corridor Navy on a Raised Navy or gradient section, 1px hairline border, 2px corners, light edge plus `shadows.1`.
   - **On hover:** Seal Gold border and ring, `shadows.2`, a gold rule fading right along the top, and a gold, redrawn icon accent.
   - **Hover gate:** hover effects only apply for `(hover: hover) and (pointer: fine)`.
+- **Registration marks:** the hover accent is four 10px corner ticks just outside the card, like crop marks on a verified document. They are a pseudo-element moving by opacity and inset only; the card box never moves.
 - **Card link:** the whole card is the link, with a blue CTA row; used for policy documents.
 - **Console:** a 4px floating panel with a navy title bar in mono and an "Illustrative" chip.
   - **Steps:** each row has an index chip, a label and a status: gold for done, blue and pulsing for in progress, muted with a dashed index for pending.
@@ -286,7 +310,12 @@ The implementation in each `source` is the truth; nothing here copies its markup
 - **Language switcher:** a `<details>` disclosure with a globe icon, the locale code and a chevron. The list is 2px-cornered, `shadows.popover`, and closes on Escape or an outside click.
 
 ### Inputs
-- **Current state:** native controls rendered with `color-scheme: dark`. Form styling is still pending (submission is disabled until the Privacy Notice is published).
+- **Field:** visible label above, Raised Navy fill, 1px hairline, 2px corners, 48px minimum height, blue 2px focus outline. Placeholders show an example pattern and end with `…`.
+- **Submit:** disabled until the Privacy Notice is published; the reason is shown under the button and linked with `aria-describedby`.
+
+### Signature details
+- **Jurisdiction clocks:** the hero's UK/CH/LU strip shows each office's real local time (mono, tabular, gold), formatted with `Intl` in the page locale and updated on the minute.
+- **Dossier numbering:** content-section eyebrows read `§ 01 ——— LABEL`, numbered per page with a CSS counter, so each page reads as a structured dossier.
 
 ## Icons
 
@@ -331,4 +360,5 @@ The implementation in each `source` is the truth; nothing here copies its markup
 > This section is **not** normative. It lists where the current implementation departs from the rules above, for the audit backlog. Frontmatter values above are the canonical ones.
 
 - **Background motion without an on-page pause control** (rule: WCAG 2.2.2 Pause, Stop, Hide, AA / actual: route dashes, aircraft flights, mesh drift and the console pulse loop indefinitely; only the OS reduced-motion setting stops them / locations: `hero.css` `.net-route` and `.hero__mesh`, `scripts/flights.js`, `process.css` `consolePulse` / occurrences: 4 loops / category: **accepted exception**, client decision 2026-11-18 to remove the pause button).
-- **Vest chip can overlap content below 1400px** (rule: decorative layers never cover reading content / actual: 60px fixed chip bottom-right, and the round's trail crosses text for ~0.2s / location: `vest.css` `@media (max-width: 87.5rem)` / category: **to confirm** with the client: accept, or hide below 1400px).
+- **Vest chip can overlap content below 1400px** (rule: decorative layers never cover reading content / actual: 60px fixed chip bottom-right; it now steps aside while the footer is on screen, but can still sit over section content mid-page, and the round's trail crosses text for ~0.2s / location: `vest.css` `@media (max-width: 87.5rem)` / category: **to confirm** with the client: accept, or hide below 1400px).
+- **Blur in the load animation is not compositor-only** (rule: animate transform and opacity only, Web Interface Guidelines / actual: `blurFocus` animates `filter: blur()` on the H1 and lead for 800ms / location: `tokens.css` `@keyframes blurFocus` / occurrences: 2 elements, once per load / category: **accepted exception**, the brief specified blur-to-focus).

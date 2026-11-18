@@ -118,3 +118,23 @@ initHeaderState();
 initHeroMotion();
 initReveal();
 initVest(reducedMotion);
+
+// Local time in each jurisdiction (hero). Real data via Intl, updated on the minute.
+function initClocks() {
+  const clocks = [...document.querySelectorAll('.clock[data-tz]')];
+  if (!clocks.length) return;
+  const lang = document.documentElement.lang || 'en-GB';
+  const fmt = (tz) => new Intl.DateTimeFormat(lang, { hour: '2-digit', minute: '2-digit', timeZone: tz, timeZoneName: 'short' });
+  const tick = () => {
+    const now = new Date();
+    for (const c of clocks) {
+      const label = c.querySelector('.sr-only');
+      c.setAttribute('datetime', now.toISOString());
+      c.textContent = fmt(c.dataset.tz).format(now);
+      if (label) c.prepend(label);
+    }
+    setTimeout(tick, 60000 - (Date.now() % 60000) + 50);
+  };
+  tick();
+}
+initClocks();

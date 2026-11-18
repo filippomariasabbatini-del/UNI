@@ -24,9 +24,13 @@ export function initVest(reducedMotion) {
   const dent = q('.vest__dent');
   const body = q('.vest__body');
 
-  // Visible once the reader starts scrolling
+  // Visible once the reader starts scrolling; steps aside while the footer is on screen
+  // so it never sits on the legal links (bottom-right chip layout below 1400px)
+  let footerInView = false;
   const showAt = () => Math.min(160, window.innerHeight * 0.2);
-  const onScroll = () => (vest.dataset.visible = String(window.scrollY > showAt()));
+  const onScroll = () => (vest.dataset.visible = String(window.scrollY > showAt() && !footerInView));
+  const footer = document.querySelector('.site-footer');
+  if (footer) new IntersectionObserver(([e]) => { footerInView = e.isIntersecting; onScroll(); }).observe(footer);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 

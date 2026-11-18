@@ -24,18 +24,20 @@
         <form action="#" method="post" novalidate data-qualification-form>
           <p>
             <label for="f-entity">{{t:engage.f.entity}}</label>
-            <input id="f-entity" name="legal_entity" type="text" autocomplete="organization" required>
+            <input id="f-entity" name="legal_entity" type="text" placeholder="{{t:engage.ph.entity}}" autocomplete="organization" required>
           </p>
           <p>
             <label for="f-jurisdiction">{{t:engage.f.jurisdiction}}</label>
-            <input id="f-jurisdiction" name="jurisdiction" type="text" autocomplete="country-name" required>
+            <input id="f-jurisdiction" name="jurisdiction" type="text" placeholder="{{t:engage.ph.jurisdiction}}" autocomplete="country-name" required>
           </p>
           <p>
             <label for="f-objective">{{t:engage.f.objective}}</label>
-            <textarea id="f-objective" name="objective" rows="4" required></textarea>
+            <textarea id="f-objective" name="objective" rows="4" autocomplete="off" placeholder="{{t:engage.ph.objective}}" required></textarea>
           </p>
           <p>
-            <button class="btn" type="submit" disabled>{{t:cta.qualify}}</button>
+            <button class="btn" type="submit" disabled aria-describedby="form-status">{{t:cta.qualify}}</button>
+          </p>
+          <p class="form-note" id="form-status">{{t:engage.form.closed}}
           </p>
         </form>
       </div>

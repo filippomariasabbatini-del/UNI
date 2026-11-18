@@ -16,6 +16,7 @@
 @import './components/hero.css';
 @import './components/cards.css';
 @import './components/process.css';
+@import './components/form.css';
 @import './components/footer.css';
 @import './components/motion.css';
 @import './components/intro.css';
@@ -26,7 +27,10 @@
     color-scheme: dark;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;   /* pressed states come from :active, not the UA flash */
   }
+  @media (pointer: fine) { html { overscroll-behavior: none; } }
+  a, button, summary, input, textarea, label { touch-action: manipulation; }
 
   body {
     margin: 0;

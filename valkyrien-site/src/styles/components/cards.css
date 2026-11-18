@@ -50,15 +50,28 @@
 
   .card__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 
-  /* Hover accent: gold rule fading right, drawn over the top border (opacity only, no geometry) */
+  /* Hover accent: registration marks. Four 10px corner ticks just outside the card, like the crop marks
+     on a verified document. Pseudo-element only (opacity + inset), the card box never moves. */
   .card::before {
+    --m: var(--color-gold-strong);
     content: '';
     position: absolute;
-    inset: -1px -1px auto -1px;
-    height: 2px;
-    background: var(--gradient-rule);
+    inset: -8px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--m), var(--m)) top left / 10px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) top left / 1px 10px no-repeat,
+      linear-gradient(var(--m), var(--m)) top right / 10px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) top right / 1px 10px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom left / 10px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom left / 1px 10px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom right / 10px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom right / 1px 10px no-repeat;
     opacity: 0;
-    transition: opacity var(--duration-tactical) var(--ease-institutional);
+    transform: scale(1.015);
+    transition:
+      opacity var(--duration-tactical) var(--ease-institutional),
+      transform var(--duration-base) var(--ease-institutional);
   }
 
   .card--link { height: 100%; color: var(--color-ink); text-decoration: none; }
@@ -114,7 +127,7 @@
       border-color: var(--color-gold-strong);
       box-shadow: var(--shadow-edge), var(--shadow-2), inset 0 0 0 1px var(--color-gold-strong);
     }
-    .card:hover::before { opacity: 1; }
+    .card:hover::before { opacity: 1; transform: none; }
     .card:hover > .icon,
     .card:hover > .card__head > .icon { color: var(--color-gold-strong); }
     .card:hover .icon .trace { animation: var(--animate-icon-trace); }
