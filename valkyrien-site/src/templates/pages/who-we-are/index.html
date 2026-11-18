@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="{{htmlLang}}">
+<head>
+  <!-- @include partials/head.html -->
+  <title>{{t:meta.who.title}}</title>
+  <meta name="description" content="{{t:meta.who.desc}}">
+</head>
+<body>
+  <!-- @include partials/header.html current="who-we-are" -->
+
+  <main id="main">
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="container">
+        <p class="eyebrow">{{t:nav.who}}</p>
+        <h1 id="page-title">{{t:who.title}}</h1>
+        <p>{{t:who.lead}}</p>
+      </div>
+    </section>
+
+    <section class="section" id="group-structure" aria-labelledby="group-title">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <h2 id="group-title">{{t:who.group.title}}</h2>
+          <p>{{t:who.group.lead}}</p>
+        </div>
+        <ul class="grid-cards">
+          <li class="card" data-reveal><span class="card__index">LU</span><h3>Vidarr Group</h3><p class="card__meta">{{t:who.meta.lu}}</p></li>
+          <li class="card" data-reveal><span class="card__index">UK</span><h3>Valkyrien Holding Ltd</h3><p class="card__meta">{{t:who.meta.valk}}</p></li>
+          <li class="card" data-reveal><span class="card__index">UK</span><h3>Styrix Ltd</h3><p class="card__meta">{{t:who.meta.styrix}}</p></li>
+          <li class="card" data-reveal><span class="card__index">CH</span><h3>XNH SA</h3><p class="card__meta">{{t:who.meta.xnh}}</p></li>
+          <li class="card" data-reveal><span class="card__index">{{t:who.tbc}}</span><h3>XCT Ltd</h3><p class="card__meta">{{t:who.meta.xct}}</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="leadership" aria-labelledby="leadership-title">
+      <div class="container">
+        <h2 id="leadership-title" data-reveal>{{t:who.leadership.title}}</h2>
+        <p class="placeholder-note">{{t:who.leadership.note}}</p>
+      </div>
+    </section>
+
+    <!-- @include partials/cta-closing.html title="{{t:cta.who.title}}" body="{{t:cta.who.body}}" -->
+  </main>
+
+  <!-- @include partials/footer.html -->
+</body>
+</html>

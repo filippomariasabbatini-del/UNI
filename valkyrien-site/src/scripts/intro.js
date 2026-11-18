@@ -1,5 +1,5 @@
 /*
- * Home intro timeline (2s total). Skippable only by scrolling down (wheel, swipe up, scroll keys).
+ * Home intro timeline (TOTAL = 2.5s). Skippable only by scrolling down (wheel, swipe up, scroll keys).
  * Web Animations API for every CSS-animatable value;
  * the globe -> frame morph tweens the rect's rx attribute (not reliably CSS-animatable in Safari).
  */
@@ -10,7 +10,12 @@ const EASE = {
 };
 const MARK_SCALE = 2.5263;     // logo 32-grid -> scene units (frame 28.5u -> 72u)
 const SCENE_W = 240;           // viewBox width
-const T = { impact: 600, fade: 800, morph: 840, outer: 900, dock: 1580, dockDur: 420 };
+// Timeline authored on a 2000ms grid and scaled to TOTAL: change one number to retime everything.
+const TOTAL = 2500;
+const ms = (v) => Math.round((v * TOTAL) / 2000);
+const T = Object.fromEntries(
+  Object.entries({ impact: 600, fade: 800, morph: 840, outer: 900, dock: 1580, dockDur: 420 }).map(([k, v]) => [k, ms(v)]),
+);
 
 export function playIntro() {
   const root = document.documentElement;
@@ -43,13 +48,13 @@ export function playIntro() {
   const at = (ms, fn) => timers.push(setTimeout(fn, ms));
 
   // 1. Globe
-  draw(frame, 0, 360);
-  overlay.querySelectorAll('.intro__grid > *').forEach((el, i) => draw(el, 80 + i * 40, 300));
+  draw(frame, 0, ms(360));
+  overlay.querySelectorAll('.intro__grid > *').forEach((el, i) => draw(el, ms(80 + i * 40), ms(300)));
 
   // 2. Shield raised
   const shield = q('.intro__shield');
-  A(shield, [{ opacity: 0 }, { opacity: 1 }], { delay: 160, duration: 200, easing: EASE.inst });
-  draw(shield, 160, 300);
+  A(shield, [{ opacity: 0 }, { opacity: 1 }], { delay: ms(160), duration: ms(200), easing: EASE.inst });
+  draw(shield, ms(160), ms(300));
 
   // 3. Arrow strikes, shield parries
   const arrow = q('.intro__arrow');
@@ -57,29 +62,29 @@ export function playIntro() {
     { transform: 'translate(-130px, 80px)', opacity: 0 },
     { opacity: 1, offset: 0.25 },
     { transform: 'translate(74px, 80px)', opacity: 1 },
-  ], { delay: 300, duration: T.impact - 300, easing: EASE.strike });
+  ], { delay: ms(300), duration: T.impact - ms(300), easing: EASE.strike });
   A(arrow, [
     { transform: 'translate(74px, 80px) rotate(0deg)', opacity: 1 },
     { transform: 'translate(63px, 95px) rotate(-24deg)', opacity: 0 },
-  ], { delay: T.impact, duration: 280, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: ms(280), easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__defence'), [
     { transform: 'translateX(0)' }, { transform: 'translateX(1.5px)', offset: 0.3 }, { transform: 'translateX(0)' },
-  ], { delay: T.impact, duration: 180, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: ms(180), easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__pulse'), [
     { opacity: 0.9, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(1.45)' },
-  ], { delay: T.impact, duration: 340, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: ms(340), easing: EASE.inst, fill: 'forwards' });
   A(q('.intro__sparks'), [
     { opacity: 0, transform: 'translateX(0)' }, { opacity: 1, offset: 0.3 }, { opacity: 0, transform: 'translateX(-4px)' },
-  ], { delay: T.impact, duration: 250, easing: EASE.inst, fill: 'forwards' });
+  ], { delay: T.impact, duration: ms(250), easing: EASE.inst, fill: 'forwards' });
 
   // 4. Defence and globe grid recede; the globe outline squares into the logo frame
-  A(q('.intro__defence'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 230, easing: EASE.inst, fill: 'forwards' });
-  A(q('.intro__grid'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: 230, easing: EASE.inst, fill: 'forwards' });
-  at(T.morph, () => tweenAttr(frame, 'rx', 36, 1.5 * MARK_SCALE, 320));
+  A(q('.intro__defence'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: ms(230), easing: EASE.inst, fill: 'forwards' });
+  A(q('.intro__grid'), [{ opacity: 1 }, { opacity: 0 }], { delay: T.fade, duration: ms(230), easing: EASE.inst, fill: 'forwards' });
+  at(T.morph, () => tweenAttr(frame, 'rx', 36, 1.5 * MARK_SCALE, ms(320)));
 
-  // 5. Chevrons: header-mark curve and stagger, compressed to fit the 2s budget
-  draw(marks[0], T.outer, 520);
-  draw(marks[1], T.outer + 110, 520);
+  // 5. Chevrons: header-mark curve and stagger, scaled to the TOTAL budget
+  draw(marks[0], T.outer, ms(520));
+  draw(marks[1], T.outer + ms(110), ms(520));
 
   // 6. Dock into the header
   at(T.dock, dock);
@@ -119,7 +124,7 @@ export function playIntro() {
     A(frame, [{ strokeWidth: 1 }, { strokeWidth: endStroke }], o);
     marks.forEach((m) => A(m, [{ strokeWidth: 1 / MARK_SCALE }, { strokeWidth: endStroke / MARK_SCALE }], o));
     // cover lifts after the mark has started travelling, so the flight reads
-    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: 300, delay: 120, easing: 'cubic-bezier(0.45, 0, 0.55, 1)', fill: 'forwards' });
+    A(q('.intro__bg'), [{ opacity: 1 }, { opacity: 0 }], { duration: ms(300), delay: ms(120), easing: 'cubic-bezier(0.45, 0, 0.55, 1)', fill: 'forwards' });
   }
 
   function finish(skipped) {

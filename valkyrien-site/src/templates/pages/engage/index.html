@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="{{htmlLang}}">
+<head>
+  <!-- @include partials/head.html -->
+  <title>{{t:meta.engage.title}}</title>
+  <meta name="description" content="{{t:meta.engage.desc}}">
+</head>
+<body>
+  <!-- @include partials/header.html current="engage" -->
+
+  <main id="main">
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="container">
+        <p class="eyebrow">{{t:nav.engage}}</p>
+        <h1 id="page-title">{{t:cta.qualify}}</h1>
+        <p>{{t:engage.lead}}</p>
+      </div>
+    </section>
+
+    <section class="section" id="qualification" aria-labelledby="form-title">
+      <div class="container">
+        <h2 id="form-title">{{t:engage.form.title}}</h2>
+        <!-- Task 4: endpoint, validation and privacy consent. No submission until the {{t:policy.privacy}} is published. -->
+        <form action="#" method="post" novalidate data-qualification-form>
+          <p>
+            <label for="f-entity">{{t:engage.f.entity}}</label>
+            <input id="f-entity" name="legal_entity" type="text" autocomplete="organization" required>
+          </p>
+          <p>
+            <label for="f-jurisdiction">{{t:engage.f.jurisdiction}}</label>
+            <input id="f-jurisdiction" name="jurisdiction" type="text" autocomplete="country-name" required>
+          </p>
+          <p>
+            <label for="f-objective">{{t:engage.f.objective}}</label>
+            <textarea id="f-objective" name="objective" rows="4" required></textarea>
+          </p>
+          <p>
+            <button class="btn" type="submit" disabled>{{t:cta.qualify}}</button>
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- @include partials/footer.html -->
+</body>
+</html>

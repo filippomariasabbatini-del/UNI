@@ -1,27 +1,29 @@
-<a class="skip-link" href="#main">Skip to main content</a>
+<a class="skip-link" href="#main">{{t:common.skip}}</a>
 <header class="site-header">
   <div class="container site-header__bar">
-    <a class="brand" href="/" aria-label="Valkyrien Holding Ltd, home">
+    <a class="brand" href="/" aria-label="{{t:brand.aria}}">
       <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="brand__frame" pathLength="1" x="1.75" y="1.75" width="28.5" height="28.5" rx="1.5"/><path class="brand__outer" pathLength="1" d="M7 8.5 16 25 25 8.5"/><path class="brand__inner" pathLength="1" d="M12 8.5 16 16 20 8.5"/></svg>
       <span class="brand__text">
         <span class="brand__name">Valkyrien</span>
-        <span class="brand__group">A Vidarr Group company</span>
+        <span class="brand__group">{{t:brand.group}}</span>
       </span>
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-      <span class="sr-only">Menu</span>
+      <span class="sr-only">{{t:nav.menu}}</span>
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
 
-    <nav class="site-nav" id="site-nav" aria-label="Primary" data-open="false">
+    <nav class="site-nav" id="site-nav" aria-label="{{t:nav.aria}}" data-open="false">
       <ul class="site-nav__list">
-        <li><a class="site-nav__link" href="/" data-nav="home">Home</a></li>
-        <li><a class="site-nav__link" href="/who-we-are/" data-nav="who-we-are">Who We Are</a></li>
-        <li><a class="site-nav__link" href="/compliance/" data-nav="compliance">Compliance &amp; Trust</a></li>
-        <li><a class="site-nav__link" href="/engage/" data-nav="engage">Engage</a></li>
+        <li><a class="site-nav__link" href="/" data-nav="home">{{t:nav.home}}</a></li>
+        <li><a class="site-nav__link" href="/who-we-are/" data-nav="who-we-are">{{t:nav.who}}</a></li>
+        <li><a class="site-nav__link" href="/compliance/" data-nav="compliance">{{t:nav.compliance}}</a></li>
+        <li><a class="site-nav__link" href="/engage/" data-nav="engage">{{t:nav.engage}}</a></li>
       </ul>
-      <a class="btn btn--sm" href="/engage/#qualification">Request a Qualification Call</a>
+      <a class="btn btn--sm" href="/engage/#qualification">{{t:cta.qualify}}</a>
     </nav>
+
+    {{langSwitcher}}
   </div>
 </header>

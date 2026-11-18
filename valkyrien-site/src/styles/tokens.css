@@ -49,7 +49,7 @@
   --space-section: clamp(4rem, 2.5rem + 6vw, 8rem);
 
   /* Layout */
-  --container-site: 76rem;
+  --container-site: 80rem;
   --container-prose: 42rem;
 
   /* Shape */

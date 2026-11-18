@@ -1,11 +1,5 @@
 /* Shared UI primitives: container, buttons, eyebrow, skip link, visually-hidden */
 @layer components {
-  .container {
-    width: 100%;
-    max-width: var(--container-site);
-    margin-inline: auto;
-    padding-inline: var(--space-gutter);
-  }
 
   .skip-link {
     position: absolute;
