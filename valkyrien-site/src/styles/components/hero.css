@@ -1,0 +1,178 @@
+/*
+ * Hero - Home
+ * Layers (back to front): paper-alt field -> network line-art (SVG) ->
+ * optional video loop (only when an asset is shipped and motion is allowed) -> content.
+ */
+@layer components {
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--color-paper-alt);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero__network {
+    position: absolute;
+    top: 50%;
+    right: -12%;
+    width: min(62rem, 120%);
+    height: auto;
+    transform: translateY(-50%);
+    color: var(--color-ink);
+    opacity: 0.9;
+  }
+  .hero__network .net-line { stroke: var(--color-line); stroke-width: 1; fill: none; }
+  .hero__network .net-route {
+    stroke: var(--color-gold);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4 6;
+    animation: hero-route 18s linear infinite;
+  }
+  .hero__network .net-node { fill: var(--color-paper); stroke: var(--color-ink-muted); stroke-width: 1.5; }
+  .hero__network .net-hub { fill: var(--color-ink); }
+  .hero__network .net-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    fill: var(--color-ink-muted);
+  }
+
+  @keyframes hero-route { to { stroke-dashoffset: -200; } }
+
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out-quart);
+  }
+  .hero__video[data-playing='true'] { opacity: 0.18; }
+
+  /* Fade the art out behind the text column so contrast never depends on it */
+  .hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      var(--color-paper-alt) 0%,
+      var(--color-paper-alt) 38%,
+      color-mix(in srgb, var(--color-paper-alt) 55%, transparent) 70%,
+      transparent 100%
+    );
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: clamp(4.5rem, 3rem + 7vw, 9rem) clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  }
+
+  .hero__content { max-width: 46rem; }
+
+  .hero__title {
+    margin-top: 1.5rem;
+    font-size: var(--text-display);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .hero__lead {
+    margin-top: 1.75rem;
+    max-width: 38rem;
+    font-size: var(--text-lg);
+    color: var(--color-ink-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero__microcopy {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    max-width: 34rem;
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+  .hero__microcopy .icon { flex: none; width: 1.125rem; height: 1.125rem; margin-top: 0.15rem; color: var(--color-gold-strong); }
+
+  .hero__jurisdictions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 40rem;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .hero__jurisdictions div {
+    padding: 1.25rem 1.25rem 0 0;
+  }
+  .hero__jurisdictions div + div {
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--color-line);
+  }
+  .hero__jurisdictions dt {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .hero__jurisdictions dd {
+    margin: 0.25rem 0 0;
+    font-size: var(--text-xs);
+    line-height: 1.4;
+    color: var(--color-ink-muted);
+  }
+
+  /* WCAG 2.2.2: looping background motion must be pausable */
+  .hero__motion-toggle {
+    position: absolute;
+    right: var(--space-gutter);
+    bottom: 1rem;
+    min-height: 2rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    color: var(--color-ink-muted);
+    font: 500 var(--text-xs) / 1 var(--font-sans);
+    cursor: pointer;
+  }
+  .hero__motion-toggle:hover { color: var(--color-ink); border-color: var(--color-ink-muted); }
+  .hero[data-motion='paused'] .net-route { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { .hero__motion-toggle { display: none; } }
+
+  .nowrap { white-space: nowrap; }
+
+  @media (max-width: 40rem) {
+    .hero__inner { padding-block: 2.5rem 3rem; gap: 2rem; }
+    .hero__title { margin-top: 1rem; }
+    .hero__lead { margin-top: 1.25rem; }
+    .hero__actions { margin-top: 1.75rem; }
+    .hero__network { top: auto; bottom: -8%; right: -45%; width: 140%; transform: none; opacity: 0.5; }
+    .hero__media::after {
+      background: linear-gradient(180deg, var(--color-paper-alt) 0%, var(--color-paper-alt) 62%, color-mix(in srgb, var(--color-paper-alt) 40%, transparent) 100%);
+    }
+    .hero__actions .btn { width: 100%; }
+    .hero__jurisdictions div + div { padding-left: 0.875rem; }
+  }
+}

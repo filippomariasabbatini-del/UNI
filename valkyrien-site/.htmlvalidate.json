@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "html-validate:recommended",
+    "html-validate:a11y"
+  ],
+  "rules": {
+    "heading-level": [
+      "error",
+      {
+        "allowMultipleH1": false,
+        "minInitialRank": "h1",
+        "sectioningRoots": [
+          "dialog",
+          "[role=\"dialog\"]"
+        ]
+      }
+    ],
+    "no-inline-style": "error",
+    "prefer-native-element": "error",
+    "require-sri": "off",
+    "no-trailing-whitespace": "off",
+    "void-style": "off",
+    "attribute-boolean-style": "off",
+    "doctype-style": [
+      "error",
+      {
+        "style": "lowercase"
+      }
+    ]
+  },
+  "elements": [
+    "html5"
+  ]
+}

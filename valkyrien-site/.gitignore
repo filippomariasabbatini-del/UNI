@@ -1,0 +1,7 @@
+node_modules/
+dist/
+compliance-docs/build/*
+!compliance-docs/build/.gitkeep
+compliance-docs/source/scans/*
+!compliance-docs/source/scans/.gitkeep
+.env
