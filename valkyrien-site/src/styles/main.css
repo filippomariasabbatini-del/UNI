@@ -9,6 +9,7 @@
 @import './components/cards.css';
 @import './components/footer.css';
 @import './components/motion.css';
+@import './components/intro.css';
 
 @layer base {
   html {

@@ -1,3 +1,5 @@
+import { playIntro } from './intro.js';
+
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function initNav() {
@@ -104,6 +106,7 @@ function initHeaderState() {
   update();
 }
 
+playIntro();
 initNav();
 initHeaderState();
 initHeroMotion();

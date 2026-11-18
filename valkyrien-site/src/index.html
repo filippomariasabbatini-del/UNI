@@ -2,6 +2,7 @@
 <html lang="en-GB">
 <head>
   <!-- @include partials/head.html -->
+  <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('vk-intro')&&!location.hash)document.documentElement.classList.add('intro-pending')}catch(e){}</script>
   <title>Defence &amp; dual-use project structuring | Valkyrien Holding</title>
   <meta name="description" content="Valkyrien Holding structures cross-border defence and dual-use engagements end to end: needs definition, supplier qualification, licensing pathway and execution oversight across the UK, Switzerland and Luxembourg.">
   <link rel="canonical" href="https://valkyrien.co.uk/">
@@ -186,5 +187,30 @@
   </main>
 
   <!-- @include partials/footer.html -->
+  <template id="intro-template">
+    <div class="intro" data-intro>
+      <div class="intro__bg"></div>
+      <svg class="intro__scene" viewBox="0 0 240 160" aria-hidden="true" focusable="false">
+        <rect class="intro__frame" pathLength="1" x="104" y="44" width="72" height="72" rx="36"/>
+        <g class="intro__grid">
+          <ellipse pathLength="1" cx="140" cy="80" rx="14" ry="36"/>
+          <ellipse pathLength="1" cx="140" cy="80" rx="27" ry="36"/>
+          <path pathLength="1" d="M104 80H176"/>
+          <path pathLength="1" d="M108.8 62H171.2M108.8 98H171.2"/>
+        </g>
+        <g class="intro__mark" transform="translate(99.58 39.58) scale(2.5263)">
+          <path class="intro__outer" pathLength="1" d="M7 8.5 16 25 25 8.5"/>
+          <path class="intro__inner" pathLength="1" d="M12 8.5 16 16 20 8.5"/>
+        </g>
+        <g class="intro__defence">
+          <path class="intro__pulse" d="M88 62 102 67V80C102 90 96 97 88 101 80 97 74 90 74 80V67Z"/>
+          <path class="intro__shield" pathLength="1" d="M88 62 102 67V80C102 90 96 97 88 101 80 97 74 90 74 80V67Z"/>
+          <path class="intro__sparks" d="M70 73 64 67M68 80H60M70 87 64 93"/>
+        </g>
+        <path class="intro__arrow" d="M-34 0H0M-6-4 0 0-6 4M-34 0-39-4M-34 0-39 4M-29 0-34-4M-29 0-34 4"/>
+      </svg>
+      <button class="intro__skip" type="button" data-intro-skip>Skip intro</button>
+    </div>
+  </template>
 </body>
 </html>
